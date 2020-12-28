@@ -46,12 +46,12 @@ class AlphaVantageCustomScreener():
         #if number of received stocks is smaller than 2000 than it means something is wrong
         if len(self.stocks) < 2000: raise ValueError('Received too few stocks. Check if Alpha Vantage is operating correctly.')
 
-        #if debug is true remove everything except for first 10 stocks
+        #if debug is true remove everything except for first 20 stocks
         if self.debug:
             logging.debug(f'# of Stocks: {len(self.stocks)}')
             temp = self.stocks.copy()
             self.stocks.clear()
-            for x in range(10):
+            for x in range(20):
                 self.stocks.append(temp[x])
             logging.debug(f'# of Stocks: {len(self.stocks)}')
 

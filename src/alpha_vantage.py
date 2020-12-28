@@ -8,6 +8,8 @@ import logging
 
 # Example Qyery - https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&outputsize=compact&apikey=B451TTOLQ2VOY99L
 
+#TODO finish implementing filter FilterStocksByDailyTurnover
+
 class AlphaVantageCustomScreener():
     def __init__(self, debug=False):
         self.debug = debug

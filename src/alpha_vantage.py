@@ -11,7 +11,7 @@ import logging
 #TODO finish implementing filter FilterStocksByDailyTurnover
 
 class AlphaVantageCustomScreener():
-    def __init__(self, debug=False):
+    def __init__(self, debug=False, ):
         self.debug = debug
         self.functions = {
             'list': 'LISTING_STATUS',
@@ -26,7 +26,8 @@ class AlphaVantageCustomScreener():
         self.stocks = []
         self.lastAPICall = datetime.now()
         self.breakBetweenAPICalls = 12 #number of seconds to wait between API calls
-        # Boot up functions
+
+    def SearchForStocks(self):
         self.PopulateStocks()
         self.FilterStocksByDailyTurnover(2000000)
 
@@ -46,14 +47,20 @@ class AlphaVantageCustomScreener():
         #if number of received stocks is smaller than 2000 than it means something is wrong
         if len(self.stocks) < 2000: raise ValueError('Received too few stocks. Check if Alpha Vantage is operating correctly.')
 
-        #if debug is true remove everything except for first 20 stocks
+        #remove any entries that 'assetType' is not 'Stocks'
+        stocks_to_remove = []
+        for idx in range(len(self.stocks)):
+            if self.stocks[idx]['assetType'] != 'Stock': stocks_to_remove.append(idx)
+        logging.debug(f'Stocks Only - Stocks to remove: {stocks_to_remove}')
+        for i in sorted(stocks_to_remove, reverse=True):
+            self.stocks.pop(i)
+
+        #if debug is true remove everything except for first 10 stocks
         if self.debug:
-            logging.debug(f'# of Stocks: {len(self.stocks)}')
             temp = self.stocks.copy()
             self.stocks.clear()
-            for x in range(20):
+            for x in range(10):
                 self.stocks.append(temp[x])
-            logging.debug(f'# of Stocks: {len(self.stocks)}')
 
     def FilterStocksByDailyTurnover(self, minTurnover = 1000000):
         stocks_to_remove = []
@@ -61,7 +68,16 @@ class AlphaVantageCustomScreener():
             newest_time_data = self._getStocksNewestTimeData('daily', self.stocks[idx]['symbol'])
             stock_turnover_daily = float(newest_time_data['4. close']) * int(newest_time_data['5. volume'])
             if stock_turnover_daily < minTurnover: stocks_to_remove.append(idx)
-        logging.debug(f'Stocks to remove: {stocks_to_remove}')
+        logging.debug(f'Turnover Filter - Stocks to remove: {stocks_to_remove}')
+        for i in sorted(stocks_to_remove, reverse=True):
+            self.stocks.pop(i)
+
+    def PrintToTradingViewList(self):
+        tv_stocks = []
+        for s in self.stocks:
+            tv_stocks.append(s['exchange'] + ':' + s['symbol'])
+        logging.debug(f'TV String: {tv_stocks}')
+        return ','.join(tv_stocks)
 
     def _getStocksNewestTimeData(self,function, symbol):
         args = {
@@ -69,7 +85,7 @@ class AlphaVantageCustomScreener():
             'outputsize':   'compact'
         }
         response = self._executeRequest(function, args)
-        logging.debug(f'Response.Text: {response.text}')
+        #logging.debug(f'Response.Text: {response.text}')
         all_data = json.loads(response.text)
         time_data = all_data[list(all_data.keys())[1]]
         newest_time_data = time_data[list(time_data.keys())[0]]
@@ -79,7 +95,6 @@ class AlphaVantageCustomScreener():
         #calculate if enough amount of time has passed since last API call. If not - wait
         time_to_wait =  self.breakBetweenAPICalls - (datetime.now() - self.lastAPICall).total_seconds()
         logging.debug(f'Time to wait: {time_to_wait}s')
-        print(f'Time to wait: {time_to_wait}s')
         if time_to_wait > 0: time.sleep(time_to_wait)
         #add arguments
         args['apikey'] = self.key
@@ -96,5 +111,7 @@ class AlphaVantageCustomScreener():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     av = AlphaVantageCustomScreener(debug=True)
+    print(av.PrintToTradingViewList())
+
 
     

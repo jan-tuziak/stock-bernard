@@ -7,7 +7,7 @@ class MoneySpyderEmail:
         self.printToConsole = printToConsole
     
     def SendLighthouseEmail(self, toAddress, stocks_to_observe):
-        if self.printToConsole: print('Creating Email... ')
+        self.print('Creating Email... ')
         context = ssl.create_default_context()
 
         msg = EmailMessage()
@@ -26,13 +26,16 @@ class MoneySpyderEmail:
         </p>
         """, subtype='html')
 
-        if self.printToConsole: print('Sending Emails... ')
+        self.print('Sending Emails... ')
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.ehlo()  # Say EHLO to server
             smtp.starttls(context=context)  # Puts the connection in TLS mode.
             smtp.ehlo()
             smtp.login(msg['From'], "BlackJack88")
             smtp.send_message(msg)
+
+    def print(self, msg, end='\r\n'):
+        if self.printToConsole: print(f'MoneySpyderEmail::{msg}', end=end)
 
 if __name__ == "__main__":    
     msEmail = MoneySpyderEmail(printToConsole=True)

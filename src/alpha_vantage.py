@@ -11,8 +11,9 @@ import logging
 #TODO finish implementing filter FilterStocksByDailyTurnover
 
 class AlphaVantageCustomScreener():
-    def __init__(self, debug=False, ):
+    def __init__(self, debug=False, printToConsole=False):
         self.debug = debug
+        self.printToConsole = printToConsole
         self.functions = {
             'list': 'LISTING_STATUS',
             '1min-ly': 'TIME_SERIES_INTRADAY&interval=1min',
@@ -33,6 +34,7 @@ class AlphaVantageCustomScreener():
 
     def PopulateStocks(self):
         #Get all stocks and save it into list of directories
+        if self.printToConsole: print('Acquiring list of Symbols... ')
         response = self._executeRequest('list')
         csv_file = 'stocks.csv' 
         with open(csv_file, 'w') as f:
@@ -48,6 +50,7 @@ class AlphaVantageCustomScreener():
         if len(self.stocks) < 2000: raise ValueError('Received too few stocks. Check if Alpha Vantage is operating correctly.')
 
         #remove any entries that 'assetType' is not 'Stocks'
+        if self.printToConsole: print('Removing non-Stock assests... ')
         stocks_to_remove = []
         for idx in range(len(self.stocks)):
             if self.stocks[idx]['assetType'] != 'Stock': stocks_to_remove.append(idx)
@@ -64,13 +67,17 @@ class AlphaVantageCustomScreener():
 
     def FilterStocksByDailyTurnover(self, minTurnover = 1000000):
         stocks_to_remove = []
-        for idx in range(len(self.stocks)):
+        num_of_loops = len(self.stocks)
+        for idx in range(num_of_loops):
+            if self.printToConsole: print(f'Filtering Stocks by daily Turnover... {idx+1} out of {num_of_loops}', end='\r')
             newest_time_data = self._getStocksNewestTimeData('daily', self.stocks[idx]['symbol'])
             stock_turnover_daily = float(newest_time_data['4. close']) * int(newest_time_data['5. volume'])
             if stock_turnover_daily < minTurnover: stocks_to_remove.append(idx)
         logging.debug(f'Turnover Filter - Stocks to remove: {stocks_to_remove}')
         for i in sorted(stocks_to_remove, reverse=True):
             self.stocks.pop(i)
+        if self.printToConsole: print(f'Filtering Stocks by daily Turnover... {num_of_loops} out of {num_of_loops}')
+        if self.printToConsole: print(f'Number of Stocks left after Daily Turnover Filter: {len(self.stocks)}')
 
     def PrintToTradingViewList(self):
         tv_stocks = []
@@ -110,7 +117,8 @@ class AlphaVantageCustomScreener():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    av = AlphaVantageCustomScreener(debug=True)
+    av = AlphaVantageCustomScreener(debug=True, printToConsole=True)
+    av.SearchForStocks()
     print(av.PrintToTradingViewList())
 
 

@@ -8,7 +8,7 @@ import logging
 
 # Example Qyery - https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&outputsize=compact&apikey=B451TTOLQ2VOY99L
 
-#TODO finish implementing filter FilterStocksByDailyTurnover
+#TODO implement try/except that removes symbols from self.stocks if data received from API for that given symbol is "Error Message"
 
 class AlphaVantageCustomScreener():
     def __init__(self, debug=False, printToConsole=False):

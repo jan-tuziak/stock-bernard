@@ -8,7 +8,7 @@ class MoneySpyderEmail:
 
         msg = EmailMessage()
 
-        msg['Subject'] = "Money Spyder's Lighthouse"
+        msg['Subject'] = "Money Spyder's Lighthouse;"
         msg['From'] = 'money.spyder@outlook.com'
         msg['To'] = toAddress
 
@@ -16,7 +16,7 @@ class MoneySpyderEmail:
 
         msg.add_alternative(f"""
         <p>
-            <h1>Money Spyder's Lighthouse</h1>
+            <h1>Money Spyder's Lighthouse &#x1F4A1;</h1>
             Money Spyder Lighthouse recommends these stocks to look at:<br><br>
             <strong>{stocks_to_observe}</strong>
         </p>

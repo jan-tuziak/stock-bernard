@@ -21,7 +21,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     
     # Create Alpha Vantage Custom Screener and search for promising stocks
-    av = AlphaVantageCustomScreener(debug=True, printToConsole=True)
+    av = AlphaVantageCustomScreener(debug=False, printToConsole=True)
     av.SearchForStocks()
     
     # Get promising stocks ready for TradingViewList

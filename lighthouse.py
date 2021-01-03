@@ -1,7 +1,10 @@
+#! /usr/bin/python3
+
 import logging
 
 from src.av_stocks_data import AVStocksData
 from src.money_spyder_email import MoneySpyderEmail
+from src.av_filter import AVFilter
 
 if __name__ == "__main__":
     # Config logger

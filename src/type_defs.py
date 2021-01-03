@@ -1,12 +1,11 @@
 class AVTypeDefs:
-   Functions = {
+   FUNCTIONS = {
             'list': 'LISTING_STATUS',
             '1min-ly': 'TIME_SERIES_INTRADAY&interval=1min',
             'hourly': 'TIME_SERIES_INTRADAY&interval=60min',
             'daily': 'TIME_SERIES_DAILY',
             'weekly': 'TIME_SERIES_WEEKLY'
         }
-
 
 class bcolors:
     HEADER = '\033[95m'

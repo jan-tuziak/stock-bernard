@@ -13,7 +13,7 @@ from src.type_defs import AVTypeDefs
 
 class AVStocksData():
     def __init__(self):
-        self.functions = AVTypeDefs.Functions
+        self.functions = AVTypeDefs.FUNCTIONS
         self.site = 'www.alphavantage.co'
         self.key = 'E6H2MXTA1P7JD4II'
         self.query_format =  'https://%s/query?function=%s%s'

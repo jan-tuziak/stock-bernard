@@ -5,22 +5,15 @@ import json
 from datetime import datetime
 import time
 import logging
+from src.type_defs import AVTypeDefs
 
 # Example Qyery - https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&outputsize=compact&apikey=B451TTOLQ2VOY99L
 
 #TODO implement try/except that removes symbols from self.stocks if data received from API for that given symbol is "Error Message"
 
-class AlphaVantageCustomScreener():
-    def __init__(self, debug=False, printToConsole=False):
-        self.debug = debug
-        self.printToConsole = printToConsole
-        self.functions = {
-            'list': 'LISTING_STATUS',
-            '1min-ly': 'TIME_SERIES_INTRADAY&interval=1min',
-            'hourly': 'TIME_SERIES_INTRADAY&interval=60min',
-            'daily': 'TIME_SERIES_DAILY',
-            'weekly': 'TIME_SERIES_WEEKLY'
-        }
+class AVStocksData():
+    def __init__(self):
+        self.functions = AVTypeDefs.Functions
         self.site = 'www.alphavantage.co'
         self.key = 'E6H2MXTA1P7JD4II'
         self.query_format =  'https://%s/query?function=%s%s'
@@ -28,14 +21,14 @@ class AlphaVantageCustomScreener():
         self.lastAPICall = datetime.now()
         self.breakBetweenAPICalls = 2 #number of seconds to wait between API calls
 
-    def SearchForStocks(self):
-        self.PopulateStocks()
-        self.FilterStocksByDailyTurnover(2000000)
+    def get_stocks(self, min_daily_turnover):
+        self.get_stocks_symbols()
+        self.filter_by_daily_turnover(min_daily_turnover)
 
-    def PopulateStocks(self):
+    def get_stocks_symbols(self):
         #Get all stocks and save it into list of directories
-        self.print('Acquiring list of Symbols... ')
-        success, response = self._executeRequest('list', {"state":"active"})
+        logging.info('Acquiring list of Symbols')
+        success, response = self._execute_req('list', {"state":"active"})
         csv_file = 'MoneySpyderStocksTemp.csv' 
         with open(csv_file, 'w') as f:
             f.write(response.text)
@@ -49,7 +42,7 @@ class AlphaVantageCustomScreener():
         #if number of received stocks is smaller than 2000 than it means something is wrong
         if len(self.stocks) < 2000: raise ValueError('Received too few stocks. Check if Alpha Vantage is operating correctly.')
 
-        self.print('Removing non-Stock assests... ')
+        logging.info('Removing non-Stock assests')
         stocks_to_remove = []
         
         for idx in range(len(self.stocks)):
@@ -61,39 +54,30 @@ class AlphaVantageCustomScreener():
             if self.stocks[idx]['symbol'] == "BC/PC": self.stocks[idx]['symbol'] = "BC-P-C"
         logging.debug(f'Stocks Only - Stocks to remove: {stocks_to_remove}')
         for i in sorted(stocks_to_remove, reverse=True):
-            self.stocks.pop(i)
-        self.print(f'Number of Stocks acquired: {len(self.stocks)}')
+            self.stocks.pop(i)        
+        logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
 
-        #if debug is true remove everything except for first 10 stocks
-        if self.debug:
-            temp = self.stocks.copy()
-            self.stocks.clear()
-            for x in range(10):
-                self.stocks.append(temp[x])
-            self.stocks = temp
-            self.print(f'Debug Mode is on. Adjusting the Number of Stocks acquired to 10')
-
-    def FilterStocksByDailyTurnover(self, minTurnover = 1000000):
+    def filter_by_daily_turnover(self, min_turnover = 1000000):
         stocks_to_remove = []
         num_of_loops = len(self.stocks)
+        logging.info('Filtering Stocks by daily Turnover')
         for idx in range(num_of_loops):
-            self.print(f'Filtering Stocks by daily Turnover... {self.stocks[idx]["exchange"]}:{self.stocks[idx]["symbol"]} ({idx+1} out of {num_of_loops})      ', end='\r')
-            success, newest_time_data = self._getStocksNewestTimeData('daily', self.stocks[idx]['symbol'])
+            logging.debug(f'Filtering Stocks by daily Turnover... {self.stocks[idx]["exchange"]}:{self.stocks[idx]["symbol"]} ({idx+1} out of {num_of_loops})')
+            success, newest_time_data = self._get_newest_time_data('daily', self.stocks[idx]['symbol'])
             if success:
                 #check if turnover daily is big enough
                 stock_turnover_daily = float(newest_time_data['4. close']) * int(newest_time_data['5. volume'])
-                if stock_turnover_daily < minTurnover: stocks_to_remove.append(idx)
+                if stock_turnover_daily < min_turnover: stocks_to_remove.append(idx)
             else:
                 #api call with that symbol failed. remove the symbol
                 stocks_to_remove.append(idx)
-                self.print(f'\r\nRemoved Stock: {self.stocks[idx]["exchange"]}:{self.stocks[idx]["symbol"]}')
+                logging.debug(f'Removed Stock: {self.stocks[idx]["exchange"]}:{self.stocks[idx]["symbol"]}')
         logging.debug(f'\r\nTurnover Filter - Stocks to remove: {stocks_to_remove}')
         for i in sorted(stocks_to_remove, reverse=True):
             self.stocks.pop(i)
-        self.print(f'Filtering Stocks by daily Turnover... {num_of_loops} out of {num_of_loops}')
-        self.print(f'Number of Stocks left after Daily Turnover Filter: {len(self.stocks)}')
+        logging.info(f'Number of Stocks left after Daily Turnover Filter: {len(self.stocks)}')
 
-    def PrintToTradingViewList(self):
+    def get_tv_list(self):
         tv_stocks = []
         for s in self.stocks:
             #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as port of "AMEX" exchange
@@ -106,12 +90,12 @@ class AlphaVantageCustomScreener():
         logging.debug(f'TV String: {tv_stocks}')
         return ','.join(tv_stocks)
 
-    def _getStocksNewestTimeData(self,function, symbol):
+    def _get_newest_time_data(self,function, symbol):
         args = {
             'symbol':       symbol,
             'outputsize':   'compact'
         }
-        success, response = self._executeRequest(function, args)
+        success, response = self._execute_req(function, args)
         #logging.debug(f'Response.Text: {response.text}')
         newest_time_data = []
         if success:
@@ -121,7 +105,7 @@ class AlphaVantageCustomScreener():
             newest_time_data = time_data[list(time_data.keys())[0]]
         return success, newest_time_data
 
-    def _executeRequest(self, function, args={}):
+    def _execute_req(self, function, args={}):
         #calculate if enough amount of time has passed since last API call. If not - wait
         time_to_wait =  self.breakBetweenAPICalls - (datetime.now() - self.lastAPICall).total_seconds()
         logging.debug(f'Time to wait: {time_to_wait}s')
@@ -150,14 +134,11 @@ class AlphaVantageCustomScreener():
             success = False
         return success, response
 
-    def print(self, msg, end='\r\n'):
-        if self.printToConsole: print(f'AlphaVantageCustomScreener::{msg}', end=end)
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    av = AlphaVantageCustomScreener(debug=True, printToConsole=True)
-    av.SearchForStocks()
-    print(av.PrintToTradingViewList())
+    av = AVStocksData()
+    av.get_stocks(min_daily_turnover=2000000)
+    print(av.get_tv_list())
 
 
     

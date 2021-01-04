@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 import time
 import logging
-from src.type_defs import AVTypeDefs
+from src.type_defs import AVDataDefs
 
 # Example Qyery - https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&outputsize=compact&apikey=B451TTOLQ2VOY99L
 
@@ -13,7 +13,7 @@ from src.type_defs import AVTypeDefs
 
 class AVStocksData():
     def __init__(self):
-        self.functions = AVTypeDefs.FUNCTIONS
+        self.functions = AVDataDefs.FUNCTIONS
         self.site = 'www.alphavantage.co'
         self.key = 'E6H2MXTA1P7JD4II'
         self.query_format =  'https://%s/query?function=%s%s'

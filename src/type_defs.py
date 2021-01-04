@@ -1,4 +1,4 @@
-class AVTypeDefs:
+class AVDataDefs:
    FUNCTIONS = {
             'list': 'LISTING_STATUS',
             '1min-ly': 'TIME_SERIES_INTRADAY&interval=1min',

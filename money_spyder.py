@@ -4,7 +4,7 @@ import logging
 import time
 
 from src.lighthouse import Lighthouse
-from src.money_spyder_email import MoneySpyderEmail
+from src.postman import Postman
 
 if __name__ == "__main__":
     #start timer
@@ -17,20 +17,23 @@ if __name__ == "__main__":
     logging.info("Money Spyder's Lighthouse starting.")
     
     # get list of stocks
-    lh_av = Lighthouse()
-    lh_av.get_data()
-    lh_av.filter_by_daily_turnover(2000000)
+    lh = Lighthouse()
+    lh.get_data()
+
+    # filter stocks by daily turnover
+    lh.filter_by_daily_turnover(2000000)
     
-    # filter stocks by SMA
-    lh_av.filter_greater_than_sma('15min',900)
+    # filter stocks by sma100x15min < sma300x15min
+    lh.filter_sma_greater_than_sma('15min',100, '15min', 300)
 
     # Create TradingViewList String from stocks
-    stocks_to_observe = lh_av.create_tv_string()
+    stocks_to_observe = lh.create_tv_string()
     
     # Send Email with promising stocks
-    mse = MoneySpyderEmail()
-    mse.send_lh_email('jan.tuziak@outlook.com', stocks_to_observe)
+    pstm = Postman()
+    addresses = ['jan.tuziak@outlook.com', 'tomasztuziak@yahoo.com']
+    pstm.send_lh_email(addresses, stocks_to_observe)
 
     # Log script execution time
     executionTime = (time.time() - startTime)
-    logging.info(f'Lighthouse execution time: {executionTime}s')
+    logging.info(f'Lighthouse execution time: {executionTime/3600}h')

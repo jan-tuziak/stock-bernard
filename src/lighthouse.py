@@ -60,7 +60,7 @@ class Lighthouse():
             self.stocks.pop(i)  
 
         #TODO remove this line
-        #self.stocks = self.stocks[0:20]
+        #self.stocks = self.stocks[0:30]
 
         logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
     
@@ -121,6 +121,26 @@ class Lighthouse():
             for sr in reversed(stocks_remove):
                 self.quotes.pop(sr)
         logging.info(f'Number of Stocks: {len(self.quotes)}')
+
+    def filter_sma_greater_than_sma(self, lower_interval, lower_period, higher_interval, higher_period):
+        """Filter through the stocks and leave the ones whose higher SMA is higher than lower SMA.
+        For instance, hihgher SMA is sma300x15min, lower SMA is sma100x15min -> leave stocks where sma300x15min > sma100x15min"""
+        self._add_sma(lower_interval, lower_period)
+        self._add_sma(higher_interval, higher_period)
+        #remove the stocks if sma is empty or sma is greater than close price
+        sma_str_lr = self._create_sma_str(lower_interval, lower_period)
+        sma_str_hr = self._create_sma_str(higher_interval, higher_period)
+        logging.info(f'Filtering Stocks by {sma_str_hr} > {sma_str_lr}')
+        stocks_remove = []
+        for idx in range(len(self.quotes)):
+            if (self.quotes[idx][sma_str_lr] == [] or self.quotes[idx][sma_str_hr] == []) or (self.quotes[idx][sma_str_lr][0] > self.quotes[idx][sma_str_hr][0]):
+                stocks_remove.append(idx)
+                continue
+        if stocks_remove != []:
+            for sr in reversed(stocks_remove):
+                self.quotes.pop(sr)
+        logging.info(f'Number of Stocks: {len(self.quotes)}')
+
 
     def _create_sma_str(self, interval, time_period):
         return f"sma{time_period}x{interval}"

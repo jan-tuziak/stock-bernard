@@ -11,7 +11,7 @@ import json
 from alpha_vantage.techindicators import TechIndicators
 from alpha_vantage.timeseries import TimeSeries
 
-class LighthouseAV():
+class Lighthouse():
     def __init__(self):
         # Example of stock entry in stocks list: 
         # {'assetType': 'Stock', 'delistingDate': 'null', 'exchange': 'NYSE', 'ipoDate': '1999-11-18', 'name': 'Agilent Technologies Inc', 'status': 'Active', 'symbol': 'A'}
@@ -173,7 +173,7 @@ class LighthouseAV():
 
 if __name__ == "__main__":
     #logging.basicConfig(level=logging.DEBUG)
-    avf = LighthouseAV()
+    avf = Lighthouse()
     avf.get_data()
     avf.filter_by_daily_turnover(2000000)
     avf.filter_greater_than_sma('15min',900)

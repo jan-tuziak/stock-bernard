@@ -3,7 +3,7 @@
 import logging
 import time
 
-from src.lighthouse_av import LighthouseAV
+from src.lighthouse import Lighthouse
 from src.money_spyder_email import MoneySpyderEmail
 
 if __name__ == "__main__":
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     logging.info("Money Spyder's Lighthouse starting.")
     
     # get list of stocks
-    lh_av = LighthouseAV()
+    lh_av = Lighthouse()
     lh_av.get_data()
     lh_av.filter_by_daily_turnover(2000000)
     

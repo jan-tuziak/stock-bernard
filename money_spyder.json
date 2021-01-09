@@ -1,0 +1,17 @@
+{
+    "av_key":"E6H2MXTA1P7JD4II",
+    
+    "logger":{
+        "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
+    },
+
+    "data_hole":{
+        "csv_name":"america_2021-01-09.csv"
+    },
+
+    "postman":{
+        "mail":"money.spyder.2020@gmail.com",
+        "password":"BlackJack88",
+        "to_addresses":["jan.tuziak@gmail.com", "tomasztuziak@yahoo.com"]
+    }
+ }

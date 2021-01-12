@@ -2,11 +2,13 @@ import os
 import csv
 import logging
 import requests
+import pandas as pd
 
 from alpha_vantage.timeseries import TimeSeries
 
 class DataHole:
-    def __init__(self, av_key, csv_name):
+    def __init__(self, df, av_key, csv_name):
+        self.df = df
         self.main_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         self.america_csv = csv_name
         self.csv_path = os.path.join(self.main_dir, 'data' ,self.america_csv)
@@ -14,17 +16,21 @@ class DataHole:
     
     def get_from_csv(self, num_of_stocks):
         logging.info(f'Getting data from {self.america_csv}')
-        with open(self.csv_path, "r") as f:
-            reader = csv.DictReader(f)
-            self.stocks = list(reader)[:num_of_stocks]
-            #rename keys
-            for s in self.stocks:
-                s['symbol'] = s.pop('Ticker')
-                s['price'] = s.pop('Last')
-                s['volume'] = s.pop('Volume')
-                s['exchange'] = s.pop('Exchange')
-        logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
-        return self.stocks
+        # with open(self.csv_path, "r") as f:
+        #     reader = csv.DictReader(f)
+        #     self.stocks = list(reader)[:num_of_stocks]
+        #     #rename keys
+        #     for s in self.stocks:
+        #         s['symbol'] = s.pop('Ticker')
+        #         s['price'] = s.pop('Last')
+        #         s['volume'] = s.pop('Volume')
+        #         s['exchange'] = s.pop('Exchange')
+        # logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
+        # return self.stocks
+        columns = ['Ticker', 'Exchange']
+        self.df = pd.read_csv(self.csv_path, usecols=columns, nrows=num_of_stocks)
+        self.df.rename(columns={'Ticker':'symbol', 'Exchange':'exchange'}, inplace = True)
+        logging.info(f'Number of Stocks acquired: {len(self.df.index)}')
     
     def get_from_av(self):
         logging.info(f'Getting data from Alpha Vantage')

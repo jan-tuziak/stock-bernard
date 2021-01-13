@@ -27,18 +27,20 @@ class Lighthouse():
         self.breakBetweenAPICalls = 2 #number of seconds to wait between API calls
     
     def filter_by_daily_turnover(self, min_turnover = 1000000):
-        stocks_to_remove = []
-        num_of_loops = len(self.quotes)
+        # stocks_to_remove = []
+        # num_of_loops = len(self.quotes)
+        # logging.info('Filtering Stocks by daily Turnover')
+        # for idx in range(num_of_loops):
+        #     logging.debug(f'Filtering Stocks by daily Turnover... {self.quotes[idx]["exchange"]}:{self.quotes[idx]["symbol"]} ({idx+1} out of {num_of_loops})')
+        #     #check if turnover daily is big enough
+        #     stock_turnover_daily = float(self.quotes[idx]['price']) * int(self.quotes[idx]['volume'])
+        #     if stock_turnover_daily < min_turnover: stocks_to_remove.append(idx)
+        # logging.debug(f'\r\nTurnover Filter - Stocks to remove: {stocks_to_remove}')
+        # for i in sorted(stocks_to_remove, reverse=True):
+        #     self.stocks.pop(i)
         logging.info('Filtering Stocks by daily Turnover')
-        for idx in range(num_of_loops):
-            logging.debug(f'Filtering Stocks by daily Turnover... {self.quotes[idx]["exchange"]}:{self.quotes[idx]["symbol"]} ({idx+1} out of {num_of_loops})')
-            #check if turnover daily is big enough
-            stock_turnover_daily = float(self.quotes[idx]['price']) * int(self.quotes[idx]['volume'])
-            if stock_turnover_daily < min_turnover: stocks_to_remove.append(idx)
-        logging.debug(f'\r\nTurnover Filter - Stocks to remove: {stocks_to_remove}')
-        for i in sorted(stocks_to_remove, reverse=True):
-            self.stocks.pop(i)
-        logging.info(f'Number of Stocks: {len(self.stocks)}')
+        self.df = self.df[self.df['volume'] > min_turnover]
+        logging.info(f'Number of Stocks: {len(self.df)}')
 
     def _get_sma(self, stock, interval='15min', time_period=300):
         """
@@ -62,11 +64,6 @@ class Lighthouse():
     def _add_sma(self, interval, time_period):
         """Add list of SMA values to object's quotes list as "smaPERIODxINTERVAL" dict element"""
         sma_str = self._create_sma_str(interval, time_period)
-        # if sma_str not in self.quotes[0]:
-        #     for i in range(len(self.quotes)):
-        #         symbol = self.quotes[i]['symbol']
-        #         sma = self._get_sma(symbol, interval, time_period)
-        #         self.quotes[i][sma_str] = sma
         if sma_str not in list(self.df.columns):
             self.df[sma_str] = ""
             for idx, row in self.df.iterrows():
@@ -83,15 +80,11 @@ class Lighthouse():
         self._add_sma(interval, time_period)
         #remove the stocks if sma is empty or sma is greater than close price
         sma_str = self._create_sma_str(interval, time_period)
-        logging.info(f'Filtering Stocks by SMA greater than {sma_str}')
-        stocks_remove = []
-        for idx in range(len(self.quotes)):
-            if (self.quotes[idx][sma_str] == []) or (self.quotes[idx][sma_str][0] > self.quotes[idx]['05. price']):
-                stocks_remove.append(idx)
-                continue
-        if stocks_remove != []:
-            for sr in reversed(stocks_remove):
-                self.quotes.pop(sr)
+        logging.info(f'Filtering Stocks by "close" greater than {sma_str}')
+        for idx, row in self.df.iterrows():
+            if row[self.col_name] == self.col_fail: continue
+            if row["close"] < row[sma_str]:
+                self.df.at[idx, self.col_name] = self.col_fail
         logging.info(f'Number of Stocks: {len(self.quotes)}')
 
     def filter_sma_greater_than_sma(self, x_interval, x_period, y_interval, y_period):
@@ -103,16 +96,7 @@ class Lighthouse():
         sma_str_lr = self._create_sma_str(y_interval, y_period)
         sma_str_hr = self._create_sma_str(x_interval, x_period)
         logging.info(f'Filtering Stocks by {sma_str_hr} > {sma_str_lr}')
-        logging.info(self.df.head())
-        # stocks_remove = []
-        # for idx in range(len(self.quotes)):
-        #     if (self.quotes[idx][sma_str_lr] == [] or self.quotes[idx][sma_str_hr] == []) or (self.quotes[idx][sma_str_lr][0] > self.quotes[idx][sma_str_hr][0]):
-        #         stocks_remove.append(idx)
-        #         continue
-        # if stocks_remove != []:
-        #     for sr in reversed(stocks_remove):
-        #         self.quotes.pop(sr)
-        # logging.info(f'Number of Stocks: {len(self.quotes)}')
+        #logging.info(self.df.head())
         for idx, row in self.df.iterrows():
             if row[self.col_name] == self.col_fail: continue
             if row[sma_str_hr] < row[sma_str_lr]:

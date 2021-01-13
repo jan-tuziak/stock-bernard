@@ -1,6 +1,8 @@
 {
     "av_key":"E6H2MXTA1P7JD4II",
     
+    "poly_key":"3U413sHUAdFisFvcp6TReoTsEZ_GgpLp",
+    
     "logger":{
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
     },

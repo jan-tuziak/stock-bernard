@@ -43,7 +43,7 @@ class DataHole:
 
         logging.info(f'Number of Stocks acquired: {len(self.df)}')
 
-    def add_volume(self):
+    def add_volume_and_close(self):
         """
         Get global quote from AV and insert volume and close to DF
         Example of Quote:
@@ -76,6 +76,6 @@ if __name__ == "__main__":
     df = pd.DataFrame()
     dh = DataHole(df, av_key="E6H2MXTA1P7JD4II", csv_name="america_2021-01-09.csv")
     dh.get_from_av()
-    dh.add_volume()
+    dh.add_volume_and_close()
     print(dh.df.loc[dh.df['symbol'] == 'AACG'])
     print(dh.df.loc[dh.df['symbol'] == 'BC-P-C'])

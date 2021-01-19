@@ -6,17 +6,21 @@ import os
 import time
 import requests
 import json
+import numpy as np
+import pandas as pd
 
 from alpha_vantage.techindicators import TechIndicators
 from alpha_vantage.timeseries import TimeSeries
 
 class Lighthouse():
-    def __init__(self, df, av_key):
+    def __init__(self, stocks, av_key):
         # if column "lighthouse" has value "false" it did not pass through lighthouse filter
-        self.df = df
         self.col_name = "lighthouse"
         self.col_fail = "false"
-        self.df[self.col_name] = ""
+        self.stocks = stocks
+        for s in self.stocks:
+            s[self.col_name] = ""
+        #self.df[self.col_name] = ""
         self.symbols = []
         #self.quotes = stocks
         #self.stocks = stocks
@@ -27,17 +31,6 @@ class Lighthouse():
         self.breakBetweenAPICalls = 2 #number of seconds to wait between API calls
     
     def filter_by_daily_turnover(self, min_turnover = 1000000):
-        # stocks_to_remove = []
-        # num_of_loops = len(self.quotes)
-        # logging.info('Filtering Stocks by daily Turnover')
-        # for idx in range(num_of_loops):
-        #     logging.debug(f'Filtering Stocks by daily Turnover... {self.quotes[idx]["exchange"]}:{self.quotes[idx]["symbol"]} ({idx+1} out of {num_of_loops})')
-        #     #check if turnover daily is big enough
-        #     stock_turnover_daily = float(self.quotes[idx]['price']) * int(self.quotes[idx]['volume'])
-        #     if stock_turnover_daily < min_turnover: stocks_to_remove.append(idx)
-        # logging.debug(f'\r\nTurnover Filter - Stocks to remove: {stocks_to_remove}')
-        # for i in sorted(stocks_to_remove, reverse=True):
-        #     self.stocks.pop(i)
         logging.info('Filtering Stocks by daily Turnover')
         self.df = self.df[self.df['volume'] > min_turnover]
         logging.info(f'Number of Stocks: {len(self.df)}')
@@ -63,17 +56,30 @@ class Lighthouse():
     
     def _add_sma(self, interval, time_period):
         """Add list of SMA values to object's quotes list as "smaPERIODxINTERVAL" dict element"""
-        sma_str = self._create_sma_str(interval, time_period)
-        if sma_str not in list(self.df.columns):
-            self.df[sma_str] = ""
-            for idx, row in self.df.iterrows():
-                if row[self.col_name] == self.col_fail: continue
-                sma = self._get_sma(row['symbol'], interval, time_period)
-                if sma == []:
-                    self.df.at[idx, sma_str] = -1
-                    row[self.col_name] = self.col_fail
-                else:
-                    self.df.at[idx, sma_str] = sma[0]
+        # sma_str = self._create_sma_str(interval, time_period)
+        # if sma_str not in list(self.df.columns):
+        #     self.df[sma_str] = ""
+        #     for idx, row in self.df.iterrows():
+        #         if row[self.col_name] == self.col_fail: continue
+        #         sma = self._get_sma(row['symbol'], interval, time_period)
+        #         if sma == []:
+        #             self.df.at[idx, sma_str] = -1
+        #             row[self.col_name] = self.col_fail
+        #         else:
+        #             self.df.at[idx, sma_str] = sma[0]
+        if interval == '1min':
+            for s in self.stocks:
+                c_idx = s["data1min"].columns.get_loc("c")
+                s["data1min"][f'sma{time_period}'] = np.nan
+                s["data1min"][f'sma{time_period}'] = s["data1min"].iloc[:,c_idx].rolling(window=time_period).mean()
+        if interval == '15min':
+            for s in self.stocks:
+                c_idx = s["data15min"].columns.get_loc("c")
+                s["data1min"][f'sma{time_period}'] = np.nan
+                s["data15min"][f'sma{time_period}'] = s["data15min"].iloc[:,c_idx].rolling(window=time_period).mean()
+        #DEBUG 
+        #time.sleep(13)
+
     
     def filter_greater_than_sma(self, interval='15min', time_period=300):
         """Filter out those stocks that are below given SMA"""
@@ -97,10 +103,14 @@ class Lighthouse():
         sma_str_hr = self._create_sma_str(x_interval, x_period)
         logging.info(f'Filtering Stocks by {sma_str_hr} > {sma_str_lr}')
         #logging.info(self.df.head())
-        for idx, row in self.df.iterrows():
-            if row[self.col_name] == self.col_fail: continue
-            if row[sma_str_hr] < row[sma_str_lr]:
-                self.df.at[idx, self.col_name] = self.col_fail
+        # for idx, row in self.df.iterrows():
+        #     if row[self.col_name] == self.col_fail: continue
+        #     if row[sma_str_hr] < row[sma_str_lr]:
+        #         self.df.at[idx, self.col_name] = self.col_fail
+        for s in self.stocks:
+            if s[self.col_name] == self.col_fail: continue
+            if s[f"data{y_interval}"][f"sma{y_period}"].iloc[-1] < s[f"data{x_interval}"][f"sma{x_period}"].iloc[-1]:
+                s[self.col_name] = self.col_fail 
 
 
     def _create_sma_str(self, interval, time_period):
@@ -109,26 +119,33 @@ class Lighthouse():
 
     
     def create_tv_string(self):
-        # tv_stocks = []
-        # for s in self.quotes:
-        #     #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as port of "AMEX" exchange
-        #     if s['exchange'] == 'NYSE ARCA': 
-        #         exch = 'AMEX'
-        #     else:
-        #         exch = s['exchange']
-        #     #Compose the string
-        #     tv_stocks.append(exch + ':' + s['symbol'])
         tv_stocks = []
-        for idx, row in self.df.iterrows():
+        for s in self.stocks:
             #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as port of "AMEX" exchange
-            if row[self.col_name] == self.col_fail: continue
-            if row['exchange'] == 'NYSE ARCA': 
+            if s[self.col_name] == self.col_fail: continue
+            if s['exchange'] == 'NYSE ARCA': 
                 exch = 'AMEX'
             else:
-                exch = row['exchange']
-            tv_stocks.append(exch + ':' + row['symbol'])
+                exch = s['exchange']
+            tv_stocks.append(exch + ':' + s['symbol'])
         logging.debug(f'TV String: {tv_stocks}')
         return ','.join(tv_stocks)
+
+    def save_stocks_to_file(self):
+        stocks_copy = self.stocks.copy()
+        for s in stocks_copy:
+            temp = s["data15min"].to_dict(orient='records')[-1]
+            temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
+            s["data15min"] = temp
+            
+            temp = s["data1min"].to_dict(orient='records')[-1]
+            temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
+            s["data1min"] = temp
+            
+            # s["data15min"] = s["data15min"].to_dict(orient='records')[-1]
+            # s["data1min"] = s["data1min"].to_dict(orient='records')[-1]
+        with open('stocks.txt', 'w') as fout:
+            json.dump(stocks_copy, fout, indent=4)
 
 
 if __name__ == "__main__":

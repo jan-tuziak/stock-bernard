@@ -77,8 +77,6 @@ class Lighthouse():
                 c_idx = s["data15min"].columns.get_loc("c")
                 s["data1min"][f'sma{time_period}'] = np.nan
                 s["data15min"][f'sma{time_period}'] = s["data15min"].iloc[:,c_idx].rolling(window=time_period).mean()
-        #DEBUG 
-        #time.sleep(13)
 
     
     def filter_greater_than_sma(self, interval='15min', time_period=300):
@@ -109,7 +107,7 @@ class Lighthouse():
         #         self.df.at[idx, self.col_name] = self.col_fail
         for s in self.stocks:
             if s[self.col_name] == self.col_fail: continue
-            if s[f"data{y_interval}"][f"sma{y_period}"].iloc[-1] < s[f"data{x_interval}"][f"sma{x_period}"].iloc[-1]:
+            if s[f"data{y_interval}"][f"sma{y_period}"].iloc[-1] > s[f"data{x_interval}"][f"sma{x_period}"].iloc[-1]:
                 s[self.col_name] = self.col_fail 
 
 

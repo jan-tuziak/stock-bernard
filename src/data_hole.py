@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import json
 import datetime
+import time
 
 from alpha_vantage.timeseries import TimeSeries
 
@@ -90,31 +91,38 @@ class DataHole:
     
     def add_close_poly(self):
         to_date = str(datetime.date.today())
-        from_date = datetime.date.today() - datetime.timedelta(days=20) 
-        for s in self.stocks:
-            for minut in [1, 15]:
-                s[f"data{minut}min"] = np.nan
-                #s[f"data{minut}min"] = s[f"data{minut}min"].astype(object)
-                #get data and add date_time columne
-                response = requests.get(self.poly_url(s["symbol"], minut, from_date, to_date))
-                data = json.loads(response.text)
-                if data["status"] == 'ERROR':
-                    raise ValueError(f'Polygon API returned an error. API data: {data}')
-                temp_df = pd.DataFrame(data['results'])
-                for idx2,row2 in temp_df.iterrows():
-                    temp_df.at[idx2, 'date_time'] = datetime.datetime.utcfromtimestamp(row2['t']/1000) - datetime.timedelta(hours=5) #.astimezone(dateutil.tz.gettz('US/Eastern'))#.strftime('%Y-%m-%d %H:%M:%S')
-                #remove ETH data
-                opening_hours = datetime.time(9, 30)
-                closing_hours = datetime.time(16, 00)
-                #logging.info(f'Amout of all data: {len(temp_df)}')
-                idx_rem = []
-                for idx3, row3 in temp_df.iterrows():
-                    if row3['date_time'].time() >= opening_hours and row3['date_time'].time() <= closing_hours: continue
-                    idx_rem.append(idx3)
-                temp_df.drop(idx_rem, inplace=True)
-                temp_df.reset_index(inplace=True)
-                s[f"data{minut}min"] = temp_df
-
+        from_date = datetime.date.today() - datetime.timedelta(days=20)
+        failed_stocks = []
+        for idx, s in enumerate(self.stocks):
+            try:
+                for minut in [1, 15]:
+                    s[f"data{minut}min"] = np.nan
+                    #s[f"data{minut}min"] = s[f"data{minut}min"].astype(object)
+                    #get data and add date_time columne
+                    response = requests.get(self.poly_url(s["symbol"], minut, from_date, to_date))
+                    data = json.loads(response.text)
+                    if data["status"] == 'ERROR':
+                        raise ValueError(f'Polygon API returned an error. API data: {data}')
+                    temp_df = pd.DataFrame(data['results'])
+                    for idx2,row2 in temp_df.iterrows():
+                        temp_df.at[idx2, 'date_time'] = datetime.datetime.utcfromtimestamp(row2['t']/1000) - datetime.timedelta(hours=5) #.astimezone(dateutil.tz.gettz('US/Eastern'))#.strftime('%Y-%m-%d %H:%M:%S')
+                    #remove ETH data
+                    opening_hours = datetime.time(9, 30)
+                    closing_hours = datetime.time(16, 00)
+                    #logging.info(f'Amout of all data: {len(temp_df)}')
+                    idx_rem = []
+                    for idx3, row3 in temp_df.iterrows():
+                        if row3['date_time'].time() >= opening_hours and row3['date_time'].time() < closing_hours: continue
+                        idx_rem.append(idx3)
+                    temp_df.drop(idx_rem, inplace=True)
+                    temp_df.reset_index(inplace=True)
+                    s[f"data{minut}min"] = temp_df
+            except:
+                failed_stocks.append(idx)
+        # remove stocks that failed to get data
+        if failed_stocks != []:
+            for idx in sorted(failed_stocks, reverse=True):
+                del self.stocks[idx]
         logging.info(f'Amout of data: {len(self.stocks)}')
 
 if __name__ == "__main__":

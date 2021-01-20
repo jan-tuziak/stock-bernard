@@ -25,8 +25,7 @@ if __name__ == "__main__":
     
     # get list of stocks
     dh = DataHole(config['av_key'], config['poly_key'], config['data_hole']['csv_name'])
-    #dh.get_stocks_from_csv(600)
-    dh.get_stocks_from_csv(2)
+    dh.get_stocks_from_csv(100)
     dh.add_close_poly()
     #df = dh.df
 
@@ -38,6 +37,7 @@ if __name__ == "__main__":
     lh.filter_sma_greater_than_sma('15min',30, '15min', 100)
     
     # filter stocks by sma900x1min > sma300x1min
+    #lh.filter_sma_greater_than_sma('1min',900, '1min', 300)
     lh.filter_sma_greater_than_sma('1min',900, '1min', 300)
 
     # save stocks to file
@@ -54,3 +54,4 @@ if __name__ == "__main__":
     # Log script execution time
     executionTime = (time.time() - startTime)
     logging.info(f'Lighthouse execution time: {time.strftime("%H:%M:%S", time.gmtime(executionTime))}')
+    logging.info(f'Stocks to observe: {stocks_to_observe}')

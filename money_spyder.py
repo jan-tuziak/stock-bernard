@@ -25,7 +25,7 @@ if __name__ == "__main__":
     
     # get list of stocks
     dh = DataHole(config['av_key'], config['poly_key'], config['data_hole']['csv_name'])
-    dh.get_stocks_from_csv(100)
+    dh.get_stocks_from_csv(600)
     dh.add_close_poly()
     #df = dh.df
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # Send Email with promising stocks
     crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min','sma30x15min > sma100x15min', 'sma900x1min > sma300x1min']
     pstm = Postman(**config['postman'])
-    #pstm.send_lh_email(stocks_to_observe, crt)
+    pstm.send_lh_email(stocks_to_observe, crt)
 
     # Log script execution time
     executionTime = (time.time() - startTime)

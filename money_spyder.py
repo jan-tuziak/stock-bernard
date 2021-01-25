@@ -37,7 +37,7 @@ def execute_lighthouse():
 
     # get list of stocks
     dh = DataHandler(config['poly_key'], config['data_hole']['csv_name'], timeframes)
-    dh.get_stocks_from_csv(2)
+    dh.get_stocks_from_csv(600)
     dh.add_close_poly()
     #df = dh.df
 

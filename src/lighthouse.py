@@ -20,20 +20,10 @@ class Lighthouse():
         self.stocks = stocks
         for s in self.stocks:
             s[self.col_name] = ""
-        #self.df[self.col_name] = ""
         self.symbols = []
-        #self.quotes = stocks
-        #self.stocks = stocks
         self.key = av_key
         self.ti = TechIndicators(key=self.key)
         self.ts = TimeSeries(key=self.key)
-        self.lastAPICall = datetime.now()
-        self.breakBetweenAPICalls = 2 #number of seconds to wait between API calls
-    
-    def filter_by_daily_turnover(self, min_turnover = 1000000):
-        logging.info('Filtering Stocks by daily Turnover')
-        self.df = self.df[self.df['volume'] > min_turnover]
-        logging.info(f'Number of Stocks: {len(self.df)}')
 
     def _get_sma(self, stock, interval='15min', time_period=300):
         """
@@ -56,17 +46,6 @@ class Lighthouse():
     
     def _add_sma(self, interval, time_period):
         """Add list of SMA values to object's quotes list as "smaPERIODxINTERVAL" dict element"""
-        # sma_str = self._create_sma_str(interval, time_period)
-        # if sma_str not in list(self.df.columns):
-        #     self.df[sma_str] = ""
-        #     for idx, row in self.df.iterrows():
-        #         if row[self.col_name] == self.col_fail: continue
-        #         sma = self._get_sma(row['symbol'], interval, time_period)
-        #         if sma == []:
-        #             self.df.at[idx, sma_str] = -1
-        #             row[self.col_name] = self.col_fail
-        #         else:
-        #             self.df.at[idx, sma_str] = sma[0]
         if interval == '1min':
             for s in self.stocks:
                 c_idx = s["data1min"].columns.get_loc("c")
@@ -129,7 +108,7 @@ class Lighthouse():
         logging.debug(f'TV String: {tv_stocks}')
         return ','.join(tv_stocks)
 
-    def save_stocks_to_file(self):
+    def save_stocks_to_file(self):      
         stocks_copy = self.stocks.copy()
         for s in stocks_copy:
             temp = s["data15min"].to_dict(orient='records')[-1]

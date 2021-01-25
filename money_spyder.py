@@ -5,40 +5,51 @@ import time
 import json
 import pandas as pd
 
-from src.data_hole import DataHole
+from src.data_handler import DataHandler
 from src.lighthouse import Lighthouse
 from src.postman import Postman
 
-if __name__ == "__main__":
+def execute_lighthouse():
     #start timer
     startTime = time.time()
 
     # get app config
-    with open('money_spyder.json') as json_file:
+    with open('data/money_spyder.json') as json_file:
         config = json.load(json_file)
     
     # Config logger
     logging.basicConfig(level=logging.INFO, **config['logger'])
     
     #Print App Header
-    logging.info("Money Spyder's Lighthouse starting.")
+    logging.info("Money Spyder's Lighthouse starting")
     
+    #define the timeframes
+    timeframes = [
+        {"multiplier":1, 
+        "timespan": "minute"},
+        {"multiplier":15, 
+        "timespan": "minute"}
+    ]
+    '''Polygon timeframes definitions:
+        - multiplier (int)
+        - timespan (string) - minute, hour, day, week, month, quarter, year
+    '''
+
     # get list of stocks
-    dh = DataHole(config['av_key'], config['poly_key'], config['data_hole']['csv_name'])
-    dh.get_stocks_from_csv(600)
+    dh = DataHandler(config['poly_key'], config['data_hole']['csv_name'], timeframes)
+    dh.get_stocks_from_csv(2)
     dh.add_close_poly()
     #df = dh.df
 
-    lh = Lighthouse(dh.stocks, config['av_key'])  
+    lh = Lighthouse(dh)  
     # filter stocks by sma300x15min > sma100x15min
-    lh.filter_sma_greater_than_sma('15min',300, '15min', 100)
+    lh.filter_sma_greater_than_sma(timeframes[1] ,300, timeframes[1], 100)
     
     # filter stocks by sma30x15min > sma100x15min
-    lh.filter_sma_greater_than_sma('15min',30, '15min', 100)
+    lh.filter_sma_greater_than_sma(timeframes[1], 30, timeframes[1], 100)
     
     # filter stocks by sma900x1min > sma300x1min
-    #lh.filter_sma_greater_than_sma('1min',900, '1min', 300)
-    lh.filter_sma_greater_than_sma('1min',900, '1min', 300)
+    lh.filter_sma_greater_than_sma(timeframes[0], 900, timeframes[0], 300)
 
     # save stocks to file
     lh.save_stocks_to_file()
@@ -55,3 +66,6 @@ if __name__ == "__main__":
     executionTime = (time.time() - startTime)
     logging.info(f'Lighthouse execution time: {time.strftime("%H:%M:%S", time.gmtime(executionTime))}')
     logging.info(f'Stocks to observe: {stocks_to_observe}')
+
+if __name__ == "__main__":
+    execute_lighthouse()

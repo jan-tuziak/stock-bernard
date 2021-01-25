@@ -8,20 +8,21 @@ import json
 import datetime
 import time
 
-from alpha_vantage.timeseries import TimeSeries
-
-class DataHole:
-    def __init__(self, av_key, poly_key, csv_name):
+class DataHandler:
+    def __init__(self, poly_key, csv_name, timeframes):
+        self.timeframes = timeframes
         self.stocks = []
         self.df = pd.DataFrame()
         self.main_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
         self.america_csv = csv_name
         self.csv_path = os.path.join(self.main_dir, 'data' ,self.america_csv)
-        self.av_key = av_key
         self.poly_key = poly_key
 
-    def poly_url(self, stock, minutes, from_date, to_date):
-        return f'https://api.polygon.io/v2/aggs/ticker/{stock}/range/{minutes}/minute/{from_date}/{to_date}?unadjusted=true&sort=asc&limit=40000&apiKey={self.poly_key}'
+    def _poly_url(self, stock, timeframe, from_date, to_date):
+        return f'https://api.polygon.io/v2/aggs/ticker/{stock}/range/{timeframe["multiplier"]}/{timeframe["timespan"]}/{from_date}/{to_date}?unadjusted=true&sort=asc&limit=40000&apiKey={self.poly_key}'
+    
+    def _data_str(self, timeframe):
+        return f"data{timeframe['multiplier']}{timeframe['timespan']}"
     
     def get_stocks_from_csv(self, num_of_stocks):
         logging.info(f'Getting stocks from {self.america_csv}')
@@ -40,9 +41,11 @@ class DataHole:
         failed_stocks = []
         for idx, s in enumerate(self.stocks):
             try:
-                for minut in [1, 15]:
-                    s[f"data{minut}min"] = np.nan
-                    response = requests.get(self.poly_url(s["symbol"], minut, from_date, to_date))
+                #for minut in [1, 15]:
+                for timeframe in self.timeframes:
+                    #s[f"data{minut}min"] = np.nan
+                    s[self._data_str(timeframe)] = np.nan
+                    response = requests.get(self._poly_url(s["symbol"], timeframe, from_date, to_date))
                     data = json.loads(response.text)
                     if data["status"] == 'ERROR':
                         raise ValueError(f'Polygon API returned an error. API data: {data}')
@@ -58,7 +61,7 @@ class DataHole:
                         idx_rem.append(idx3)
                     temp_df.drop(idx_rem, inplace=True)
                     temp_df.reset_index(inplace=True)
-                    s[f"data{minut}min"] = temp_df
+                    s[self._data_str(timeframe)] = temp_df
             except:
                 failed_stocks.append(idx)
         # remove stocks that failed to get data
@@ -68,8 +71,9 @@ class DataHole:
         logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
 
 if __name__ == "__main__":
-    pd.set_option('display.max_columns', None)
-    dh = DataHole(poly_key="3U413sHUAdFisFvcp6TReoTsEZ_GgpLp", av_key="E6H2MXTA1P7JD4II", csv_name="america_2021-01-09.csv")
-    dh.get_stocks_from_csv(1)
-    dh.add_close_poly()
-    print(dh.stocks)
+    pass
+    # pd.set_option('display.max_columns', None)
+    # dh = DataHole(poly_key="3U413sHUAdFisFvcp6TReoTsEZ_GgpLp", av_key="E6H2MXTA1P7JD4II", csv_name="america_2021-01-09.csv")
+    # dh.get_stocks_from_csv(1)
+    # dh.add_close_poly()
+    # print(dh.stocks)

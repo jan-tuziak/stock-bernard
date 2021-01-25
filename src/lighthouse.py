@@ -9,91 +9,40 @@ import json
 import numpy as np
 import pandas as pd
 
-from alpha_vantage.techindicators import TechIndicators
-from alpha_vantage.timeseries import TimeSeries
-
 class Lighthouse():
-    def __init__(self, stocks, av_key):
+    def __init__(self, dh):
         # if column "lighthouse" has value "false" it did not pass through lighthouse filter
+        self.dh = dh
         self.col_name = "lighthouse"
         self.col_fail = "false"
-        self.stocks = stocks
+        self.stocks = dh.stocks
         for s in self.stocks:
             s[self.col_name] = ""
         self.symbols = []
-        self.key = av_key
-        self.ti = TechIndicators(key=self.key)
-        self.ts = TimeSeries(key=self.key)
-
-    def _get_sma(self, stock, interval='15min', time_period=300):
-        """
-        time_period:  How many data points to average (default 20)
-        interval:  time interval between two conscutive values,
-                supported values are '1min', '5min', '15min', '30min', '60min', 'daily',
-                'weekly', 'monthly' (default 'daily')
-        return: sma - list of sma values. First value is the newest SMA.
-        """
-        try:
-            sma = self.ti.get_sma(stock, time_period=time_period, interval=interval)
-        except:
-            return []
-        sma_data = sma[0]
-        sma_metadata = sma[1]
-        sma = []
-        for key in sma_data:
-            sma.append(float(sma_data[key]['SMA']))
-        return sma
     
-    def _add_sma(self, interval, time_period):
-        """Add list of SMA values to object's quotes list as "smaPERIODxINTERVAL" dict element"""
-        if interval == '1min':
-            for s in self.stocks:
-                c_idx = s["data1min"].columns.get_loc("c")
-                s["data1min"][f'sma{time_period}'] = np.nan
-                s["data1min"][f'sma{time_period}'] = s["data1min"].iloc[:,c_idx].rolling(window=time_period).mean()
-        if interval == '15min':
-            for s in self.stocks:
-                c_idx = s["data15min"].columns.get_loc("c")
-                s["data1min"][f'sma{time_period}'] = np.nan
-                s["data15min"][f'sma{time_period}'] = s["data15min"].iloc[:,c_idx].rolling(window=time_period).mean()
+    def _add_sma(self, timeframe, period):
+        """Add list of SMA values to object's quotes list as "smaTIMEFRAMExPERIOD" dict element"""
+        for s in self.stocks:
+            c_idx = s[self.dh._data_str(timeframe)].columns.get_loc("c")
+            s[self.dh._data_str(timeframe)][self._sma_str(period)] = np.nan
+            s[self.dh._data_str(timeframe)][self._sma_str(period)] = s[self.dh._data_str(timeframe)].iloc[:,c_idx].rolling(window=period).mean()
 
-    
-    def filter_greater_than_sma(self, interval='15min', time_period=300):
-        """Filter out those stocks that are below given SMA"""
-        self._add_sma(interval, time_period)
-        #remove the stocks if sma is empty or sma is greater than close price
-        sma_str = self._create_sma_str(interval, time_period)
-        logging.info(f'Filtering Stocks by "close" greater than {sma_str}')
-        for idx, row in self.df.iterrows():
-            if row[self.col_name] == self.col_fail: continue
-            if row["close"] < row[sma_str]:
-                self.df.at[idx, self.col_name] = self.col_fail
-        logging.info(f'Number of Stocks: {len(self.quotes)}')
-
-    def filter_sma_greater_than_sma(self, x_interval, x_period, y_interval, y_period):
+    def filter_sma_greater_than_sma(self, x_timeframe, x_period, y_timeframe, y_period):
         """Filter through the stocks and leave the ones whose smaX is higher than smaY.
         For instance, smaX is sma300x15min, smaY is sma100x15min -> leave stocks where sma300x15min > sma100x15min"""
-        self._add_sma(x_interval, x_period)
-        self._add_sma(y_interval, y_period)
-        #remove the stocks if sma is empty or sma is greater than close price
-        sma_str_lr = self._create_sma_str(y_interval, y_period)
-        sma_str_hr = self._create_sma_str(x_interval, x_period)
+        self._add_sma(x_timeframe, x_period)
+        self._add_sma(y_timeframe, y_period)
+        sma_str_lr = f"sma{y_period}x{y_timeframe['multiplier']}{y_timeframe['timespan']}"
+        sma_str_hr = f"sma{x_period}x{x_timeframe['multiplier']}{x_timeframe['timespan']}"
         logging.info(f'Filtering Stocks by {sma_str_hr} > {sma_str_lr}')
-        #logging.info(self.df.head())
-        # for idx, row in self.df.iterrows():
-        #     if row[self.col_name] == self.col_fail: continue
-        #     if row[sma_str_hr] < row[sma_str_lr]:
-        #         self.df.at[idx, self.col_name] = self.col_fail
         for s in self.stocks:
             if s[self.col_name] == self.col_fail: continue
-            if s[f"data{y_interval}"][f"sma{y_period}"].iloc[-1] > s[f"data{x_interval}"][f"sma{x_period}"].iloc[-1]:
+            elif s[self.dh._data_str(y_timeframe)][self._sma_str(y_period)].iloc[-1] > s[self.dh._data_str(x_timeframe)][self._sma_str(x_period)].iloc[-1]:
                 s[self.col_name] = self.col_fail 
 
 
-    def _create_sma_str(self, interval, time_period):
-        return f"sma{time_period}x{interval}"
-
-
+    def _sma_str(self, period):
+        return f"sma{period}"
     
     def create_tv_string(self):
         tv_stocks = []
@@ -111,17 +60,14 @@ class Lighthouse():
     def save_stocks_to_file(self):      
         stocks_copy = self.stocks.copy()
         for s in stocks_copy:
-            temp = s["data15min"].to_dict(orient='records')[-1]
+            temp = s["data15minute"].to_dict(orient='records')[-1]
             temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
-            s["data15min"] = temp
+            s["data15minute"] = temp
             
-            temp = s["data1min"].to_dict(orient='records')[-1]
+            temp = s["data1minute"].to_dict(orient='records')[-1]
             temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
-            s["data1min"] = temp
-            
-            # s["data15min"] = s["data15min"].to_dict(orient='records')[-1]
-            # s["data1min"] = s["data1min"].to_dict(orient='records')[-1]
-        with open('stocks.txt', 'w') as fout:
+            s["data1minute"] = temp
+        with open('data/stocks.txt', 'w') as fout:
             json.dump(stocks_copy, fout, indent=4)
 
 

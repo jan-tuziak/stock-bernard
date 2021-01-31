@@ -2,6 +2,8 @@
     "av_key":"E6H2MXTA1P7JD4II",
     
     "poly_key":"3U413sHUAdFisFvcp6TReoTsEZ_GgpLp",
+
+    "stocks_filename":"data/stocks.txt",
     
     "logger":{
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s",
@@ -17,9 +19,5 @@
         "mail":"money.spyder.2020@gmail.com",
         "password":"xgnlgcybwufeiowy",
         "to_addresses":["jan.tuziak@gmail.com", "tomasztuziak@yahoo.com"]
-    },
-
-    "lighthouse":{
-        "stocks_filename":"data/stocks.txt"
     }
  }

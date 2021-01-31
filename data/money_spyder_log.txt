@@ -1,0 +1,28 @@
+2021-01-31 11:11:48,983 :: money_spyder :: INFO :: Money Spyder's Lighthouse starting
+2021-01-31 11:11:48,988 :: data_handler :: INFO :: Getting stocks from america_2021-01-22.csv
+2021-01-31 11:11:49,019 :: data_handler :: INFO :: Number of Stocks acquired: 6
+2021-01-31 11:11:49,019 :: data_handler :: INFO :: Acquiring data from Polygon.io
+2021-01-31 11:12:14,257 :: data_handler :: INFO :: Number of Stocks acquired: 6
+2021-01-31 11:12:14,266 :: lighthouse :: INFO :: Filtering Stocks by sma300x15minute > sma100x15minute
+2021-01-31 11:12:14,274 :: lighthouse :: INFO :: Filtering Stocks by sma30x15minute > sma100x15minute
+2021-01-31 11:12:14,284 :: lighthouse :: INFO :: Filtering Stocks by sma900x1minute > sma300x1minute
+2021-01-31 11:12:14,595 :: money_spyder :: INFO :: Lighthouse execution time: 00:00:25
+2021-01-31 11:12:14,595 :: money_spyder :: INFO :: Stocks to observe: 
+2021-01-31 11:12:14,595 :: postman :: INFO :: Creating Email
+2021-01-31 11:12:14,598 :: postman :: INFO :: Sending Emails to ['jan.tuziak@gmail.com', 'tomasztuziak@yahoo.com']
+2021-01-31 11:13:37,588 :: money_spyder :: INFO :: Money Spyder's Lighthouse starting
+2021-01-31 11:13:37,589 :: data_handler :: INFO :: Getting stocks from america_2021-01-22.csv
+2021-01-31 11:13:37,601 :: data_handler :: INFO :: Number of Stocks acquired: 6
+2021-01-31 11:13:37,602 :: data_handler :: INFO :: Acquiring data from Polygon.io
+2021-01-31 11:14:02,032 :: data_handler :: INFO :: Number of Stocks acquired: 6
+2021-01-31 11:14:02,042 :: lighthouse :: INFO :: Filtering Stocks by sma300x15minute > sma100x15minute
+2021-01-31 11:14:02,051 :: lighthouse :: INFO :: Filtering Stocks by sma30x15minute > sma100x15minute
+2021-01-31 11:14:02,061 :: lighthouse :: INFO :: Filtering Stocks by sma900x1minute > sma300x1minute
+2021-01-31 11:14:02,418 :: money_spyder :: INFO :: Lighthouse execution time: 00:00:24
+2021-01-31 11:14:02,418 :: money_spyder :: INFO :: Stocks to observe: 
+2021-01-31 11:14:02,418 :: postman :: INFO :: Creating Email
+2021-01-31 11:14:02,420 :: postman :: INFO :: Sending Emails to ['jan.tuziak@gmail.com', 'tomasztuziak@yahoo.com']
+2021-01-31 11:15:24,203 :: server :: INFO :: Shutting down
+2021-01-31 11:15:24,305 :: on :: INFO :: Waiting for application shutdown.
+2021-01-31 11:15:24,305 :: on :: INFO :: Application shutdown complete.
+2021-01-31 11:15:24,306 :: server :: INFO :: Finished server process [32733]

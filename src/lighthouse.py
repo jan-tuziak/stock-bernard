@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 class Lighthouse():
-    def __init__(self, dh):
+    def __init__(self, dh, stocks_filename):
         # if column "lighthouse" has value "false" it did not pass through lighthouse filter
         self.dh = dh
         self.col_name = "lighthouse"
@@ -19,6 +19,7 @@ class Lighthouse():
         for s in self.stocks:
             s[self.col_name] = ""
         self.symbols = []
+        self.stocks_filename = stocks_filename
     
     def _add_sma(self, timeframe, period):
         """Add list of SMA values to object's quotes list as "smaTIMEFRAMExPERIOD" dict element"""
@@ -67,7 +68,7 @@ class Lighthouse():
             temp = s["data1minute"].to_dict(orient='records')[-1]
             temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
             s["data1minute"] = temp
-        with open('data/stocks.txt', 'w') as fout:
+        with open(self.stocks_filename, 'w') as fout:
             json.dump(stocks_copy, fout, indent=4)
 
 

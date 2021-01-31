@@ -41,7 +41,6 @@ class DataHandler:
         failed_stocks = []
         for idx, s in enumerate(self.stocks):
             try:
-                #for minut in [1, 15]:
                 for timeframe in self.timeframes:
                     #s[f"data{minut}min"] = np.nan
                     s[self._data_str(timeframe)] = np.nan

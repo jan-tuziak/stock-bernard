@@ -4,7 +4,9 @@
     "poly_key":"3U413sHUAdFisFvcp6TReoTsEZ_GgpLp",
     
     "logger":{
-        "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
+        "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s",
+        "filename":"data/money_spyder_log.txt",
+        "filemode":"w"
     },
 
     "data_hole":{
@@ -15,5 +17,9 @@
         "mail":"money.spyder.2020@gmail.com",
         "password":"BlackJack88",
         "to_addresses":["jan.tuziak@gmail.com", "tomasztuziak@yahoo.com"]
+    },
+
+    "lighthouse":{
+        "stocks_filename":"data/stocks.txt"
     }
  }

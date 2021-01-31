@@ -5,11 +5,24 @@ import time
 import json
 import pandas as pd
 
+from fastapi import FastAPI, BackgroundTasks
+app = FastAPI()
+
 from src.data_handler import DataHandler
 from src.lighthouse import Lighthouse
 from src.postman import Postman
 
+lighthouse_working = False
+
+@app.get("/")
+async def root():
+    return {"message": "Hello from Money Spyder"}
+
 def execute_lighthouse():
+    #get lighthouse_working global variable
+    global lighthouse_working
+    lighthouse_working = True
+
     #start timer
     startTime = time.time()
 
@@ -37,11 +50,11 @@ def execute_lighthouse():
 
     # get list of stocks
     dh = DataHandler(config['poly_key'], config['data_hole']['csv_name'], timeframes)
-    dh.get_stocks_from_csv(600)
+    dh.get_stocks_from_csv(6)
     dh.add_close_poly()
     #df = dh.df
 
-    lh = Lighthouse(dh)  
+    lh = Lighthouse(dh, **config['lighthouse'])  
     # filter stocks by sma300x15min > sma100x15min
     lh.filter_sma_greater_than_sma(timeframes[1] ,300, timeframes[1], 100)
     
@@ -57,15 +70,28 @@ def execute_lighthouse():
     # Create TradingViewList String from stocks
     stocks_to_observe = lh.create_tv_string()
     
-    # Send Email with promising stocks
-    crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min','sma30x15min > sma100x15min', 'sma900x1min > sma300x1min']
-    pstm = Postman(**config['postman'])
-    pstm.send_lh_email(stocks_to_observe, crt)
-
     # Log script execution time
     executionTime = (time.time() - startTime)
     logging.info(f'Lighthouse execution time: {time.strftime("%H:%M:%S", time.gmtime(executionTime))}')
     logging.info(f'Stocks to observe: {stocks_to_observe}')
+    
+    # Send Email with promising stocks
+    crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min','sma30x15min > sma100x15min', 'sma900x1min > sma300x1min']
+    pstm = Postman(**config['postman'])
+    pstm.send_lh_email(stocks_to_observe, crt, [config['logger']['filename'], config['lighthouse']['stocks_filename']])
+
+    #update lighthouse working status
+    lighthouse_working = False
+
+@app.get("/lighthouse")
+def run_lighthouse(background_tasks: BackgroundTasks):
+    global lighthouse_working
+    if lighthouse_working:
+        return {"message":"Lighthouse already running"}
+    else:
+        background_tasks.add_task(execute_lighthouse)
+        return {"message":"Lighthouse run in background"}
 
 if __name__ == "__main__":
-    execute_lighthouse()
+    pass
+    #execute_lighthouse()

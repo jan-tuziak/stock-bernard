@@ -3,6 +3,8 @@
 import logging
 import time
 import json
+import os
+import uvicorn
 import pandas as pd
 
 from fastapi import FastAPI, BackgroundTasks
@@ -93,5 +95,5 @@ def run_lighthouse(background_tasks: BackgroundTasks):
         return {"message":"Lighthouse run in background"}
 
 if __name__ == "__main__":
-    pass
-    #execute_lighthouse()
+    port = int(os.environ.get("PORT", 5000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

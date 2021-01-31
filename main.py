@@ -56,7 +56,7 @@ def execute_lighthouse():
     lh.filter_sma_greater_than_sma(timeframes[1] ,300, timeframes[1], 100)
     
     # filter stocks by sma30x15min > sma100x15min
-    lh.filter_sma_greater_than_sma(timeframes[1], 30, timeframes[1], 100)
+    #lh.filter_sma_greater_than_sma(timeframes[1], 30, timeframes[1], 100)
     
     # filter stocks by sma900x1min > sma300x1min
     lh.filter_sma_greater_than_sma(timeframes[0], 900, timeframes[0], 300)
@@ -74,7 +74,7 @@ def execute_lighthouse():
     logging.info(f'Stocks to observe: {stocks_to_observe}')
     
     # Send Email with promising stocks
-    crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min','sma30x15min > sma100x15min', 'sma900x1min > sma300x1min']
+    crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min', 'sma900x1min > sma300x1min']
     pstm = Postman(**config['postman'])
     pstm.send_lh_email(stocks_to_observe, crt, [config['logger']['filename'], config['lighthouse']['stocks_filename']])
 

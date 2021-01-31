@@ -24,6 +24,19 @@ class DataHandler:
     def _data_str(self, timeframe):
         return f"data{timeframe['multiplier']}{timeframe['timespan']}"
     
+    def _sma_str(self, period):
+        return f"sma{period}"
+    
+    def add_smas(self, timeframe, period):
+        """Add list of SMA values to object's quotes list as "smaTIMEFRAMExPERIOD" dict element"""
+
+        for t in self.timeframes:
+            for idx, s in enumerate(self.stocks):
+                for period in range(100, 901, 100)
+                    c_idx = s[self.dh._data_str(timeframe)].columns.get_loc("c")
+                    s[self.dh._data_str(timeframe)][self._sma_str(period)] = np.nan
+                    s[self.dh._data_str(timeframe)][self._sma_str(period)] = s[self.dh._data_str(timeframe)].iloc[:,c_idx].rolling(window=period).mean()
+
     def get_stocks_from_csv(self, num_of_stocks):
         logging.info(f'Getting stocks from {self.america_csv}')
         df = pd.DataFrame()
@@ -68,6 +81,16 @@ class DataHandler:
             for idx in sorted(failed_stocks, reverse=True):
                 del self.stocks[idx]
         logging.info(f'Number of Stocks acquired: {len(self.stocks)}')
+    
+    def save_stocks_to_file(self):      
+        stocks_copy = self.stocks.copy()
+        for s in stocks_copy:
+            for t in self.timeframes:
+                temp = s[self._data_str(t)].to_dict(orient='records')[-1]
+                temp["date_time"] = temp["date_time"].strftime('%Y-%m-%d %H:%M:%S')
+                s[self._data_str(t)] = temp
+        with open(self.stocks_filename, 'w') as fout:
+            json.dump(stocks_copy, fout, indent=4)
 
 if __name__ == "__main__":
     pass

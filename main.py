@@ -47,16 +47,19 @@ def execute_lighthouse():
 
     # get list of stocks
     dh = DataHandler(config['poly_key'], config['data_hole']['csv_name'], timeframes)
-    dh.get_stocks_from_csv(600)
+    dh.get_stocks_from_csv(6)
     dh.add_close_poly()
+    dh.add_smas()
+    dh.save_stocks_to_file()
     #df = dh.df
+    return
 
-    lh = Lighthouse(dh, **config['lighthouse'])  
+    lh = Lighthouse(config['stocks_filename'])  
     # filter stocks by sma300x15min > sma100x15min
     lh.filter_sma_greater_than_sma(timeframes[1] ,300, timeframes[1], 100)
     
     # filter stocks by sma30x15min > sma100x15min
-    lh.filter_sma_greater_than_sma(timeframes[1], 30, timeframes[1], 100)
+    #lh.filter_sma_greater_than_sma(timeframes[1], 30, timeframes[1], 100)
     
     # filter stocks by sma900x1min > sma300x1min
     lh.filter_sma_greater_than_sma(timeframes[0], 900, timeframes[0], 300)
@@ -76,13 +79,13 @@ def execute_lighthouse():
     # Send Email with promising stocks
     crt = ['600 stocks with highest market capitalization','sma300x15min > sma100x15min','sma30x15min > sma100x15min', 'sma900x1min > sma300x1min']
     pstm = Postman(**config['postman'])
-    pstm.send_lh_email(stocks_to_observe, crt, [config['logger']['filename'], config['lighthouse']['stocks_filename']])
+    #pstm.send_lh_email(stocks_to_observe, crt, [config['logger']['filename'], config['lighthouse']['stocks_filename']])
 
 @app.get("/lighthouse")
 def run_lighthouse(background_tasks: BackgroundTasks):
     return {"message":"Lighthouse started in background"}
 
 if __name__ == "__main__":
-    pass
+    execute_lighthouse()
     # port = int(os.environ.get("PORT", 5000))
     # uvicorn.run(app, host="0.0.0.0", port=port)

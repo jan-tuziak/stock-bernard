@@ -15,6 +15,8 @@ from src.lighthouse import Lighthouse
 from src.postman import Postman
 
 lighthouse_working = False
+lighthouse_exec_time = 0
+lighthouse_stocks = ''
 
 @app.get("/")
 async def root():
@@ -23,6 +25,8 @@ async def root():
 def execute_lighthouse():
     #get lighthouse_working global variable
     global lighthouse_working
+    global lighthouse_exec_time
+    global lighthouse_stocks
     lighthouse_working = True
 
     #start timer
@@ -74,7 +78,8 @@ def execute_lighthouse():
     
     # Log script execution time
     executionTime = (time.time() - startTime)
-    logging.info(f'Lighthouse execution time: {time.strftime("%H:%M:%S", time.gmtime(executionTime))}')
+    executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
+    logging.info(f'Lighthouse execution time: {executionTimeStr}')
     logging.info(f'Stocks to observe: {stocks_to_observe}')
     
     # Send Email with promising stocks
@@ -84,6 +89,8 @@ def execute_lighthouse():
 
     #update lighthouse working status
     lighthouse_working = False
+    lighthouse_exec_time = executionTimeStr
+    lighthouse_stocks = stocks_to_observe
 
 @app.get("/lighthouse")
 def run_lighthouse(background_tasks: BackgroundTasks):
@@ -93,6 +100,15 @@ def run_lighthouse(background_tasks: BackgroundTasks):
     else:
         background_tasks.add_task(execute_lighthouse)
         return {"message":"Lighthouse run in background"}
+
+@app.get("/lighthouse/status")
+async def get_lighthouse_status():
+    global lighthouse_working
+    global lighthouse_exec_time
+    global lighthouse_stocks    
+    return {"status": lighthouse_working, 
+            "Last Execution Time":lighthouse_exec_time,
+            "Stocks to observe":lighthouse_stocks}
 
 if __name__ == "__main__":
     pass

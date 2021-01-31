@@ -102,7 +102,7 @@ def run_lighthouse(background_tasks: BackgroundTasks):
         return {"message":"Lighthouse run in background"}
 
 @app.get("/lighthouse/status")
-async def get_lighthouse_status():
+def get_lighthouse_status():
     global lighthouse_working
     global lighthouse_exec_time
     global lighthouse_stocks    

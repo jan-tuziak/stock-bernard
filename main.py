@@ -1,9 +1,5 @@
 #! /usr/bin/python3
 
-#this is a comment
-#from the feature branch
-#hello
-
 import logging
 import time
 import json
@@ -23,8 +19,6 @@ async def root():
     return {"message": "Hello from Money Spyder"}
 
 def execute_lighthouse():
-    #set lighthouse status env var
-    os.environ["LH_STATUS"] = "True"
 
     #start timer
     startTime = time.time()
@@ -84,24 +78,9 @@ def execute_lighthouse():
     pstm = Postman(**config['postman'])
     pstm.send_lh_email(stocks_to_observe, crt, [config['logger']['filename'], config['lighthouse']['stocks_filename']])
 
-    #update lighthouse working status
-    os.environ["LH_STATUS"] = "False"
-    os.environ["LH_EXEC_TIME"] = executionTimeStr
-    os.environ["LH_STOCKS"] = stocks_to_observe
-
 @app.get("/lighthouse")
 def run_lighthouse(background_tasks: BackgroundTasks):
-    if os.environ["LH_STATUS"] == "True":
-        return {"message":"Lighthouse already running"}
-    else:
-        background_tasks.add_task(execute_lighthouse)
-        return {"message":"Lighthouse started in background"}
-
-@app.get("/lighthouse/status")
-def get_lighthouse_status():  
-    return {"status": os.environ["LH_STATUS"], 
-            "Last Execution Time":os.environ["LH_EXEC_TIME"],
-            "Stocks to observe":os.environ["LH_STOCKS"]}
+    return {"message":"Lighthouse started in background"}
 
 if __name__ == "__main__":
     pass

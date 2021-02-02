@@ -17,7 +17,6 @@ app = FastAPI()
 
 from src.data_handler import DataHandler
 from src.lighthouse import Lighthouse
-from src.postman import Postman
 
 def get_stocks_data_loop():
     startTime = time.time()

@@ -1,5 +1,0 @@
-2021-01-31 21:17:26,441 :: main :: INFO :: Money Spyder's Lighthouse starting
-2021-01-31 21:17:26,443 :: data_handler :: INFO :: Getting stocks from america_2021-01-22.csv
-2021-01-31 21:17:26,565 :: data_handler :: INFO :: Number of Stocks acquired: 600
-2021-01-31 21:17:26,566 :: data_handler :: INFO :: Acquiring data from Polygon.io
-2021-01-31 22:04:29,949 :: data_handler :: INFO :: Number of Stocks acquired: 600

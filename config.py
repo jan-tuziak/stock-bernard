@@ -10,7 +10,7 @@ logger = {
 
 stocks_csv = "american_stocks.csv"
 
-num_of_stocks_to_read = 600
+num_of_stocks_to_read = 500
 
 #NASDAQ working hours in UTC timezone
 market_opening_hour = [14, 30]   #[HOUR, MINUTE]

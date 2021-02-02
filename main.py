@@ -18,7 +18,7 @@ app = FastAPI()
 from src.data_handler import DataHandler
 from src.lighthouse import Lighthouse
 
-def get_stocks_data_loop():
+def get_stocks_data():
     startTime = time.time()
     dh = DataHandler()
     dh.get_stocks_from_csv()
@@ -26,9 +26,13 @@ def get_stocks_data_loop():
     dh.add_smas()
     dh.save_stocks_to_file()
     dh.clear_memory()
+    del dh
     executionTime = (time.time() - startTime)
     executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
     logging.info(f'Stocks data loop time: {executionTimeStr}')
+
+def start_stocks_data_loop():
+    get_stocks_data()
     while True:
         now = datetime.datetime.now()
         # if weekend day wait for 1 hour and skip this iteration
@@ -44,15 +48,7 @@ def get_stocks_data_loop():
             time.sleep(5 * 60)
             continue
 
-        startTime = time.time()
-        dh.get_stocks_from_csv()
-        dh.add_close_poly()
-        dh.add_smas()
-        dh.save_stocks_to_file()
-        dh.clear_memory()
-        executionTime = (time.time() - startTime)
-        executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
-        logging.info(f'Stocks data loop time: {executionTimeStr}')
+        get_stocks_data()
 
 def execute_lighthouse():
     lh = Lighthouse()  
@@ -65,7 +61,7 @@ def execute_lighthouse():
 # Start Stocks Data Loop
 @app.on_event("startup")
 def start_data_loop():
-    _thread.start_new_thread(get_stocks_data_loop, ())
+    _thread.start_new_thread(start_stocks_data_loop, ())
 
 @app.get("/")
 async def root():

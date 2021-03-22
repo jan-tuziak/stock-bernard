@@ -10,7 +10,7 @@ import json
 import datetime
 import time
 
-class DataHandler:
+class DataHandlerPoly:
     def __init__(self):
         logging.debug("Initializing Data Handler")
         self.stocks = []

@@ -15,12 +15,12 @@ import pandas as pd
 from fastapi import FastAPI, BackgroundTasks
 app = FastAPI()
 
-from src.data_handler import DataHandler
+from src.data_handler_poly import DataHandlerPoly
 from src.lighthouse import Lighthouse
 
 def get_stocks_data():
     startTime = time.time()
-    dh = DataHandler()
+    dh = DataHandlerPoly()
     dh.get_stocks_from_csv()
     dh.add_close_poly()
     dh.add_smas()

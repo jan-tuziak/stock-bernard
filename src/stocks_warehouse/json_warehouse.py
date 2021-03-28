@@ -1,5 +1,8 @@
 '''Json implemention os Stocks Warehouse'''
 
+import logging
+import json
+
 from src.stocks_warehouse.i_stocks_warehouse import IStocksWarehouse
 
 class JsonWarehouse(IStocksWarehouse):
@@ -11,7 +14,7 @@ class JsonWarehouse(IStocksWarehouse):
         self.stocks = symbols
         self._create_rejected_field()
     
-    def init_from_file(self):
+    def deserialize(self):
         with open(self.json_path) as json_file:
             self.stocks = json.load(json_file)
 
@@ -19,7 +22,7 @@ class JsonWarehouse(IStocksWarehouse):
         for s in self.stocks:
             s['rejected'] = False
 
-    def get_stocks_list(self):
+    def get_symbols(self):
         stocks_list = []
         for s in self.stocks:
             stocks_list.append(s["symbol"])
@@ -37,7 +40,7 @@ class JsonWarehouse(IStocksWarehouse):
         idx  = self._get_idx(symbol)
         self.stocks[idx]['rejected'] = True
 
-    def save_stocks_to_file(self):      
+    def serialize(self):      
         with open(self.json_path, 'w') as fout:
             json.dump(self.stocks, fout, indent=4)
         logging.info(f'Number of Stocks saved to file: {len(self.stocks)}')
@@ -45,9 +48,10 @@ class JsonWarehouse(IStocksWarehouse):
     def get_stocks_for_tv(self, include_rejected=False):
         tv_stocks = []
         for s in self.stocks:
+            #skip this stock if "include_rejected" is False and is rejected
+            if (not include_rejected) and s['rejected']: continue
+
             #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as port of "AMEX" exchange
-            if include_rejected:
-                if s[self.col_name] == self.col_fail: continue
             if s['exchange'] == 'NYSE ARCA': 
                 exch = 'AMEX'
             else:
@@ -63,5 +67,5 @@ class JsonWarehouse(IStocksWarehouse):
         if idx == None: raise IndexError(f'Symbol {symbol} not found in Warehouse.')
         return idx
 
-    def _sma_str(time_period, interval):
-        return f"sma{period}x{interval}"
+    def _sma_str(self, time_period, interval):
+        return f"sma{time_period}x{interval}"

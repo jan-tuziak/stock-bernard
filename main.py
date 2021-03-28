@@ -15,17 +15,14 @@ import pandas as pd
 from fastapi import FastAPI, BackgroundTasks
 app = FastAPI()
 
-from src.data_handler_poly import DataHandlerPoly
+# from src.data_handler_poly import DataHandlerPoly
+from src.data_handler.data_handler_av import DataHandlerAV
 from src.lighthouse import Lighthouse
 
 def get_stocks_data():
     startTime = time.time()
-    dh = DataHandlerPoly()
-    dh.get_stocks_from_csv()
-    dh.add_close_poly()
-    dh.add_smas()
-    dh.save_stocks_to_file()
-    dh.clear_memory()
+    dh = DataHandlerAV()
+    dh.get_data()
     del dh
     executionTime = (time.time() - startTime)
     executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
@@ -52,10 +49,8 @@ def start_stocks_data_loop():
 
 def execute_lighthouse():
     lh = Lighthouse()  
-    lh.load_stocks_from_file()
-    for criteria in config.criterias:
-        lh.filter_sma_greater_than_sma(criteria)
-    stocks_to_observe = lh.create_tv_string()
+    stocks_to_observe = lh.get_lighthouse_stocks()
+    del lh
     return stocks_to_observe
 
 # Start Stocks Data Loop

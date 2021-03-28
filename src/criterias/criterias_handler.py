@@ -2,26 +2,33 @@
 
 import config
 
-from src.stocks_warehouse.json_warehouse import JsonWarehouse
 from src.criterias.sma_sma_criteria import SmaSmaCriteria
 
 class CriterasHandler:
-    def __init__():
-        self._warehouse = JsonWarehouse(config.json_path)
-        self._warehouse.init_from_file()
+    def __init__(self, warehouse, data_source=None):
+        self._data_source = data_source
+        self._warehouse = warehouse
         self._criterias = self._create_criterias(config.criterias)
 
     def _create_criterias(self, criterias):
         cls_criterias = []
         for c in criterias:
             if c['type'] == 'sma_x > sma_y':
-                cls.cls_criterias.append(SmaSmaCriteria(self._warehouse, **c['parameters']))
+                cls_criterias.append(SmaSmaCriteria(**c['parameters']))
             else:
-                raise Warning(f'Invalid Criteria: "{c}". Criteria type "{type}" is invalid.')
+                raise Warning(f'Invalid Criteria: "{c}". Criteria type "{c["type"]}" is invalid.')
         return cls_criterias
     
     def check_symbol(self, symbol):
         passed = []
         for c in self._criterias:
-            passed.append(c.check_symbol(symbol))
+            passed.append(c.check_symbol(symbol, self._warehouse))
         return all(p == True for p in passed)
+
+    def add_needed_data_for_crits(self):
+        for c in self._criterias:
+            c.add_needed_data(self._warehouse, self._data_source)
+
+    def check_against_crits(self):
+        for symbol in self._warehouse.get_symbols():
+            if self.check_symbol(symbol) == False: self._warehouse.set_rejected(symbol)

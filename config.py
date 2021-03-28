@@ -1,14 +1,14 @@
-av_key = "E6H2MXTA1P7JD4II"
+av_key = "84Z5UAW0D6O19LK0"
 
 poly_key = "3U413sHUAdFisFvcp6TReoTsEZ_GgpLp"
-
-stocks_filename = "data/stocks.json"
 
 logger = {
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
     }
 
-stocks_csv = "data/american_stocks.csv"
+json_path = "data/stocks.json"
+
+csv_path = "data/american_stocks.csv"
 
 num_of_stocks_to_read = 500
 

@@ -1,5 +1,8 @@
 '''Get Top Stocks from csv file'''
 
+import pandas as pd
+import logging
+
 from src.data_handler.stocks_finder.i_stocks_finder import IStocksFinder
 
 class CSVStocksFinder(IStocksFinder):

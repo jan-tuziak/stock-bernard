@@ -40,6 +40,13 @@ class JsonWarehouse(IStocksWarehouse):
         idx  = self._get_idx(symbol)
         self.stocks[idx]['rejected'] = True
 
+    def is_symbol_rejected(self, symbol):
+        idx  = self._get_idx(symbol)
+        try:
+            return self.stocks[idx]['rejected']
+        except:
+            return False
+            
     def serialize(self):      
         with open(self.json_path, 'w') as fout:
             json.dump(self.stocks, fout, indent=4)

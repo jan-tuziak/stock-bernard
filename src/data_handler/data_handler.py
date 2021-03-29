@@ -7,7 +7,7 @@ from src.data_handler.data_source.av_data_source import AVDataSource
 from src.stocks_warehouse.json_warehouse import JsonWarehouse
 from src.criterias.criterias_handler import CriterasHandler
 
-class DataHandlerAV:
+class DataHandler:
     def __init__(self):
         logging.debug("Initializing Data Handler")
         self._stock_finder = CSVStocksFinder(config.csv_path)
@@ -22,6 +22,8 @@ class DataHandlerAV:
         self._crits_handler.add_needed_data_for_crits()
         #Save warehouse to file
         self._warehouse.serialize()
+
+
 
 if __name__ == "__main__":
     pass

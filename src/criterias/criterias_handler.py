@@ -20,10 +20,13 @@ class CriterasHandler:
         return cls_criterias
     
     def check_symbol(self, symbol):
-        passed = []
-        for c in self._criterias:
-            passed.append(c.check_symbol(symbol, self._warehouse))
-        return all(p == True for p in passed)
+        if not self._warehouse.is_symbol_rejected(symbol):
+            passed = []
+            for c in self._criterias:
+                passed.append(c.check_symbol(self._warehouse, symbol))
+            return all(p == True for p in passed)
+        else:
+            return False
 
     def add_needed_data_for_crits(self):
         for c in self._criterias:
@@ -31,4 +34,5 @@ class CriterasHandler:
 
     def check_against_crits(self):
         for symbol in self._warehouse.get_symbols():
+            if self._warehouse.is_symbol_rejected(symbol): continue
             if self.check_symbol(symbol) == False: self._warehouse.set_rejected(symbol)

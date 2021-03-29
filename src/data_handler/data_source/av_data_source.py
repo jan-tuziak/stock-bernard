@@ -16,6 +16,7 @@ class AVDataSource(IDataSource):
     
     def get_latest_sma(self, symbol='GOOGL', interval='daily', time_period=20):
         '''Methond for getting the latest sma value for given stock'''
+        temp_e = None
         for _ in range(self.retries):
             try:
                 #wait because can make 75 API calls per minute
@@ -29,9 +30,9 @@ class AVDataSource(IDataSource):
                 return sma
             except Exception as e:
                 time.sleep(10)
-                logging.error(f'Failed to get data for {symbol} from API: '+ str(e))
-            finally:    
-                logging.debug(f"Num of errors = {self.count}. Failed symbols = {self.failed_symbols}")
+                temp_e = e
+        logging.error(f'Failed to get data for {symbol} from API: '+ str(temp_e))
+        logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
         self.count = self.count + 1
         self.failed_symbols.append(symbol)
         return 0

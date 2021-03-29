@@ -2,19 +2,23 @@ av_key = "84Z5UAW0D6O19LK0"
 
 poly_key = "3U413sHUAdFisFvcp6TReoTsEZ_GgpLp"
 
-logger = {
-        "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
-    }
-
 json_path = "data/stocks.json"
 
 csv_path = "data/american_stocks.csv"
 
 num_of_stocks_to_read = 500
 
+logger = {
+        "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"
+    }
+
 #NASDAQ working hours in UTC timezone
 market_opening_hour = [14, 30]   #[HOUR, MINUTE]
 market_closing_hour = [21, 00]
+
+#Data Handler working hours in UTC timezone
+dh_opening_hour = [0, 00]   #[HOUR, MINUTE]
+dh_closing_hour = [1, 00]
 
 timeframes = [
     {"multiplier":1, "timespan": "minute"},

@@ -28,6 +28,12 @@ async def root():
 async def run_lighthouse():
     return {"stocks_to_observe":execute_lighthouse()}
 
+@app.get("/jsonfile")
+async def jsonfile():
+    import json
+    with open(config.json_path) as json_file:
+            return json.load(json_file)
+
 def execute_lighthouse():
     lh = Lighthouse()  
     stocks_to_observe = lh.get_lighthouse_stocks()

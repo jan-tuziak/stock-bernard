@@ -6,7 +6,7 @@ json_path = "data/stocks.json"
 
 csv_path = "data/american_stocks.csv"
 
-num_of_stocks_to_read = 500
+num_of_stocks_to_read = 50
 
 logger = {
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"

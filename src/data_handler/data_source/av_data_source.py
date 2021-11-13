@@ -42,7 +42,7 @@ class AVDataSource(IDataSource):
         self.failed_symbols.append(symbol)
         return 0
             
-    def get_smas(self, symbol='GOOGL', interval='daily', time_period=20, number=200):
+    def get_smas(self, symbol='GOOGL', interval='daily', time_period=20, lookbacks=[100,200]):
         '''Methond for getting list of sma values for given stock'''
         temp_e = None
         for _ in range(self.retries):
@@ -52,12 +52,14 @@ class AVDataSource(IDataSource):
                 data, meta_data = self.ti.get_sma(symbol=symbol, interval=interval, time_period=time_period, series_type='close')   
                 data_l = list(data)
                 data_l.sort(reverse=True)
-                smas = []
+                sma_all = []
                 for key in data_l:
                     sma = float(data[key]['SMA'])
-                    smas.append(sma)
-                smas = smas[0:number]
-                logging.debug(f"{symbol} sma{time_period}x{interval} list length = {len(smas)}")
+                    sma_all.append(sma)
+                smas = []
+                for lb in lookbacks:
+                    smas.append(sma_all[lb])
+                logging.debug(f"{symbol} smas{time_period}x{interval} = {smas}")
                 return smas
             except Exception as e:
                 time.sleep(10)

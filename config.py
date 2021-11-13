@@ -19,7 +19,7 @@ dh_closing_hour = [1, 00]
 #Allowed intervals: '1min', '5min', '15min', '30min', '60min', 'daily', 'weekly', 'monthly'
 criterias = [
     {"type":"sma_x > sma_y", "parameters":{"time_period_x":300, "interval_x":"15min", "time_period_y":900, "interval_y":"15min"}},
-    {"type":"sma_x > sma_y", "parameters":{"time_period_x":300, "interval_x":"15min", "time_period_y":900, "interval_y":"60min"}},
-    {"type":"sma_x > sma_y 1inMany", "parameters":{"time_period_x":900, "interval_x":"15min", "time_period_y":300, "interval_y":"15min", "lookback":"[50,100,150,200]"}}
+    {"type":"sma_x > sma_y", "parameters":{"time_period_x":300, "interval_x":"15min", "time_period_y":130, "interval_y":"daily"}},
+    {"type":"sma_x > sma_y 1inMany", "parameters":{"time_period_x":900, "interval_x":"15min", "time_period_y":300, "interval_y":"15min", "lookback":[50,100,150,200]}}
     
 ]

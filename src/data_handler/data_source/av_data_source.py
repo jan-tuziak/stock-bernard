@@ -37,3 +37,28 @@ class AVDataSource(IDataSource):
         self.failed_symbols.append(symbol)
         return 0
             
+    def get_smas(self, symbol='GOOGL', interval='daily', time_period=20, number=200):
+        '''Methond for getting list of sma values for given stock'''
+        temp_e = None
+        for _ in range(self.retries):
+            try:
+                #wait because can make 75 API calls per minute
+                time.sleep(1)
+                data, meta_data = self.ti.get_sma(symbol=symbol, interval=interval, time_period=time_period, series_type='close')   
+                data_l = list(data)
+                data_l.sort(reverse=True)
+                smas = []
+                for d in data_l:
+                    key=d[0]
+                    sma = float(data[key]['SMA'])
+                    smas.append(sma)
+                logging.debug(f"{symbol} sma{time_period}x{interval} list length = {len(smas)}")
+                return smas
+            except Exception as e:
+                time.sleep(10)
+                temp_e = e
+        logging.error(f'Failed to get data for {symbol} from API: '+ str(temp_e))
+        logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
+        self.count = self.count + 1
+        self.failed_symbols.append(symbol)
+        return 0

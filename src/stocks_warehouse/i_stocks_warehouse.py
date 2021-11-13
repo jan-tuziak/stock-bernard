@@ -10,6 +10,14 @@ class IStocksWarehouse:
         '''get sma value for given symbol'''
         return NotImplementedError
 
+    def add_smas(self, symbol, time_period, interval, values):
+        '''add list of sma values to a given symbol'''
+        return NotImplementedError
+
+    def get_smas(self, symbol, time_period, interval):
+        '''get list of sma values for given symbol'''
+        return NotImplementedError
+
     def get_symbols(self):
         '''get list of all symbols'''
         return NotImplementedError

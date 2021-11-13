@@ -7,3 +7,9 @@ class IDataSource:
         Methond for getting the latest sma value for given stock
         '''
         return NotImplementedError
+    
+    def get_smas(self, symbol='GOOGL', interval='daily', time_period=20, number=200):
+        '''
+        Methond for getting list of sma values for given stock
+        '''
+        return NotImplementedError

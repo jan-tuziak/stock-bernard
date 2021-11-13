@@ -36,6 +36,16 @@ class JsonWarehouse(IStocksWarehouse):
         idx = self._get_idx(symbol)
         return self.stocks[idx][self._sma_str(time_period, interval)]
 
+    def add_smas(self, symbol, time_period, interval, values):
+        '''add list of sma values to a given symbol'''
+        idx = self._get_idx(symbol)
+        self.stocks[idx][self._smas_str(time_period, interval)] = values
+
+    def get_smas(self, symbol, time_period, interval):
+        '''get list of sma values for given symbol'''
+        idx = self._get_idx(symbol)
+        return self.stocks[idx][self._smas_str(time_period, interval)]
+
     def set_rejected(self, symbol):
         idx  = self._get_idx(symbol)
         self.stocks[idx]['rejected'] = True
@@ -76,3 +86,6 @@ class JsonWarehouse(IStocksWarehouse):
 
     def _sma_str(self, time_period, interval):
         return f"sma{time_period}x{interval}"
+
+    def _smas_str(self, time_period, interval):
+        return f"smas{time_period}x{interval}"

@@ -3,6 +3,7 @@
 import config
 
 from src.criterias.sma_sma_criteria import SmaSmaCriteria
+from src.criterias.sma_sma_1_in_many_criteria import SmaSma1InManyCriteria
 
 class CriterasHandler:
     def __init__(self, warehouse, data_source=None):
@@ -15,6 +16,8 @@ class CriterasHandler:
         for c in criterias:
             if c['type'] == 'sma_x > sma_y':
                 cls_criterias.append(SmaSmaCriteria(**c['parameters']))
+            elif c['type'] == 'sma_x > sma_y 1inMany':
+                cls_criterias.append(SmaSma1InManyCriteria(**c['parameters']))
             else:
                 raise Warning(f'Invalid Criteria: "{c}". Criteria type "{c["type"]}" is invalid.')
         return cls_criterias

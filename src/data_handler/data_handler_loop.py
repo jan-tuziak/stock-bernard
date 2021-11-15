@@ -2,11 +2,16 @@ import logging
 import time
 import datetime
 import pandas as pd
+import json
 
 import config
 from src.data_handler.data_handler import DataHandler
 
 class DataHandlerLoop():
+    def write_execution_time(self, time_str):
+        time_json = {"data_handler_execution_time" : time_str}
+        with open(config.execute_time_path, 'w') as fout:
+            json.dump(time_json, fout, indent=4)
 
     def execute_data_handler(self):
         logging.info(f'Stocks data loop start')
@@ -17,6 +22,7 @@ class DataHandlerLoop():
         executionTime = (time.time() - startTime)
         executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
         logging.info(f'Stocks data loop end. Loop time: {executionTimeStr}')
+        self.write_execution_time(executionTimeStr)
 
     def start_data_handler_loop(self):
         self.execute_data_handler()

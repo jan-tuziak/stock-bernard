@@ -2,10 +2,12 @@
 
 import logging
 import time
+import json
 
 from alpha_vantage.techindicators import TechIndicators
 
 # normal import
+import config
 from src.data_handler.data_source.i_data_source import IDataSource
 
 # import and logging when testing this module
@@ -69,6 +71,15 @@ class AVDataSource(IDataSource):
         self.count = self.count + 1
         self.failed_symbols.append(symbol)
         return [0]
+
+    def save_failed_symbols(self):
+        if len(self.failed_symbols) == 0: self.failed_symbols = "None failed"
+        failed_symbols_json = {"failed_symbols": self.failed_symbols}
+        #Save failed symbols
+        with open(config.failed_symbols_path, 'w') as fout:
+            json.dump(failed_symbols_json, fout, indent=4)
+        #Clear failed symbold variable
+        self.failed_symbols = []
 
 if __name__ == "__main__":
     av = AVDataSource("44V1UXEX9HBN0RST")

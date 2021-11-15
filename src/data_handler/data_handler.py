@@ -22,6 +22,8 @@ class DataHandler:
         self._crits_handler.add_needed_data_for_crits()
         #Save warehouse to file
         self._warehouse.serialize()
+        #Save failed symbols to file
+        self._data_source.save_failed_symbols()
 
 
 

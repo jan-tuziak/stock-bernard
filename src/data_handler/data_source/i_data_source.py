@@ -13,3 +13,9 @@ class IDataSource:
         Methond for getting list of sma values for given stock
         '''
         return NotImplementedError
+
+    def save_failed_symbols(self):
+        '''
+        Method for saving symbols that failed to get data to json file
+        '''
+        return NotImplementedError

@@ -6,6 +6,7 @@ import logging
 logging.basicConfig(level=logging.INFO, **config.logger)
 import os
 import uvicorn
+import json
 
 from fastapi import FastAPI
 
@@ -13,6 +14,10 @@ from src.lighthouse import Lighthouse
 from src.data_handler.data_handler_loop import DataHandlerLoop
 
 app = FastAPI()
+
+def read_json_file(json_path):
+    with open(json_path) as json_file:
+        return json.load(json_file)
 
 # Start Stocks Data Loop
 @app.on_event("startup")
@@ -28,11 +33,17 @@ async def root():
 async def run_lighthouse():
     return {"stocks_to_observe":execute_lighthouse()}
 
-@app.get("/jsonfile")
-async def jsonfile():
-    import json
-    with open(config.json_path) as json_file:
-            return json.load(json_file)
+@app.get("/datastocks")
+async def datasctocks():
+    return read_json_file(config.json_path)
+
+@app.get("/failedsymbols")
+async def failedsymbols():
+    return read_json_file(config.failed_symbols_path)
+
+@app.get("/executiontime")
+async def executiontime():
+    return read_json_file(config.execute_time_path)
 
 def execute_lighthouse():
     lh = Lighthouse()  

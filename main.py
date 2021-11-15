@@ -9,9 +9,11 @@ import uvicorn
 import json
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 from src.lighthouse import Lighthouse
 from src.data_handler.data_handler_loop import DataHandlerLoop
+from src.ui import ui_root, ui_lighthouse, ui_datastocks, ui_failedsymbols, ui_executiontime
 
 app = FastAPI()
 
@@ -25,25 +27,28 @@ def start_data_loop():
     dhl = DataHandlerLoop()
     _thread.start_new_thread(dhl.start_data_handler_loop, ())
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"message": "Hello from Money Spyder"}
+    return ui_root()
 
 @app.get("/lighthouse")
 async def run_lighthouse():
-    return {"stocks_to_observe":execute_lighthouse()}
+    return ui_lighthouse(execute_lighthouse())
 
 @app.get("/datastocks")
 async def datasctocks():
-    return read_json_file(config.json_path)
+    datastocks = read_json_file(config.json_path)
+    return ui_datastocks(datastocks)
 
 @app.get("/failedsymbols")
 async def failedsymbols():
-    return read_json_file(config.failed_symbols_path)
+    failed_symbols = read_json_file(config.failed_symbols_path)["failed_symbols"]
+    return ui_failedsymbols(failed_symbols)
 
 @app.get("/executiontime")
 async def executiontime():
-    return read_json_file(config.execute_time_path)
+    execute_time = read_json_file(config.execute_time_path)["data_handler_execution_time"]
+    return ui_executiontime(execute_time)
 
 def execute_lighthouse():
     lh = Lighthouse()  

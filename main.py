@@ -9,9 +9,11 @@ import uvicorn
 import json
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 from src.lighthouse import Lighthouse
 from src.data_handler.data_handler_loop import DataHandlerLoop
+from src.ui.ui_root import ui_root
 
 app = FastAPI()
 
@@ -25,9 +27,9 @@ def start_data_loop():
     dhl = DataHandlerLoop()
     _thread.start_new_thread(dhl.start_data_handler_loop, ())
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {"message": "Hello from Money Spyder"}
+    return ui_root()
 
 @app.get("/lighthouse")
 async def run_lighthouse():

@@ -74,7 +74,7 @@ class JsonWarehouse(IStocksWarehouse):
             else:
                 exch = s['exchange']
             tv_stocks.append(exch + ':' + s['symbol'])
-        stocks_to_observe = ','.join(tv_stocks)
+        stocks_to_observe = ', '.join(tv_stocks)
         #logging.debug(f'TV String: {tv_stocks}')
         logging.debug(f'Stocks to observe: {stocks_to_observe}')
         return stocks_to_observe

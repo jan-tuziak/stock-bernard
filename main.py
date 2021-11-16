@@ -38,7 +38,8 @@ async def run_lighthouse():
 @app.get("/datastocks")
 async def datasctocks():
     datastocks = read_json_file(config.json_path)
-    return ui_datastocks(datastocks)
+    datastocks_pretty = json.dumps(datastocks, indent=4, sort_keys=True)
+    return ui_datastocks(datastocks_pretty)
 
 @app.get("/failedsymbols")
 async def failedsymbols():

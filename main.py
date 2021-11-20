@@ -36,7 +36,7 @@ async def run_lighthouse():
     return ui_lighthouse(execute_lighthouse())
 
 @app.get("/lighthouse/{sector}")
-async def run_lighthouse(sector):
+async def run_lighthouse_sector(sector):
     return ui_lighthouse(execute_lighthouse(sector), sector)
 
 @app.get("/datastocks")

@@ -35,6 +35,10 @@ async def root():
 async def run_lighthouse():
     return ui_lighthouse(execute_lighthouse())
 
+@app.get("/lighthouse/{sector}")
+async def run_lighthouse(sector):
+    return ui_lighthouse(execute_lighthouse(sector), sector)
+
 @app.get("/datastocks")
 async def datasctocks():
     datastocks = read_json_file(config.json_path)
@@ -51,9 +55,9 @@ async def executiontime():
     execute_time = read_json_file(config.execute_time_path)["data_handler_execution_time"]
     return ui_executiontime(execute_time)
 
-def execute_lighthouse():
+def execute_lighthouse(sector=""):
     lh = Lighthouse()  
-    stocks_to_observe = lh.get_lighthouse_stocks()
+    stocks_to_observe = lh.get_lighthouse_stocks(sector)
     del lh
     return stocks_to_observe
 

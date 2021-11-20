@@ -62,11 +62,14 @@ class JsonWarehouse(IStocksWarehouse):
             json.dump(self.stocks, fout, indent=4)
         logging.info(f'Number of Stocks saved to file: {len(self.stocks)}')
 
-    def get_stocks_for_tv(self, include_rejected=False):
+    def get_stocks_for_tv(self, sector="", include_rejected=False):
         tv_stocks = []
         for s in self.stocks:
             #skip this stock if "include_rejected" is False and is rejected
             if (not include_rejected) and s['rejected']: continue
+            
+            #skip if sector is defined and the stock is not of this sector
+            if (len(sector)!=0) and s['sector']!=sector: continue
 
             #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as port of "AMEX" exchange
             if s['exchange'] == 'NYSE ARCA': 

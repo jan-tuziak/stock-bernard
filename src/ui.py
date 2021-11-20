@@ -96,8 +96,10 @@ def ui_common(title, subtitle, body):
     """
     return html_content
 
-def ui_lighthouse(stocks_to_observe):
-    html_content = ui_common("Lighthouse", "Stocks to Analyze", stocks_to_observe)
+def ui_lighthouse(stocks_to_observe, sector=""):
+    title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
+    
+    html_content = ui_common(title, "Stocks to Analyze", stocks_to_observe)
     return HTMLResponse(content=html_content, status_code=200)
 
 def ui_datastocks(datastocks):

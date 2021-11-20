@@ -15,11 +15,11 @@ class CSVStocksFinder(IStocksFinder):
         #logging.info(f'Getting stocks from {config.stocks_csv}')
         stocks = []
         df = pd.DataFrame()
-        columns = ['Ticker', 'Exchange']
+        columns = ['Ticker', 'Exchange', 'Sector']
         df = pd.read_csv(self.csv_path, usecols=columns, nrows=number)
-        df.rename(columns={'Ticker':'symbol', 'Exchange':'exchange'}, inplace = True)
+        df.rename(columns={'Ticker':'symbol', 'Exchange':'exchange', 'Sector':'sector'}, inplace = True)
         for idx, row in df.iterrows():
-            stocks.append({"symbol":row["symbol"], "exchange":row["exchange"]})
+            stocks.append({"symbol":row["symbol"], "exchange":row["exchange"], "sector":row["sector"]})
         logging.info(f'Number of Stocks read from csv: {len(stocks)}')
         del df
         return stocks

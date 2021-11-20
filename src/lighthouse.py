@@ -25,9 +25,9 @@ class Lighthouse():
         # self.stocks = []
 
     
-    def get_lighthouse_stocks(self):
+    def get_lighthouse_stocks(self, sector):
         self._crits_handler.check_against_crits()
-        return self._warehouse.get_stocks_for_tv()
+        return self._warehouse.get_stocks_for_tv(sector)
 
     # def load_stocks_from_file(self):
     #     # Read stocks data from file

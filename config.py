@@ -10,7 +10,7 @@ failed_symbols_path = "data/failed_symbols.json"
 
 csv_path = "data/american_stocks.csv"
 
-num_of_stocks_to_read = 500
+num_of_stocks_to_read = 1000
 
 logger = {
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"

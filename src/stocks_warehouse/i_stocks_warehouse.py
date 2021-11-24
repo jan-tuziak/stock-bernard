@@ -39,3 +39,11 @@ class IStocksWarehouse:
     def deserialize(self):
         '''deseialize warehouse'''
         return NotImplementedError
+
+    def add_overview_data(self, symbol):
+        '''add overview data for given symbol'''
+        return NotImplementedError
+
+    def get_overview_data(self, symbol):
+        '''get overview data for given symbol'''
+        return NotImplementedError

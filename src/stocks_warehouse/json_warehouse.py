@@ -92,3 +92,13 @@ class JsonWarehouse(IStocksWarehouse):
 
     def _smas_str(self, time_period, interval):
         return f"smas{time_period}x{interval}"
+
+    def add_overview_data(self, symbol, overview_data):
+        '''add overview data for given symbol'''
+        idx = self._get_idx(symbol)
+        self.stocks[idx]['overview'] = overview_data
+
+    def get_overview_data(self, symbol):
+        '''get overview data for given symbol'''
+        idx = self._get_idx(symbol)
+        return self.stocks[idx]['overview']

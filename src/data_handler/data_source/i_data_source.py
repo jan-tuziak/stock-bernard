@@ -19,3 +19,9 @@ class IDataSource:
         Method for saving symbols that failed to get data to json file
         '''
         return NotImplementedError
+
+    def get_overview(self, symbol='GOOGL'):
+        '''
+        Method for getting an overview of the company
+        '''
+        return NotImplementedError

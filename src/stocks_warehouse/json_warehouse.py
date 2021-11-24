@@ -102,3 +102,25 @@ class JsonWarehouse(IStocksWarehouse):
         '''get overview data for given symbol'''
         idx = self._get_idx(symbol)
         return self.stocks[idx]['overview']
+
+    def get_data_for_overview_table(self, sector="", include_rejected=True):
+        '''get overview data for HTML Table for given sector if specified'''
+        ov_tbl_data = []
+        for s in self.stocks:
+            #skip this stock if "include_rejected" is False and is rejected
+            if (not include_rejected) and s['rejected']: continue
+
+            #skip if sector is defined and the stock is not of this sector
+            if (len(sector)!=0) and s['sector']!=sector: continue
+
+            one_stock_data = {}
+            one_stock_data['symbol'] = s['symbol']
+            one_stock_data['exchange'] = s['exchange']
+            one_stock_data['overview'] = s['overview']
+            one_stock_data['sector'] = s['sector']
+            ov_tbl_data.append(one_stock_data)
+        logging.debug(f'Overview Table Data: {ov_tbl_data}')
+        return ov_tbl_data
+
+
+

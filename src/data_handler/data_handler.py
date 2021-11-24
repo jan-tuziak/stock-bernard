@@ -29,8 +29,7 @@ class DataHandler:
 
     def add_overview_data(self):
         for symbol in self._warehouse.get_symbols():
-            # UCOMMENT THIS Comment!!!
-            # if self._warehouse.is_symbol_rejected(symbol): continue
+            if self._warehouse.is_symbol_rejected(symbol): continue
             self._warehouse.add_overview_data(symbol, self._data_source.get_overview(symbol))
 
 if __name__ == "__main__":

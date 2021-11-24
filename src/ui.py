@@ -36,6 +36,30 @@ def css_style():
         white-space: pre-wrap;
     }   
 
+    /* Table Styling */
+    #overview {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #overview td, #overview th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #overview tr:nth-child(even){background-color: #f2f2f2;}
+
+    #overview tr:hover {background-color: #ddd;}
+
+    #overview th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
     </style>
     '''
     return css
@@ -96,10 +120,27 @@ def ui_common(title, subtitle, body):
     """
     return html_content
 
-def ui_lighthouse(stocks_to_observe, sector=""):
+def ui_lighthouse(stocks_to_observe, overview_table_data, sector=""):
     title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
-    
-    html_content = ui_common(title, "Stocks to Analyze", stocks_to_observe)
+    subtitle = "Stocks to Analyze"
+    table = create_overview_table(overview_table_data)
+
+    html_content = f"""
+    <html>
+        {head()}
+        <body>
+            <h1>Money Spyder</h1>
+            <h2>{title}</h2>
+            <h4>{subtitle}</h4>
+            <div>{stocks_to_observe}</div>
+            <div>Table Data</div>
+            <div>{table}</div>
+            <br><br>
+            <a href="/" class="button">Back</a>
+            <br><br>
+        </body>
+    </html>
+    """
     return HTMLResponse(content=html_content, status_code=200)
 
 def ui_datastocks(datastocks):
@@ -113,3 +154,25 @@ def ui_failedsymbols(failed_symbols):
 def ui_executiontime(execute_time):
     html_content = ui_common("Execution Time", "Amount of time Money Spyder took to acquire and analyze given stocks", execute_time)
     return HTMLResponse(content=html_content, status_code=200)
+
+def create_overview_table(overview_table_data):
+    table_html = """<table id="overview">
+    <tr>
+        <th>Symbol</th>
+        <th>Exchange</th>
+        <th>Sector</th>
+        <th>P/E</th>
+    </tr>"""
+
+    for stock in overview_table_data:
+        row_html = f"""
+        <tr>
+            <th>{stock['symbol']}</th>
+            <th>{stock['exchange']}</th>
+            <th>{stock['sector']}</th>
+            <th>{stock['overview']['PERatio']}</th>
+        </tr>"""
+        table_html += row_html
+
+    table_html += "</table>"
+    return table_html

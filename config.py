@@ -1,7 +1,5 @@
 av_key = "44V1UXEX9HBN0RST"
 
-poly_key = "3U413sHUAdFisFvcp6TReoTsEZ_GgpLp"
-
 json_path = "data/stocks.json"
 
 execute_time_path = "data/execute_time.json"
@@ -10,7 +8,7 @@ failed_symbols_path = "data/failed_symbols.json"
 
 csv_path = "data/american_stocks.csv"
 
-num_of_stocks_to_read = 3
+num_of_stocks_to_read = 1000
 
 logger = {
         "format":"%(asctime)s :: %(module)s :: %(levelname)s :: %(message)s"

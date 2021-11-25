@@ -37,26 +37,27 @@ def css_style():
     }   
 
     /* Table Styling */
-    #overview {
-        font-family: Arial, Helvetica, sans-serif;
+    .overview {
         border-collapse: collapse;
-        width: 100%;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    #overview td, #overview th {
+    .overview td, .overview th {
         border: 1px solid #ddd;
         padding: 8px;
     }
 
-    #overview tr:nth-child(even){background-color: #f2f2f2;}
+    .overview tr:nth-child(even){background-color: #f2f2f2;}
 
-    #overview tr:hover {background-color: #ddd;}
+    .overview tr:hover {background-color: #ddd;}
 
-    #overview th {
+    .overview th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-color: #04AA6D;
+        background-color: #4CAF50;
         color: white;
     }
 
@@ -74,8 +75,6 @@ def head():
 
         <meta name="description" content="Stocks Data Filter App">
         <meta name="author" content="Draxgen">
-
-        <link rel="stylesheet" href="css/styles.css?v=1.0">
         
         {css_style()}
     </head>
@@ -123,7 +122,10 @@ def ui_common(title, subtitle, body):
 def ui_lighthouse(stocks_to_observe, overview_table_data, sector=""):
     title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
     subtitle = "Stocks to Analyze"
-    table = create_overview_table(overview_table_data)
+    if len(overview_table_data)==0: 
+        table = ""
+    else: 
+        table = create_overview_table(overview_table_data)
 
     html_content = f"""
     <html>
@@ -133,7 +135,7 @@ def ui_lighthouse(stocks_to_observe, overview_table_data, sector=""):
             <h2>{title}</h2>
             <h4>{subtitle}</h4>
             <div>{stocks_to_observe}</div>
-            <div>Table Data</div>
+            <br><br>
             <div>{table}</div>
             <br><br>
             <a href="/" class="button">Back</a>
@@ -156,21 +158,25 @@ def ui_executiontime(execute_time):
     return HTMLResponse(content=html_content, status_code=200)
 
 def create_overview_table(overview_table_data):
-    table_html = """<table id="overview">
+    table_html = """<table class="overview">
     <tr>
         <th>Symbol</th>
-        <th>Exchange</th>
-        <th>Sector</th>
+        <th>Name</th>
+        <th>Market Cap</th>
         <th>P/E</th>
+        <th>Sector</th>
+        <th>Exchange</th>
     </tr>"""
 
     for stock in overview_table_data:
         row_html = f"""
         <tr>
-            <th>{stock['symbol']}</th>
-            <th>{stock['exchange']}</th>
-            <th>{stock['sector']}</th>
-            <th>{stock['overview']['PERatio']}</th>
+            <td>{stock['symbol']}</td>
+            <td>{stock['overview']['Name']}</td>
+            <td>{stock['overview']['MarketCapitalization']}</td>
+            <td>{stock['overview']['PERatio']}</td>
+            <td>{stock['sector']}</td>
+            <td>{stock['exchange']}</td>
         </tr>"""
         table_html += row_html
 

@@ -103,7 +103,7 @@ class JsonWarehouse(IStocksWarehouse):
         idx = self._get_idx(symbol)
         return self.stocks[idx]['overview']
 
-    def get_data_for_overview_table(self, sector="", include_rejected=True):
+    def get_data_for_overview_table(self, sector="", include_rejected=False):
         '''get overview data for HTML Table for given sector if specified'''
         ov_tbl_data = []
         for s in self.stocks:

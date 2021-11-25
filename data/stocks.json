@@ -12,55 +12,7 @@
         ],
         "smas12xdaily": [
             150.3844
-        ],
-        "overview": {
-            "Symbol": "AAPL",
-            "AssetType": "Common Stock",
-            "Name": "Apple Inc",
-            "Description": "Apple Inc. is an American multinational technology company that specializes in consumer electronics, computer software, and online services. Apple is the world's largest technology company by revenue (totalling $274.5 billion in 2020) and, since January 2021, the world's most valuable company. As of 2021, Apple is the world's fourth-largest PC vendor by unit sales, and fourth-largest smartphone manufacturer. It is one of the Big Five American information technology companies, along with Amazon, Google, Microsoft, and Facebook.",
-            "CIK": "320193",
-            "Exchange": "NASDAQ",
-            "Currency": "USD",
-            "Country": "USA",
-            "Sector": "TECHNOLOGY",
-            "Industry": "ELECTRONIC COMPUTERS",
-            "Address": "ONE INFINITE LOOP, CUPERTINO, CA, US",
-            "FiscalYearEnd": "September",
-            "LatestQuarter": "2021-09-30",
-            "MarketCapitalization": "2648157192000",
-            "EBITDA": "120233001000",
-            "PERatio": "28.77",
-            "PEGRatio": "3.446",
-            "BookValue": "3.841",
-            "DividendPerShare": "0.85",
-            "DividendYield": "0.0053",
-            "EPS": "5.61",
-            "RevenuePerShareTTM": "21.9",
-            "ProfitMargin": "0.259",
-            "OperatingMarginTTM": "0.298",
-            "ReturnOnAssetsTTM": "0.202",
-            "ReturnOnEquityTTM": "1.474",
-            "RevenueTTM": "365817004000",
-            "GrossProfitTTM": "152836000000",
-            "DilutedEPSTTM": "5.61",
-            "QuarterlyEarningsGrowthYOY": "0.662",
-            "QuarterlyRevenueGrowthYOY": "0.288",
-            "AnalystTargetPrice": "168.45",
-            "TrailingPE": "28.77",
-            "ForwardPE": "28.74",
-            "PriceToSalesRatioTTM": "7.24",
-            "PriceToBookRatio": "41.75",
-            "EVToRevenue": "7.37",
-            "EVToEBITDA": "21.9",
-            "Beta": "1.206",
-            "52WeekHigh": "165.7",
-            "52WeekLow": "115.51",
-            "50DayMovingAverage": "147.6",
-            "200DayMovingAverage": "137.82",
-            "SharesOutstanding": "16406400000",
-            "DividendDate": "2021-11-11",
-            "ExDividendDate": "2021-11-05"
-        }
+        ]
     },
     {
         "symbol": "MSFT",
@@ -75,55 +27,7 @@
         ],
         "smas12xdaily": [
             335.0408
-        ],
-        "overview": {
-            "Symbol": "MSFT",
-            "AssetType": "Common Stock",
-            "Name": "Microsoft Corporation",
-            "Description": "Microsoft Corporation is an American multinational technology company which produces computer software, consumer electronics, personal computers, and related services. Its best known software products are the Microsoft Windows line of operating systems, the Microsoft Office suite, and the Internet Explorer and Edge web browsers. Its flagship hardware products are the Xbox video game consoles and the Microsoft Surface lineup of touchscreen personal computers. Microsoft ranked No. 21 in the 2020 Fortune 500 rankings of the largest United States corporations by total revenue; it was the world's largest software maker by revenue as of 2016. It is considered one of the Big Five companies in the U.S. information technology industry, along with Google, Apple, Amazon, and Facebook.",
-            "CIK": "789019",
-            "Exchange": "NASDAQ",
-            "Currency": "USD",
-            "Country": "USA",
-            "Sector": "TECHNOLOGY",
-            "Industry": "SERVICES-PREPACKAGED SOFTWARE",
-            "Address": "ONE MICROSOFT WAY, REDMOND, WA, US",
-            "FiscalYearEnd": "June",
-            "LatestQuarter": "2021-09-30",
-            "MarketCapitalization": "2535294501000",
-            "EBITDA": "85745000000",
-            "PERatio": "37.78",
-            "PEGRatio": "2.871",
-            "BookValue": "20.24",
-            "DividendPerShare": "2.3",
-            "DividendYield": "0.0068",
-            "EPS": "8.94",
-            "RevenuePerShareTTM": "23.39",
-            "ProfitMargin": "0.385",
-            "OperatingMarginTTM": "0.421",
-            "ReturnOnAssetsTTM": "0.146",
-            "ReturnOnEquityTTM": "0.493",
-            "RevenueTTM": "176250995000",
-            "GrossProfitTTM": "115856000000",
-            "DilutedEPSTTM": "8.94",
-            "QuarterlyEarningsGrowthYOY": "0.489",
-            "QuarterlyRevenueGrowthYOY": "0.22",
-            "AnalystTargetPrice": "363.88",
-            "TrailingPE": "37.78",
-            "ForwardPE": "36.9",
-            "PriceToSalesRatioTTM": "14.38",
-            "PriceToBookRatio": "16.68",
-            "EVToRevenue": "14.0",
-            "EVToEBITDA": "27.41",
-            "Beta": "0.862",
-            "52WeekHigh": "349.67",
-            "52WeekLow": "207.37",
-            "50DayMovingAverage": "311.9",
-            "200DayMovingAverage": "274.38",
-            "SharesOutstanding": "7507980000",
-            "DividendDate": "2021-12-09",
-            "ExDividendDate": "2021-11-17"
-        }
+        ]
     },
     {
         "symbol": "AMZN",
@@ -138,54 +42,1502 @@
         ],
         "smas12xdaily": [
             3489.4192
+        ]
+    },
+    {
+        "symbol": "GOOG",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 2968.3475,
+        "sma36xdaily": 2893.1828,
+        "sma130xdaily": 2737.3118,
+        "smas36xdaily": [
+            2855.9475
+        ],
+        "smas12xdaily": [
+            2966.2042
+        ]
+    },
+    {
+        "symbol": "GOOGL",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 2951.0008,
+        "sma36xdaily": 2882.4569,
+        "sma130xdaily": 2701.1575,
+        "smas36xdaily": [
+            2847.6158
+        ],
+        "smas12xdaily": [
+            2953.0208
+        ]
+    },
+    {
+        "symbol": "TSLA",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Durables",
+        "rejected": true,
+        "sma12xdaily": 1080.0708,
+        "sma36xdaily": 1007.7286,
+        "sma130xdaily": 774.4947,
+        "smas36xdaily": [
+            959.9172
+        ],
+        "smas12xdaily": [
+            1112.1925
+        ]
+    },
+    {
+        "symbol": "FB",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 338.8533,
+        "sma36xdaily": 332.5358,
+        "sma130xdaily": 346.6694,
+        "smas36xdaily": [
+            331.9217
+        ],
+        "smas12xdaily": [
+            336.5192
+        ]
+    },
+    {
+        "symbol": "BABA",
+        "exchange": "NYSE",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 153.8425,
+        "sma36xdaily": 162.4469,
+        "sma130xdaily": 182.6998,
+        "smas36xdaily": [
+            163.3319
+        ],
+        "smas12xdaily": [
+            164.1825
+        ]
+    },
+    {
+        "symbol": "TSM",
+        "exchange": "NYSE",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 120.5492,
+        "sma36xdaily": 116.1692,
+        "sma130xdaily": 116.5385,
+        "smas36xdaily": [
+            114.4647
+        ],
+        "smas12xdaily": [
+            118.0617
+        ]
+    },
+    {
+        "symbol": "BRK.A",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 429224.2492,
+        "sma36xdaily": 429759.1078,
+        "sma130xdaily": 425332.651,
+        "smas36xdaily": [
+            427816.6343
+        ],
+        "smas12xdaily": [
+            431485.6642
+        ]
+    },
+    {
+        "symbol": "BRK.B",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 284.4467,
+        "sma36xdaily": 285.2172,
+        "sma130xdaily": 282.5635,
+        "smas36xdaily": [
+            284.0006
+        ],
+        "smas12xdaily": [
+            286.0792
+        ]
+    },
+    {
+        "symbol": "V",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 207.095,
+        "sma36xdaily": 217.4099,
+        "sma130xdaily": 228.5974,
+        "smas36xdaily": [
+            220.8941
+        ],
+        "smas12xdaily": [
+            212.0803
+        ]
+    },
+    {
+        "symbol": "JNJ",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 161.7125,
+        "sma36xdaily": 161.5091,
+        "sma130xdaily": 165.4935,
+        "smas36xdaily": [
+            161.3899
+        ],
+        "smas12xdaily": [
+            162.7423
+        ]
+    },
+    {
+        "symbol": "WMT",
+        "exchange": "NYSE",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 145.7658,
+        "sma36xdaily": 145.4336,
+        "sma130xdaily": 143.3461,
+        "smas36xdaily": [
+            144.5042
+        ],
+        "smas12xdaily": [
+            148.0992
+        ]
+    },
+    {
+        "symbol": "JPM",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 165.8183,
+        "sma36xdaily": 167.6692,
+        "sma130xdaily": 159.5897,
+        "smas36xdaily": [
+            167.8055
+        ],
+        "smas12xdaily": [
+            167.7217
+        ]
+    },
+    {
+        "symbol": "NVDA",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 309.5175,
+        "sma36xdaily": 262.2217,
+        "sma130xdaily": 216.389,
+        "smas36xdaily": [
+            245.8667
+        ],
+        "smas12xdaily": [
+            294.7842
+        ]
+    },
+    {
+        "symbol": "UNH",
+        "exchange": "NYSE",
+        "sector": "Health Services",
+        "rejected": true,
+        "sma12xdaily": 451.1917,
+        "sma36xdaily": 440.8233,
+        "sma130xdaily": 417.5522,
+        "smas36xdaily": [
+            433.5933
+        ],
+        "smas12xdaily": [
+            456.2133
+        ]
+    },
+    {
+        "symbol": "MA",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 349.0633,
+        "sma36xdaily": 347.8277,
+        "sma130xdaily": 359.247,
+        "smas36xdaily": [
+            349.7179
+        ],
+        "smas12xdaily": [
+            350.1933
+        ]
+    },
+    {
+        "symbol": "PG",
+        "exchange": "NYSE",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 147.225,
+        "sma36xdaily": 143.9223,
+        "sma130xdaily": 139.9503,
+        "smas36xdaily": [
+            142.6817
+        ],
+        "smas12xdaily": [
+            146.0233
+        ]
+    },
+    {
+        "symbol": "DIS",
+        "exchange": "NYSE",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 159.3333,
+        "sma36xdaily": 168.0908,
+        "sma130xdaily": 174.9332,
+        "smas36xdaily": [
+            170.8636
+        ],
+        "smas12xdaily": [
+            167.3817
+        ]
+    },
+    {
+        "symbol": "HD",
+        "exchange": "NYSE",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 390.13,
+        "sma36xdaily": 368.3636,
+        "sma130xdaily": 335.046,
+        "smas36xdaily": [
+            357.4522
+        ],
+        "smas12xdaily": [
+            373.5983
+        ]
+    },
+    {
+        "symbol": "PYPL",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 201.2683,
+        "sma36xdaily": 232.1589,
+        "sma130xdaily": 266.6054,
+        "smas36xdaily": [
+            241.5664
+        ],
+        "smas12xdaily": [
+            216.5108
+        ]
+    },
+    {
+        "symbol": "BAC",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 46.8567,
+        "sma36xdaily": 46.5261,
+        "sma130xdaily": 42.2505,
+        "smas36xdaily": [
+            46.0547
+        ],
+        "smas12xdaily": [
+            47.2533
+        ]
+    },
+    {
+        "symbol": "NFLX",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 669.49,
+        "sma36xdaily": 657.8217,
+        "sma130xdaily": 571.8411,
+        "smas36xdaily": [
+            650.2756
+        ],
+        "smas12xdaily": [
+            669.4242
+        ]
+    },
+    {
+        "symbol": "VZ",
+        "exchange": "NYSE",
+        "sector": "Communications",
+        "rejected": true,
+        "sma12xdaily": 51.9058,
+        "sma36xdaily": 52.3917,
+        "sma130xdaily": 54.1386,
+        "smas36xdaily": [
+            52.7101
+        ],
+        "smas12xdaily": [
+            52.3125
+        ]
+    },
+    {
+        "symbol": "ASML",
+        "exchange": "NASDAQ",
+        "sector": "Producer Manufacturing",
+        "rejected": true,
+        "sma12xdaily": 841.7967,
+        "sma36xdaily": 805.0384,
+        "sma130xdaily": 767.5031,
+        "smas36xdaily": [
+            791.1986
+        ],
+        "smas12xdaily": [
+            843.2592
+        ]
+    },
+    {
+        "symbol": "INTC",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 50.1542,
+        "sma36xdaily": 51.0643,
+        "sma130xdaily": 53.4694,
+        "smas36xdaily": [
+            51.5732
+        ],
+        "smas12xdaily": [
+            50.5252
+        ]
+    },
+    {
+        "symbol": "ADBE",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 665.3333,
+        "sma36xdaily": 638.9975,
+        "sma130xdaily": 611.5915,
+        "smas36xdaily": [
+            624.8225
+        ],
+        "smas12xdaily": [
+            659.6683
+        ]
+    },
+    {
+        "symbol": "CMCSA",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 52.9525,
+        "sma36xdaily": 53.38,
+        "sma130xdaily": 56.3468,
+        "smas36xdaily": [
+            53.9781
+        ],
+        "smas12xdaily": [
+            53.4183
+        ]
+    },
+    {
+        "symbol": "NKE",
+        "exchange": "NYSE",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 171.2675,
+        "sma36xdaily": 164.9542,
+        "sma130xdaily": 157.4763,
+        "smas36xdaily": [
+            161.3503
+        ],
+        "smas12xdaily": [
+            171.3075
+        ]
+    },
+    {
+        "symbol": "NVS",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 82.2675,
+        "sma36xdaily": 82.9303,
+        "sma130xdaily": 88.1084,
+        "smas36xdaily": [
+            82.97
+        ],
+        "smas12xdaily": [
+            82.965
+        ]
+    },
+    {
+        "symbol": "TM",
+        "exchange": "NYSE",
+        "sector": "Consumer Durables",
+        "rejected": true,
+        "sma12xdaily": 183.3925,
+        "sma36xdaily": 178.4947,
+        "sma130xdaily": 177.9628,
+        "smas36xdaily": [
+            177.3614
+        ],
+        "smas12xdaily": [
+            181.4217
+        ]
+    },
+    {
+        "symbol": "KO",
+        "exchange": "NYSE",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 56.0525,
+        "sma36xdaily": 55.3503,
+        "sma130xdaily": 55.1271,
+        "smas36xdaily": [
+            54.9947
+        ],
+        "smas12xdaily": [
+            56.4558
+        ]
+    },
+    {
+        "symbol": "CRM",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 301.7667,
+        "sma36xdaily": 295.4158,
+        "sma130xdaily": 262.7145,
+        "smas36xdaily": [
+            292.0275
+        ],
+        "smas12xdaily": [
+            305.8917
+        ]
+    },
+    {
+        "symbol": "T",
+        "exchange": "NYSE",
+        "sector": "Communications",
+        "rejected": true,
+        "sma12xdaily": 24.6742,
+        "sma36xdaily": 25.2874,
+        "sma130xdaily": 26.8647,
+        "smas36xdaily": [
+            25.5973
+        ],
+        "smas12xdaily": [
+            24.9025
+        ]
+    },
+    {
+        "symbol": "MRK",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 82.9683,
+        "sma36xdaily": 82.6231,
+        "sma130xdaily": 77.3336,
+        "smas36xdaily": [
+            82.2294
+        ],
+        "smas12xdaily": [
+            84.8067
+        ]
+    },
+    {
+        "symbol": "PFE",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 50.1442,
+        "sma36xdaily": 45.3622,
+        "sma130xdaily": 43.1068,
+        "smas36xdaily": [
+            44.1661
+        ],
+        "smas12xdaily": [
+            48.0512
+        ]
+    },
+    {
+        "symbol": "TMO",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 633.0592,
+        "sma36xdaily": 614.1647,
+        "sma130xdaily": 551.2537,
+        "smas36xdaily": [
+            605.585
+        ],
+        "smas12xdaily": [
+            631.9092
+        ]
+    },
+    {
+        "symbol": "ABT",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 127.3492,
+        "sma36xdaily": 124.4563,
+        "sma130xdaily": 120.425,
+        "smas36xdaily": [
+            123.1975
+        ],
+        "smas12xdaily": [
+            127.9642
+        ]
+    },
+    {
+        "symbol": "XOM",
+        "exchange": "NYSE",
+        "sector": "Energy Minerals",
+        "rejected": true,
+        "sma12xdaily": 63.6569,
+        "sma36xdaily": 62.874,
+        "sma130xdaily": 58.776,
+        "smas36xdaily": [
+            62.4983
+        ],
+        "smas12xdaily": [
+            64.2502
+        ]
+    },
+    {
+        "symbol": "LLY",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 260.8445,
+        "sma36xdaily": 250.3876,
+        "sma130xdaily": 240.2523,
+        "smas36xdaily": [
+            245.8489
+        ],
+        "smas12xdaily": [
+            261.5866
+        ]
+    },
+    {
+        "symbol": "ABBV",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 116.9225,
+        "sma36xdaily": 112.8744,
+        "sma130xdaily": 112.3678,
+        "smas36xdaily": [
+            111.5167
+        ],
+        "smas12xdaily": [
+            116.7475
+        ]
+    },
+    {
+        "symbol": "PEP",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 163.645,
+        "sma36xdaily": 161.2294,
+        "sma130xdaily": 154.2956,
+        "smas36xdaily": [
+            159.4122
+        ],
+        "smas12xdaily": [
+            163.5958
+        ]
+    },
+    {
+        "symbol": "CSCO",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 56.0117,
+        "sma36xdaily": 55.8539,
+        "sma130xdaily": 55.092,
+        "smas36xdaily": [
+            55.8687
+        ],
+        "smas12xdaily": [
+            57.19
+        ]
+    },
+    {
+        "symbol": "AVGO",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 561.6692,
+        "sma36xdaily": 531.8342,
+        "sma130xdaily": 492.2649,
+        "smas36xdaily": [
+            521.0694
+        ],
+        "smas12xdaily": [
+            556.275
+        ]
+    },
+    {
+        "symbol": "QCOM",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 175.3442,
+        "sma36xdaily": 148.1425,
+        "sma130xdaily": 141.5316,
+        "smas36xdaily": [
+            140.5539
+        ],
+        "smas12xdaily": [
+            162.3717
+        ]
+    },
+    {
+        "symbol": "ORCL",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 94.2267,
+        "sma36xdaily": 95.1655,
+        "sma130xdaily": 88.2287,
+        "smas36xdaily": [
+            94.5431
+        ],
+        "smas12xdaily": [
+            94.8917
+        ]
+    },
+    {
+        "symbol": "CVX",
+        "exchange": "NYSE",
+        "sector": "Energy Minerals",
+        "rejected": true,
+        "sma12xdaily": 114.4892,
+        "sma36xdaily": 111.4926,
+        "sma130xdaily": 103.0279,
+        "smas36xdaily": [
+            109.825
+        ],
+        "smas12xdaily": [
+            113.6505
+        ]
+    },
+    {
+        "symbol": "ACN",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 367.415,
+        "sma36xdaily": 354.1318,
+        "sma130xdaily": 324.0788,
+        "smas36xdaily": [
+            348.0555
+        ],
+        "smas12xdaily": [
+            367.3192
+        ]
+    },
+    {
+        "symbol": "DHR",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": false,
+        "sma12xdaily": 307.8825,
+        "sma36xdaily": 305.84,
+        "sma130xdaily": 295.3329,
+        "smas36xdaily": [
+            304.2275
+        ],
+        "smas12xdaily": [
+            304.05
         ],
         "overview": {
-            "Symbol": "AMZN",
+            "Symbol": "DHR",
             "AssetType": "Common Stock",
-            "Name": "Amazon.com Inc",
-            "Description": "Amazon.com, Inc. is an American multinational technology company which focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is one of the Big Five companies in the U.S. information technology industry, along with Google, Apple, Microsoft, and Facebook. The company has been referred to as one of the most influential economic and cultural forces in the world, as well as the world's most valuable brand.",
-            "CIK": "1018724",
-            "Exchange": "NASDAQ",
+            "Name": "Danaher Corporation",
+            "Description": "Danaher Corporation is an American globally diversified conglomerate with its headquarters in Washington, D.C.. The company designs, manufactures, and markets professional, medical, industrial, and commercial products and services. The company's 3 platforms are Life Sciences, Diagnostics, and Environmental & Applied Solutions.",
+            "CIK": "313616",
+            "Exchange": "NYSE",
             "Currency": "USD",
             "Country": "USA",
-            "Sector": "TRADE & SERVICES",
-            "Industry": "RETAIL-CATALOG & MAIL-ORDER HOUSES",
-            "Address": "410 TERRY AVENUE NORTH, SEATTLE, WA, US",
+            "Sector": "LIFE SCIENCES",
+            "Industry": "INDUSTRIAL INSTRUMENTS FOR MEASUREMENT, DISPLAY, AND CONTROL",
+            "Address": "2200 PENNSYLVANIA AVE. N.W., SUITE 800W, WASHINGTON, DC, US",
             "FiscalYearEnd": "December",
             "LatestQuarter": "2021-09-30",
-            "MarketCapitalization": "1815610130000",
-            "EBITDA": "60403999000",
-            "PERatio": "70.06",
-            "PEGRatio": "2.127",
-            "BookValue": "237.8",
-            "DividendPerShare": "None",
-            "DividendYield": "0",
-            "EPS": "51.1",
-            "RevenuePerShareTTM": "909.11",
-            "ProfitMargin": "0.0574",
-            "OperatingMarginTTM": "0.0618",
-            "ReturnOnAssetsTTM": "0.0532",
-            "ReturnOnEquityTTM": "0.258",
-            "RevenueTTM": "457965011000",
-            "GrossProfitTTM": "152757000000",
-            "DilutedEPSTTM": "51.1",
-            "QuarterlyEarningsGrowthYOY": "-0.505",
-            "QuarterlyRevenueGrowthYOY": "0.153",
-            "AnalystTargetPrice": "4068.37",
-            "TrailingPE": "70.06",
-            "ForwardPE": "55.87",
-            "PriceToSalesRatioTTM": "3.965",
-            "PriceToBookRatio": "15.03",
-            "EVToRevenue": "4.032",
-            "EVToEBITDA": "28.48",
-            "Beta": "1.114",
-            "52WeekHigh": "3773.08",
-            "52WeekLow": "2881",
-            "50DayMovingAverage": "3405.2",
-            "200DayMovingAverage": "3344.49",
-            "SharesOutstanding": "507148000",
-            "DividendDate": "None",
-            "ExDividendDate": "None"
+            "MarketCapitalization": "225434763000",
+            "EBITDA": "9655000000",
+            "PERatio": "40.03",
+            "PEGRatio": "2.277",
+            "BookValue": "56.24",
+            "DividendPerShare": "0.81",
+            "DividendYield": "0.0026",
+            "EPS": "7.88",
+            "RevenuePerShareTTM": "39.33",
+            "ProfitMargin": "0.21",
+            "OperatingMarginTTM": "0.27",
+            "ReturnOnAssetsTTM": "0.0609",
+            "ReturnOnEquityTTM": "0.142",
+            "RevenueTTM": "28064999000",
+            "GrossProfitTTM": "12932000000",
+            "DilutedEPSTTM": "7.88",
+            "QuarterlyEarningsGrowthYOY": "0.328",
+            "QuarterlyRevenueGrowthYOY": "0.229",
+            "AnalystTargetPrice": "348.08",
+            "TrailingPE": "40.03",
+            "ForwardPE": "31.35",
+            "PriceToSalesRatioTTM": "8.03",
+            "PriceToBookRatio": "5.58",
+            "EVToRevenue": "8.85",
+            "EVToEBITDA": "26.43",
+            "Beta": "0.704",
+            "52WeekHigh": "333.73",
+            "52WeekLow": "210.71",
+            "50DayMovingAverage": "308.45",
+            "200DayMovingAverage": "274.18",
+            "SharesOutstanding": "714577000",
+            "DividendDate": "2021-10-29",
+            "ExDividendDate": "2021-09-29"
         }
+    },
+    {
+        "symbol": "NEE",
+        "exchange": "NYSE",
+        "sector": "Utilities",
+        "rejected": true,
+        "sma12xdaily": 86.4596,
+        "sma36xdaily": 83.9971,
+        "sma130xdaily": 79.5825,
+        "smas36xdaily": [
+            82.8009
+        ],
+        "smas12xdaily": [
+            85.4113
+        ]
+    },
+    {
+        "symbol": "TMUS",
+        "exchange": "NASDAQ",
+        "sector": "Communications",
+        "rejected": true,
+        "sma12xdaily": 117.1525,
+        "sma36xdaily": 118.1372,
+        "sma130xdaily": 134.0656,
+        "smas36xdaily": [
+            119.7231
+        ],
+        "smas12xdaily": [
+            119.4467
+        ]
+    },
+    {
+        "symbol": "COST",
+        "exchange": "NASDAQ",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 526.1892,
+        "sma36xdaily": 492.4968,
+        "sma130xdaily": 442.4444,
+        "smas36xdaily": [
+            479.565
+        ],
+        "smas12xdaily": [
+            512.3617
+        ]
+    },
+    {
+        "symbol": "TXN",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 190.9317,
+        "sma36xdaily": 191.8677,
+        "sma130xdaily": 189.3774,
+        "smas36xdaily": [
+            191.5928
+        ],
+        "smas12xdaily": [
+            189.9342
+        ]
+    },
+    {
+        "symbol": "MCD",
+        "exchange": "NYSE",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 253.0308,
+        "sma36xdaily": 247.8794,
+        "sma130xdaily": 239.4921,
+        "smas36xdaily": [
+            246.3503
+        ],
+        "smas12xdaily": [
+            252.1342
+        ]
+    },
+    {
+        "symbol": "MDT",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 118.0492,
+        "sma36xdaily": 121.2906,
+        "sma130xdaily": 125.6356,
+        "smas36xdaily": [
+            122.6931
+        ],
+        "smas12xdaily": [
+            120.5133
+        ]
+    },
+    {
+        "symbol": "PDD",
+        "exchange": "NASDAQ",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 86.6517,
+        "sma36xdaily": 91.2117,
+        "sma130xdaily": 101.4381,
+        "smas36xdaily": [
+            92.1361
+        ],
+        "smas12xdaily": [
+            89.2475
+        ]
+    },
+    {
+        "symbol": "SAP",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 141.2858,
+        "sma36xdaily": 142.6886,
+        "sma130xdaily": 143.3825,
+        "smas36xdaily": [
+            142.2997
+        ],
+        "smas12xdaily": [
+            145.8708
+        ]
+    },
+    {
+        "symbol": "AMGN",
+        "exchange": "NASDAQ",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 206.723,
+        "sma36xdaily": 206.957,
+        "sma130xdaily": 223.1184,
+        "smas36xdaily": [
+            207.9148
+        ],
+        "smas12xdaily": [
+            210.2318
+        ]
+    },
+    {
+        "symbol": "BMY",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 58.65,
+        "sma36xdaily": 58.2703,
+        "sma130xdaily": 63.1777,
+        "smas36xdaily": [
+            58.5123
+        ],
+        "smas12xdaily": [
+            59.3108
+        ]
+    },
+    {
+        "symbol": "SHOP",
+        "exchange": "NYSE",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 1610.5842,
+        "sma36xdaily": 1498.1814,
+        "sma130xdaily": 1460.5582,
+        "smas36xdaily": [
+            1456.9981
+        ],
+        "smas12xdaily": [
+            1561.0592
+        ]
+    },
+    {
+        "symbol": "HON",
+        "exchange": "NYSE",
+        "sector": "Producer Manufacturing",
+        "rejected": true,
+        "sma12xdaily": 220.4537,
+        "sma36xdaily": 219.2984,
+        "sma130xdaily": 222.2884,
+        "smas36xdaily": [
+            218.815
+        ],
+        "smas12xdaily": [
+            222.7778
+        ]
+    },
+    {
+        "symbol": "UNP",
+        "exchange": "NYSE",
+        "sector": "Transportation",
+        "rejected": true,
+        "sma12xdaily": 242.305,
+        "sma36xdaily": 234.0728,
+        "sma130xdaily": 221.2989,
+        "smas36xdaily": [
+            228.3917
+        ],
+        "smas12xdaily": [
+            240.3008
+        ]
+    },
+    {
+        "symbol": "UPS",
+        "exchange": "NYSE",
+        "sector": "Transportation",
+        "rejected": true,
+        "sma12xdaily": 209.8506,
+        "sma36xdaily": 202.2755,
+        "sma130xdaily": 199.1223,
+        "smas36xdaily": [
+            198.2732
+        ],
+        "smas12xdaily": [
+            209.7604
+        ]
+    },
+    {
+        "symbol": "AZN",
+        "exchange": "NASDAQ",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 58.8075,
+        "sma36xdaily": 60.5881,
+        "sma130xdaily": 58.6488,
+        "smas36xdaily": [
+            61.0561
+        ],
+        "smas12xdaily": [
+            61.6667
+        ]
+    },
+    {
+        "symbol": "HDB",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 70.8192,
+        "sma36xdaily": 73.1561,
+        "sma130xdaily": 74.0144,
+        "smas36xdaily": [
+            73.5611
+        ],
+        "smas12xdaily": [
+            71.4142
+        ]
+    },
+    {
+        "symbol": "LIN",
+        "exchange": "NYSE",
+        "sector": "Process Industries",
+        "rejected": true,
+        "sma12xdaily": 333.0675,
+        "sma36xdaily": 320.0483,
+        "sma130xdaily": 305.3187,
+        "smas36xdaily": [
+            315.3933
+        ],
+        "smas12xdaily": [
+            333.615
+        ]
+    },
+    {
+        "symbol": "WFC",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 50.405,
+        "sma36xdaily": 49.7155,
+        "sma130xdaily": 46.894,
+        "smas36xdaily": [
+            49.2362
+        ],
+        "smas12xdaily": [
+            50.6595
+        ]
+    },
+    {
+        "symbol": "CHTR",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 686.5183,
+        "sma36xdaily": 700.3089,
+        "sma130xdaily": 728.7845,
+        "smas36xdaily": [
+            708.7422
+        ],
+        "smas12xdaily": [
+            691.5717
+        ]
+    },
+    {
+        "symbol": "NVO",
+        "exchange": "NYSE",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 112.8183,
+        "sma36xdaily": 107.9333,
+        "sma130xdaily": 96.5492,
+        "smas36xdaily": [
+            105.8158
+        ],
+        "smas12xdaily": [
+            113.7342
+        ]
+    },
+    {
+        "symbol": "C",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 67.7833,
+        "sma36xdaily": 69.3251,
+        "sma130xdaily": 70.2148,
+        "smas36xdaily": [
+            69.8323
+        ],
+        "smas12xdaily": [
+            68.1333
+        ]
+    },
+    {
+        "symbol": "LOW",
+        "exchange": "NYSE",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 242.86,
+        "sma36xdaily": 230.1451,
+        "sma130xdaily": 205.4718,
+        "smas36xdaily": [
+            223.6171
+        ],
+        "smas12xdaily": [
+            236.3308
+        ]
+    },
+    {
+        "symbol": "SNE",
+        "exchange": "NYSE",
+        "sector": "Consumer Durables",
+        "rejected": true,
+        "sma12xdaily": 123.0733,
+        "sma36xdaily": 117.3928,
+        "sma130xdaily": 106.9351,
+        "smas36xdaily": [
+            115.4053
+        ],
+        "smas12xdaily": [
+            122.98
+        ]
+    },
+    {
+        "symbol": "PM",
+        "exchange": "NYSE",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 92.6033,
+        "sma36xdaily": 94.6981,
+        "sma130xdaily": 97.3611,
+        "smas36xdaily": [
+            95.5739
+        ],
+        "smas12xdaily": [
+            94.1242
+        ]
+    },
+    {
+        "symbol": "JD",
+        "exchange": "NASDAQ",
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 85.3967,
+        "sma36xdaily": 82.1267,
+        "sma130xdaily": 76.0598,
+        "smas36xdaily": [
+            79.5914
+        ],
+        "smas12xdaily": [
+            81.3317
+        ]
+    },
+    {
+        "symbol": "SNY",
+        "exchange": "NASDAQ",
+        "sector": "Health Technology",
+        "rejected": true,
+        "sma12xdaily": 50.6458,
+        "sma36xdaily": 50.0036,
+        "sma130xdaily": 50.9888,
+        "smas36xdaily": [
+            49.7636
+        ],
+        "smas12xdaily": [
+            51.3675
+        ]
+    },
+    {
+        "symbol": "SBUX",
+        "exchange": "NASDAQ",
+        "sector": "Consumer Services",
+        "rejected": true,
+        "sma12xdaily": 112.4457,
+        "sma36xdaily": 112.1947,
+        "sma130xdaily": 114.0216,
+        "smas36xdaily": [
+            111.99
+        ],
+        "smas12xdaily": [
+            112.7092
+        ]
+    },
+    {
+        "symbol": "RY",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 105.0992,
+        "sma36xdaily": 104.8683,
+        "sma130xdaily": 102.0613,
+        "smas36xdaily": [
+            104.1776
+        ],
+        "smas12xdaily": [
+            105.9133
+        ]
+    },
+    {
+        "symbol": "MS",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 99.3067,
+        "sma36xdaily": 100.1371,
+        "sma130xdaily": 96.7779,
+        "smas36xdaily": [
+            99.9157
+        ],
+        "smas12xdaily": [
+            100.1492
+        ]
+    },
+    {
+        "symbol": "TOT",
+        "exchange": "NYSE",
+        "sector": "Energy Minerals",
+        "rejected": true,
+        "sma12xdaily": 0,
+        "sma36xdaily": 0
+    },
+    {
+        "symbol": "HSBC",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 29.2675,
+        "sma36xdaily": 29.5017,
+        "sma130xdaily": 28.3844,
+        "smas36xdaily": [
+            29.0817
+        ],
+        "smas12xdaily": [
+            29.38
+        ]
+    },
+    {
+        "symbol": "BA",
+        "exchange": "NYSE",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 219.6792,
+        "sma36xdaily": 217.8275,
+        "sma130xdaily": 226.335,
+        "smas36xdaily": [
+            219.1747
+        ],
+        "smas12xdaily": [
+            220.955
+        ]
+    },
+    {
+        "symbol": "BLK",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 943.3317,
+        "sma36xdaily": 918.6303,
+        "sma130xdaily": 893.9428,
+        "smas36xdaily": [
+            906.9153
+        ],
+        "smas12xdaily": [
+            955.9458
+        ]
+    },
+    {
+        "symbol": "ZM",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 247.3675,
+        "sma36xdaily": 262.6481,
+        "sma130xdaily": 318.124,
+        "smas36xdaily": [
+            266.505
+        ],
+        "smas12xdaily": [
+            264.7408
+        ]
+    },
+    {
+        "symbol": "BUD",
+        "exchange": "NYSE",
+        "sector": "Consumer Non-Durables",
+        "rejected": true,
+        "sma12xdaily": 59.4483,
+        "sma36xdaily": 58.0539,
+        "sma130xdaily": 64.1473,
+        "smas36xdaily": [
+            57.7464
+        ],
+        "smas12xdaily": [
+            60.0608
+        ]
+    },
+    {
+        "symbol": "AMD",
+        "exchange": "NASDAQ",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 150.3033,
+        "sma36xdaily": 129.6231,
+        "sma130xdaily": 105.6812,
+        "smas36xdaily": [
+            122.3225
+        ],
+        "smas12xdaily": [
+            142.9275
+        ]
+    },
+    {
+        "symbol": "ABNB",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 194.9208,
+        "sma36xdaily": 180.5856,
+        "sma130xdaily": 159.592,
+        "smas36xdaily": [
+            177.7364
+        ],
+        "smas12xdaily": [
+            193.7117
+        ]
+    },
+    {
+        "symbol": "BHP",
+        "exchange": "NYSE",
+        "sector": "Non-Energy Minerals",
+        "rejected": true,
+        "sma12xdaily": 53.6492,
+        "sma36xdaily": 54.9969,
+        "sma130xdaily": 63.0165,
+        "smas36xdaily": [
+            54.9039
+        ],
+        "smas12xdaily": [
+            53.5192
+        ]
+    },
+    {
+        "symbol": "NOW",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 673.9408,
+        "sma36xdaily": 670.3156,
+        "sma130xdaily": 602.8218,
+        "smas36xdaily": [
+            665.5953
+        ],
+        "smas12xdaily": [
+            687.7633
+        ]
+    },
+    {
+        "symbol": "IBM",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 118.1992,
+        "sma36xdaily": 123.7109,
+        "sma130xdaily": 130.3737,
+        "smas36xdaily": [
+            126.0929
+        ],
+        "smas12xdaily": [
+            119.8898
+        ]
+    },
+    {
+        "symbol": "SCHW",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 81.6584,
+        "sma36xdaily": 80.7235,
+        "sma130xdaily": 74.2665,
+        "smas36xdaily": [
+            79.6417
+        ],
+        "smas12xdaily": [
+            81.54
+        ]
+    },
+    {
+        "symbol": "TD",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 73.9717,
+        "sma36xdaily": 72.1953,
+        "sma130xdaily": 68.6646,
+        "smas36xdaily": [
+            71.1751
+        ],
+        "smas12xdaily": [
+            73.7225
+        ]
+    },
+    {
+        "symbol": "CAT",
+        "exchange": "NYSE",
+        "sector": "Producer Manufacturing",
+        "rejected": true,
+        "sma12xdaily": 205.5867,
+        "sma36xdaily": 201.5031,
+        "sma130xdaily": 208.7425,
+        "smas36xdaily": [
+            200.0538
+        ],
+        "smas12xdaily": [
+            207.0658
+        ]
+    },
+    {
+        "symbol": "INTU",
+        "exchange": "NASDAQ",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 641.26,
+        "sma36xdaily": 600.8326,
+        "sma130xdaily": 540.0522,
+        "smas36xdaily": [
+            582.7263
+        ],
+        "smas12xdaily": [
+            621.23
+        ]
+    },
+    {
+        "symbol": "RTX",
+        "exchange": "NYSE",
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 87.8979,
+        "sma36xdaily": 88.9283,
+        "sma130xdaily": 86.3522,
+        "smas36xdaily": [
+            88.9464
+        ],
+        "smas12xdaily": [
+            88.7459
+        ]
+    },
+    {
+        "symbol": "RIO",
+        "exchange": "NYSE",
+        "sector": "Non-Energy Minerals",
+        "rejected": true,
+        "sma12xdaily": 61.6775,
+        "sma36xdaily": 64.7325,
+        "sma130xdaily": 74.058,
+        "smas36xdaily": [
+            65.3464
+        ],
+        "smas12xdaily": [
+            61.4783
+        ]
+    },
+    {
+        "symbol": "AXP",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 177.6008,
+        "sma36xdaily": 176.5348,
+        "sma130xdaily": 168.8114,
+        "smas36xdaily": [
+            176.4015
+        ],
+        "smas12xdaily": [
+            178.5958
+        ]
+    },
+    {
+        "symbol": "UBER",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 43.9467,
+        "sma36xdaily": 45.3733,
+        "sma130xdaily": 45.5525,
+        "smas36xdaily": [
+            45.6819
+        ],
+        "smas12xdaily": [
+            44.8108
+        ]
+    },
+    {
+        "symbol": "SQ",
+        "exchange": "NYSE",
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 225.6783,
+        "sma36xdaily": 241.5631,
+        "sma130xdaily": 245.8792,
+        "smas36xdaily": [
+            243.9075
+        ],
+        "smas12xdaily": [
+            236.52
+        ]
+    },
+    {
+        "symbol": "GS",
+        "exchange": "NYSE",
+        "sector": "Finance",
+        "rejected": true,
+        "sma12xdaily": 399.3017,
+        "sma36xdaily": 403.5433,
+        "sma130xdaily": 389.1323,
+        "smas36xdaily": [
+            401.3886
+        ],
+        "smas12xdaily": [
+            406.3675
+        ]
     }
 ]

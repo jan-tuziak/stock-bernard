@@ -2,43 +2,46 @@
     {
         "symbol": "AAPL",
         "exchange": "NASDAQ",
-        "rejected": false,
-        "sma12xdaily": 149.8708,
-        "sma36xdaily": 146.4458,
-        "sma130xdaily": 142.0176,
+        "sector": "Electronic Technology",
+        "rejected": true,
+        "sma12xdaily": 154.4892,
+        "sma36xdaily": 149.6184,
+        "sma130xdaily": 143.7785,
         "smas36xdaily": [
-            145.8437
+            146.9354
         ],
         "smas12xdaily": [
-            149.9036
+            150.3844
         ]
     },
     {
         "symbol": "MSFT",
         "exchange": "NASDAQ",
-        "rejected": false,
-        "sma12xdaily": 334.1317,
-        "sma36xdaily": 310.9989,
-        "sma130xdaily": 286.9371,
+        "sector": "Technology Services",
+        "rejected": true,
+        "sma12xdaily": 337.2274,
+        "sma36xdaily": 320.9005,
+        "sma130xdaily": 291.5847,
         "smas36xdaily": [
-            305.8494
+            313.2473
         ],
         "smas12xdaily": [
-            326.0442
+            335.0408
         ]
     },
     {
         "symbol": "AMZN",
         "exchange": "NASDAQ",
-        "rejected": false,
-        "sma12xdaily": 3456.1558,
-        "sma36xdaily": 3372.9914,
-        "sma130xdaily": 3398.4067,
+        "sector": "Retail Trade",
+        "rejected": true,
+        "sma12xdaily": 3566.4133,
+        "sma36xdaily": 3433.9189,
+        "sma130xdaily": 3418.6048,
         "smas36xdaily": [
-            3354.0836
+            3383.2119
         ],
         "smas12xdaily": [
-            3395.2758
+            3489.4192
         ]
     }
 ]

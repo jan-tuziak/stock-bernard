@@ -33,11 +33,13 @@ async def root():
 
 @app.get("/lighthouse")
 async def run_lighthouse():
-    return ui_lighthouse(execute_lighthouse())
+    stocks_data, table_data = execute_lighthouse()
+    return ui_lighthouse(stocks_data, table_data)
 
 @app.get("/lighthouse/{sector}")
 async def run_lighthouse_sector(sector):
-    return ui_lighthouse(execute_lighthouse(sector), sector)
+    stocks_data, table_data = execute_lighthouse()
+    return ui_lighthouse(stocks_data, table_data, sector)
 
 @app.get("/datastocks")
 async def datasctocks():
@@ -57,9 +59,9 @@ async def executiontime():
 
 def execute_lighthouse(sector=""):
     lh = Lighthouse()  
-    stocks_to_observe = lh.get_lighthouse_stocks(sector)
+    stocks_to_observe, overview_table_data = lh.get_lighthouse_stocks(sector)
     del lh
-    return stocks_to_observe
+    return stocks_to_observe, overview_table_data
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

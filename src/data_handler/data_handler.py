@@ -20,12 +20,17 @@ class DataHandler:
         self._warehouse.init_from_symbols(self._stock_finder.get_top_stocks_by_daily_turnover(config.num_of_stocks_to_read))
         #Add Data
         self._crits_handler.add_needed_data_for_crits()
+        self._crits_handler.check_against_crits()
+        self.add_overview_data()
         #Save warehouse to file
         self._warehouse.serialize()
         #Save failed symbols to file
         self._data_source.save_failed_symbols()
 
-
+    def add_overview_data(self):
+        for symbol in self._warehouse.get_symbols():
+            if self._warehouse.is_symbol_rejected(symbol): continue
+            self._warehouse.add_overview_data(symbol, self._data_source.get_overview(symbol))
 
 if __name__ == "__main__":
     pass

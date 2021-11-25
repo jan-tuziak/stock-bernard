@@ -1,7 +1,5 @@
 av_key = "44V1UXEX9HBN0RST"
 
-poly_key = "3U413sHUAdFisFvcp6TReoTsEZ_GgpLp"
-
 json_path = "data/stocks.json"
 
 execute_time_path = "data/execute_time.json"
@@ -25,5 +23,4 @@ criterias = [
     {"type":"sma_x > sma_y", "parameters":{"time_period_x":12, "interval_x":"daily", "time_period_y":36, "interval_y":"daily"}},
     {"type":"sma_x > sma_y", "parameters":{"time_period_x":12, "interval_x":"daily", "time_period_y":130, "interval_y":"daily"}},
     {"type":"sma_x > sma_y 1inMany", "parameters":{"time_period_x":36, "interval_x":"daily", "time_period_y":12, "interval_y":"daily", "lookback":[5]}}
-    
 ]

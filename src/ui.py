@@ -36,6 +36,31 @@ def css_style():
         white-space: pre-wrap;
     }   
 
+    /* Table Styling */
+    .overview {
+        border-collapse: collapse;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .overview td, .overview th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .overview tr:nth-child(even){background-color: #f2f2f2;}
+
+    .overview tr:hover {background-color: #ddd;}
+
+    .overview th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+
     </style>
     '''
     return css
@@ -50,8 +75,6 @@ def head():
 
         <meta name="description" content="Stocks Data Filter App">
         <meta name="author" content="Draxgen">
-
-        <link rel="stylesheet" href="css/styles.css?v=1.0">
         
         {css_style()}
     </head>
@@ -96,10 +119,30 @@ def ui_common(title, subtitle, body):
     """
     return html_content
 
-def ui_lighthouse(stocks_to_observe, sector=""):
+def ui_lighthouse(stocks_to_observe, overview_table_data, sector=""):
     title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
-    
-    html_content = ui_common(title, "Stocks to Analyze", stocks_to_observe)
+    subtitle = "Stocks to Analyze"
+    if len(overview_table_data)==0: 
+        table = ""
+    else: 
+        table = create_overview_table(overview_table_data)
+
+    html_content = f"""
+    <html>
+        {head()}
+        <body>
+            <h1>Money Spyder</h1>
+            <h2>{title}</h2>
+            <h4>{subtitle}</h4>
+            <div>{stocks_to_observe}</div>
+            <br><br>
+            <div>{table}</div>
+            <br><br>
+            <a href="/" class="button">Back</a>
+            <br><br>
+        </body>
+    </html>
+    """
     return HTMLResponse(content=html_content, status_code=200)
 
 def ui_datastocks(datastocks):
@@ -113,3 +156,29 @@ def ui_failedsymbols(failed_symbols):
 def ui_executiontime(execute_time):
     html_content = ui_common("Execution Time", "Amount of time Money Spyder took to acquire and analyze given stocks", execute_time)
     return HTMLResponse(content=html_content, status_code=200)
+
+def create_overview_table(overview_table_data):
+    table_html = """<table class="overview">
+    <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Market Cap</th>
+        <th>P/E</th>
+        <th>Sector</th>
+        <th>Exchange</th>
+    </tr>"""
+
+    for stock in overview_table_data:
+        row_html = f"""
+        <tr>
+            <td>{stock['symbol']}</td>
+            <td>{stock['overview']['Name']}</td>
+            <td>{stock['overview']['MarketCapitalization']}</td>
+            <td>{stock['overview']['PERatio']}</td>
+            <td>{stock['sector']}</td>
+            <td>{stock['exchange']}</td>
+        </tr>"""
+        table_html += row_html
+
+    table_html += "</table>"
+    return table_html

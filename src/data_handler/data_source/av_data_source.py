@@ -5,6 +5,7 @@ import time
 import json
 
 from alpha_vantage.techindicators import TechIndicators
+from alpha_vantage.fundamentaldata import FundamentalData
 
 # normal import
 import config
@@ -17,6 +18,7 @@ from src.data_handler.data_source.i_data_source import IDataSource
 class AVDataSource(IDataSource):
     def __init__(self, av_key):
         self.ti = TechIndicators(key=av_key)
+        self.fd = FundamentalData(key=av_key)
         self.count = 0
         self.retries = 3
         self.failed_symbols = []
@@ -81,6 +83,9 @@ class AVDataSource(IDataSource):
         #Clear failed symbold variable
         self.failed_symbols = []
 
+    def get_overview(self, symbol='GOOGL'):
+        return self.fd.get_company_overview(symbol)[0]
+
 if __name__ == "__main__":
     av = AVDataSource("44V1UXEX9HBN0RST")
-    print(av.get_smas('AAPL', "15min", 900))
+    print(type(av.get_overview('AAPL')[0]))

@@ -13,13 +13,10 @@ from fastapi.responses import HTMLResponse
 
 from src.lighthouse import Lighthouse
 from src.data_handler.data_handler_loop import DataHandlerLoop
+from src.stocks_warehouse.json_warehouse import JsonWarehouse
 from src.ui import ui_root, ui_lighthouse, ui_datastocks, ui_failedsymbols, ui_executiontime
 
 app = FastAPI()
-
-def read_json_file(json_path):
-    with open(json_path) as json_file:
-        return json.load(json_file)
 
 # Start Stocks Data Loop
 @app.on_event("startup")
@@ -43,18 +40,23 @@ async def run_lighthouse_sector(sector):
 
 @app.get("/datastocks")
 async def datasctocks():
-    datastocks = read_json_file(config.json_path)
-    datastocks_pretty = json.dumps(datastocks, indent=4, sort_keys=True)
-    return ui_datastocks(datastocks_pretty)
+    jw = JsonWarehouse(config.stocks_data_json_path, config.diagnostics_path)
+    datastocks = jw.read_stocks_data()
+    del jw
+    return ui_datastocks(datastocks)
 
 @app.get("/failedsymbols")
 async def failedsymbols():
-    failed_symbols = read_json_file(config.failed_symbols_path)["failed_symbols"]
+    jw = JsonWarehouse(config.stocks_data_json_path, config.diagnostics_path)
+    failed_symbols = jw.read_failed_symbols()
+    del jw
     return ui_failedsymbols(failed_symbols)
 
 @app.get("/executiontime")
 async def executiontime():
-    execute_time = read_json_file(config.execute_time_path)["data_handler_execution_time"]
+    jw = JsonWarehouse(config.stocks_data_json_path, config.diagnostics_path)
+    execute_time = jw.read_execution_time()
+    del jw
     return ui_executiontime(execute_time)
 
 def execute_lighthouse(sector=""):

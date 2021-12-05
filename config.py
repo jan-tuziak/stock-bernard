@@ -1,9 +1,7 @@
 import os
-import logging 
 
 # Data Source config
 av_key = os.environ.get('av_key')
-logging.info(f"\n\n\nUsed AV key = {av_key}\n\n\n")
 
 # Warehouse config
 stocks_data_json_path = "data/stocks_data.json"

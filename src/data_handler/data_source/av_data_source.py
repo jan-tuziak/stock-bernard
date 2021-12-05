@@ -83,5 +83,4 @@ class AVDataSource(IDataSource):
         return self.fd.get_company_overview(symbol)[0]
 
 if __name__ == "__main__":
-    av = AVDataSource("44V1UXEX9HBN0RST")
-    print(type(av.get_overview('AAPL')[0]))
+    pass

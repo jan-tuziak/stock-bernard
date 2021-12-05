@@ -1,13 +1,12 @@
+# Data Source config
 av_key = "44V1UXEX9HBN0RST"
 
-json_path = "data/stocks.json"
+# Warehouse config
+stocks_data_json_path = "data/stocks_data.json"
+diagnostics_path = "data/diagnostics.json"
 
-execute_time_path = "data/execute_time.json"
-
-failed_symbols_path = "data/failed_symbols.json"
-
+# Stock Finder config
 csv_path = "data/american_stocks.csv"
-
 num_of_stocks_to_read = 1000
 
 logger = {

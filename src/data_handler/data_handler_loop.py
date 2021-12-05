@@ -8,21 +8,17 @@ import config
 from src.data_handler.data_handler import DataHandler
 
 class DataHandlerLoop():
-    def write_execution_time(self, time_str):
-        time_json = {"data_handler_execution_time" : time_str}
-        with open(config.execute_time_path, 'w') as fout:
-            json.dump(time_json, fout, indent=4)
 
     def execute_data_handler(self):
         logging.info(f'Stocks data loop start')
         startTime = time.time()
         dh = DataHandler()
         dh.get_data()
-        del dh
         executionTime = (time.time() - startTime)
         executionTimeStr = time.strftime("%H:%M:%S", time.gmtime(executionTime))
+        dh.write_execution_time(executionTimeStr)
+        del dh
         logging.info(f'Stocks data loop end. Loop time: {executionTimeStr}')
-        self.write_execution_time(executionTimeStr)
 
     def start_data_handler_loop(self):
         self.execute_data_handler()
@@ -34,13 +30,6 @@ class DataHandlerLoop():
                 logging.info("Weekend - waiting 1h")
                 time.sleep(60 * 60) 
                 continue
-            
-            # # if outside of market hours (+/- 1 hour) wait for 5 min and skip this iteration
-            # opening_hours = datetime.time(config.market_opening_hour[0] - 1, config.market_opening_hour[1])
-            # closing_hours = datetime.time(config.market_closing_hour[0] + 1, config.market_closing_hour[1])
-            # if now.time() < opening_hours or now.time() > closing_hours:
-            #     time.sleep(5 * 60)
-            #     continue
 
             # if outside of data handler hours then wait for 30min and skip this iteration
             opening_hours = datetime.time(config.dh_opening_hour[0], config.dh_opening_hour[1])

@@ -14,7 +14,7 @@ class IDataSource:
         '''
         return NotImplementedError
 
-    def save_failed_symbols(self):
+    def get_failed_symbols(self):
         '''
         Method for saving symbols that failed to get data to json file
         '''

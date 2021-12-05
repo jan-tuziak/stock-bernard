@@ -72,16 +72,12 @@ class AVDataSource(IDataSource):
         logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
         self.count = self.count + 1
         self.failed_symbols.append(symbol)
+        # Delete repeating failed symbols
+        self.failed_symbols = (list(set(self.failed_symbols)))
         return [0]
 
-    def save_failed_symbols(self):
-        if len(self.failed_symbols) == 0: self.failed_symbols = "None failed"
-        failed_symbols_json = {"failed_symbols": self.failed_symbols}
-        #Save failed symbols
-        with open(config.failed_symbols_path, 'w') as fout:
-            json.dump(failed_symbols_json, fout, indent=4)
-        #Clear failed symbold variable
-        self.failed_symbols = []
+    def get_failed_symbols(self):
+        return self.failed_symbols
 
     def get_overview(self, symbol='GOOGL'):
         return self.fd.get_company_overview(symbol)[0]

@@ -23,6 +23,7 @@ app = FastAPI()
 def start_data_loop():
     dhl = DataHandlerLoop()
     _thread.start_new_thread(dhl.start_data_handler_loop, ())
+    logging.info(f"\n\n\nUsed AV key = {config.av_key}\n\n\n")
 
 @app.get("/", response_class=HTMLResponse)
 async def root():

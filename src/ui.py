@@ -171,12 +171,12 @@ def create_overview_table(overview_table_data):
     for stock in overview_table_data:
         row_html = f"""
         <tr>
-            <td>{stock['symbol']}</td>
-            <td>{stock['overview']['Name']}</td>
-            <td>{stock['overview']['MarketCapitalization']}</td>
-            <td>{stock['overview']['PERatio']}</td>
-            <td>{stock['sector']}</td>
-            <td>{stock['exchange']}</td>
+            <td>{stock.get('symbol')}</td>
+            <td>{stock.get('overview').get('Name')}</td>
+            <td>{stock.get('overview').get('MarketCapitalization')}</td>
+            <td>{stock.get('overview').get('PERatio')}</td>
+            <td>{stock.get('sector')}</td>
+            <td>{stock.get('exchange')}</td>
         </tr>"""
         table_html += row_html
 

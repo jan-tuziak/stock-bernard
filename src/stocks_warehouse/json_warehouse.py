@@ -38,7 +38,7 @@ class JsonWarehouse():
 
     def get_sma(self, symbol, time_period, interval):
         idx = self._get_idx(symbol)
-        return self.stocks[idx][self._sma_str(time_period, interval)]
+        return self.stocks[idx].get(self._sma_str(time_period, interval))
 
     def add_smas(self, symbol, time_period, interval, values):
         '''add list of sma values to a given symbol'''
@@ -48,7 +48,7 @@ class JsonWarehouse():
     def get_smas(self, symbol, time_period, interval):
         '''get list of sma values for given symbol'''
         idx = self._get_idx(symbol)
-        return self.stocks[idx][self._smas_str(time_period, interval)]
+        return self.stocks[idx].get(self._smas_str(time_period, interval))
     # **************************************************************************
 
     # ***************************************** Functions for Overview ************************************
@@ -60,7 +60,7 @@ class JsonWarehouse():
     def get_overview_data(self, symbol):
         '''get overview data for given symbol'''
         idx = self._get_idx(symbol)
-        return self.stocks[idx]['overview']
+        return self.stocks[idx].get('overview')
 
     def get_data_for_overview_table(self, sector="", include_rejected=False):
         '''get overview data for HTML Table for given sector if specified'''
@@ -70,13 +70,13 @@ class JsonWarehouse():
             if (not include_rejected) and s['rejected']: continue
 
             #skip if sector is defined and the stock is not of this sector
-            if (len(sector)!=0) and s['sector']!=sector: continue
+            if (len(sector)!=0) and s.get('sector') != sector: continue
 
             one_stock_data = {}
-            one_stock_data['symbol'] = s['symbol']
-            one_stock_data['exchange'] = s['exchange']
-            one_stock_data['overview'] = s['overview']
-            one_stock_data['sector'] = s['sector']
+            one_stock_data['symbol'] = s.get('symbol')
+            one_stock_data['exchange'] = s.get('exchange')
+            one_stock_data['overview'] = s.get('overview')
+            one_stock_data['sector'] = s.get('sector')
             ov_tbl_data.append(one_stock_data)
         logging.debug(f'Overview Table Data: {ov_tbl_data}')
         return ov_tbl_data
@@ -93,9 +93,9 @@ class JsonWarehouse():
 
     def read_execution_time(self):
         '''read data handler loop execution time'''
-        return self.read_diagnostics()['data_handler_execution_time']
+        return self.read_diagnostics().get('data_handler_execution_time')
 
-    def read_diagnostics(self):
+    def read_diagnostics(self) -> dict:
         with open(self.diagnostics_json_path) as json_file:
             return json.load(json_file)
 
@@ -121,7 +121,7 @@ class JsonWarehouse():
         #     json.dump(time_json, fout, indent=4)
 
     def read_failed_symbols(self):
-        return self.read_diagnostics()['failed_symbols']
+        return self.read_diagnostics().get('failed_symbols')
     # *************************************************************************************
 
     # **************************************** Utility Functions ***************************
@@ -153,13 +153,13 @@ class JsonWarehouse():
             if (not include_rejected) and s['rejected']: continue
             
             #skip if sector is defined and the stock is not of this sector
-            if (len(sector)!=0) and s['sector']!=sector: continue
+            if (len(sector)!=0) and s.get('sector')!=sector: continue
 
             #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as part of "AMEX" exchange
-            if s['exchange'] == 'NYSE ARCA': 
+            if s.get('exchange') == 'NYSE ARCA': 
                 exch = 'AMEX'
             else:
-                exch = s['exchange']
+                exch = s.get('exchange')
             tv_stocks.append(exch + ':' + s['symbol'])
         stocks_to_observe = ', '.join(tv_stocks)
         #logging.debug(f'TV String: {tv_stocks}')

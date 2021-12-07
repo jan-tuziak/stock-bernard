@@ -40,7 +40,7 @@ class AVDataSource(IDataSource):
             except Exception as e:
                 time.sleep(10)
                 temp_e = e
-        logging.error(f'Failed to get data for {symbol} from API: '+ str(temp_e))
+        logging.error(f'Failed to get SMA for {symbol} from API: '+ str(temp_e))
         logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
         self.count = self.count + 1
         self.failed_symbols.append(symbol)
@@ -68,7 +68,7 @@ class AVDataSource(IDataSource):
             except Exception as e:
                 time.sleep(10)
                 temp_e = e
-        logging.error(f'Failed to get data for {symbol} from API: '+ str(temp_e))
+        logging.error(f'Failed to get SMAs for {symbol} from API: '+ str(temp_e))
         logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
         self.count = self.count + 1
         self.failed_symbols.append(symbol)
@@ -80,7 +80,18 @@ class AVDataSource(IDataSource):
         return self.failed_symbols
 
     def get_overview(self, symbol='GOOGL'):
-        return self.fd.get_company_overview(symbol)[0]
+        try:
+            return self.fd.get_company_overview(symbol)[0]
+        except Exception as e:
+            time.sleep(10)
+            temp_e = e
+        logging.error(f'Failed to get overview data for {symbol} from API: '+ str(temp_e))
+        logging.debug(f"Num of errors = {self.count}. Failed symbols = {set(self.failed_symbols)}")
+        self.count = self.count + 1
+        self.failed_symbols.append(symbol)
+        # Delete repeating failed symbols
+        self.failed_symbols = (list(set(self.failed_symbols)))
+        return {"failed":True}
 
 if __name__ == "__main__":
     pass

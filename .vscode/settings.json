@@ -1,6 +1,7 @@
 {
-    "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "/home/gitpod/.pyenv/versions/3.8.12/bin/python",
-    "terminal.integrated.fontFamily": "Sans-serif"
+    "python.linting.pylintEnabled": true,
+    "python.linting.pycodestyleEnabled": true,
+    "python.pythonPath": "venv/bin/python",
+    // "terminal.integrated.fontFamily": "monospace"
 }

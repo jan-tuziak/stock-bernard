@@ -6,3 +6,7 @@ class ICriteria:
 
     def add_needed_data(self, warehouse, data_source):
         return NotImplementedError
+
+    def check_symbol_inv(self, warehouse, symbol):
+        result = self.check_symbol(warehouse, symbol)
+        return not result

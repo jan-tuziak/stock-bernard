@@ -31,6 +31,15 @@ class CriterasHandler:
         else:
             return False
 
+    def check_symbol_inverted(self, symbol):
+        if not self._warehouse.is_symbol_rejected_inv(symbol):
+            passed = []
+            for c in self._criterias:
+                passed.append(c.check_symbol_inv(self._warehouse, symbol))
+            return all(p == True for p in passed)
+        else:
+            return False
+
     def add_needed_data_for_crits(self):
         for c in self._criterias:
             c.add_needed_data(self._warehouse, self._data_source)
@@ -39,3 +48,8 @@ class CriterasHandler:
         for symbol in self._warehouse.get_symbols():
             if self._warehouse.is_symbol_rejected(symbol): continue
             if self.check_symbol(symbol) == False: self._warehouse.set_rejected(symbol)
+
+    def check_against_inverted_crits(self):
+        for symbol in self._warehouse.get_symbols():
+            if self._warehouse.is_symbol_rejected_inv(symbol): continue
+            if self.check_symbol_inverted(symbol) == False: self._warehouse.set_rejected_inv(symbol)

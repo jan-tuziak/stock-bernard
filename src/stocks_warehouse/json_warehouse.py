@@ -18,6 +18,7 @@ class JsonWarehouse():
     def _create_rejected_field(self):
         for s in self.stocks:
             s['rejected'] = False
+            s['rejected_inv'] = False
 
     def _get_idx(self, symbol):
         idx =  next((index for (index, d) in enumerate(self.stocks) if d["symbol"] == symbol), None)
@@ -62,12 +63,12 @@ class JsonWarehouse():
         idx = self._get_idx(symbol)
         return self.stocks[idx].get('overview')
 
-    def get_data_for_overview_table(self, sector="", include_rejected=False):
+    def _get_data_for_overview_table(self, sector="", rejected_key="rejected", include_rejected=False):
         '''get overview data for HTML Table for given sector if specified'''
         ov_tbl_data = []
         for s in self.stocks:
             #skip this stock if "include_rejected" is False and is rejected
-            if (not include_rejected) and s['rejected']: continue
+            if (not include_rejected) and s[rejected_key]: continue
 
             #skip if sector is defined and the stock is not of this sector
             if (len(sector)!=0) and s.get('sector') != sector: continue
@@ -80,6 +81,12 @@ class JsonWarehouse():
             ov_tbl_data.append(one_stock_data)
         logging.debug(f'Overview Table Data: {ov_tbl_data}')
         return ov_tbl_data
+
+    def get_data_for_overview_table(self, sector="", include_rejected=False):
+        return self._get_data_for_overview_table(sector, "rejected", include_rejected)
+
+    def get_data_for_overview_table_inverted(self, sector="", include_rejected=False):
+        return self._get_data_for_overview_table(sector, "rejected_inv", include_rejected)
     # ******************************************************************************************************
 
     # **************************** Read and Save Data **************************************
@@ -139,18 +146,29 @@ class JsonWarehouse():
         idx  = self._get_idx(symbol)
         self.stocks[idx]['rejected'] = True
 
+    def set_rejected_inv(self, symbol):
+        idx  = self._get_idx(symbol)
+        self.stocks[idx]['rejected_inv'] = True
+
     def is_symbol_rejected(self, symbol):
         idx  = self._get_idx(symbol)
         try:
             return self.stocks[idx]['rejected']
         except:
             return False
-            
-    def get_stocks_for_tv(self, sector="", include_rejected=False):
+
+    def is_symbol_rejected_inv(self, symbol):
+        idx  = self._get_idx(symbol)
+        try:
+            return self.stocks[idx]['rejected_inv']
+        except:
+            return False
+    
+    def _get_stocks_for_tv(self, sector="", rejected_key="rejected", include_rejected=False):
         tv_stocks = []
         for s in self.stocks:
             #skip this stock if "include_rejected" is False and is rejected
-            if (not include_rejected) and s['rejected']: continue
+            if (not include_rejected) and s[rejected_key]: continue
             
             #skip if sector is defined and the stock is not of this sector
             if (len(sector)!=0) and s.get('sector')!=sector: continue
@@ -165,4 +183,10 @@ class JsonWarehouse():
         #logging.debug(f'TV String: {tv_stocks}')
         logging.debug(f'Stocks to observe: {stocks_to_observe}')
         return stocks_to_observe
+
+    def get_stocks_for_tv(self, sector="", include_rejected=False):
+        return self._get_stocks_for_tv(sector, 'rejected', include_rejected)
+
+    def get_stocks_for_tv_inverted(self, sector="", include_rejected=False):
+        return self._get_stocks_for_tv(sector, 'rejected_inv', include_rejected)
     # ****************************************************************************************

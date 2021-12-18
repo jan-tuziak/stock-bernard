@@ -21,6 +21,7 @@ class DataHandler:
         #Add Data
         self._crits_handler.add_needed_data_for_crits()
         self._crits_handler.check_against_crits()
+        self._crits_handler.check_against_inverted_crits()
         self.add_overview_data()
         #Save stocks data
         self._warehouse.save_stocks_data()
@@ -30,7 +31,7 @@ class DataHandler:
 
     def add_overview_data(self):
         for symbol in self._warehouse.get_symbols():
-            if self._warehouse.is_symbol_rejected(symbol): continue
+            if (self._warehouse.is_symbol_rejected(symbol) and self._warehouse.is_symbol_rejected_inv(symbol)): continue
             self._warehouse.add_overview_data(symbol, self._data_source.get_overview(symbol))
     
     def write_execution_time(self, time_str):

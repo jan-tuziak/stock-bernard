@@ -31,12 +31,22 @@ async def root():
 @app.get("/lighthouse")
 async def run_lighthouse():
     stocks_data, table_data = execute_lighthouse()
-    return ui_lighthouse(stocks_data, table_data)
+    return ui_lighthouse(stocks_data, table_data, False)
 
 @app.get("/lighthouse/{sector}")
 async def run_lighthouse_sector(sector):
     stocks_data, table_data = execute_lighthouse()
-    return ui_lighthouse(stocks_data, table_data, sector)
+    return ui_lighthouse(stocks_data, table_data, False, sector)
+
+@app.get("/inverted_lighthouse")
+async def run_inverted_lighthouse():
+    stocks_data, table_data = execute_inverted_lighthouse()
+    return ui_lighthouse(stocks_data, table_data, True)
+
+@app.get("/inverted_lighthouse/{sector}")
+async def run_inverted_lighthouse_sector(sector):
+    stocks_data, table_data = execute_inverted_lighthouse()
+    return ui_lighthouse(stocks_data, table_data, True, sector)
 
 @app.get("/datastocks")
 async def datasctocks():
@@ -62,6 +72,12 @@ async def executiontime():
 def execute_lighthouse(sector=""):
     lh = Lighthouse()  
     stocks_to_observe, overview_table_data = lh.get_lighthouse_stocks(sector)
+    del lh
+    return stocks_to_observe, overview_table_data
+
+def execute_inverted_lighthouse(sector=""):
+    lh = Lighthouse()  
+    stocks_to_observe, overview_table_data = lh.get_lighthouse_stocks_inverted(sector)
     del lh
     return stocks_to_observe, overview_table_data
 

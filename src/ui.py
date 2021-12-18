@@ -90,6 +90,8 @@ def ui_root():
             <h2>Services</h2>
             <a href="/lighthouse" class="button">Lighthouse</a>
             <br><br>
+            <a href="/inverted_lighthouse" class="button">Inverted Lighthouse</a>
+            <br><br>
             <h4>Diagnostics</h4>
             <a href="/datastocks" class="diag-button">Stocks Data</a>
             <br><br>
@@ -119,8 +121,11 @@ def ui_common(title, subtitle, body):
     """
     return html_content
 
-def ui_lighthouse(stocks_to_observe, overview_table_data, sector=""):
-    title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
+def ui_lighthouse(stocks_to_observe, overview_table_data, inverted=False, sector=""):
+    if not inverted:
+        title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
+    else:
+        title = "Inverted Lighthouse" if len(sector) == 0 else f"Inverted Lighthouse - {sector}"
     subtitle = "Stocks to Analyze"
     if len(overview_table_data)==0: 
         table = ""

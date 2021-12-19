@@ -39,7 +39,7 @@ class JsonWarehouse():
 
     def get_sma(self, symbol, time_period, interval):
         idx = self._get_idx(symbol)
-        return self.stocks[idx].get(self._sma_str(time_period, interval))
+        return self.stocks[idx].get(self._sma_str(time_period, interval), -1)
 
     def add_smas(self, symbol, time_period, interval, values):
         '''add list of sma values to a given symbol'''
@@ -49,7 +49,7 @@ class JsonWarehouse():
     def get_smas(self, symbol, time_period, interval):
         '''get list of sma values for given symbol'''
         idx = self._get_idx(symbol)
-        return self.stocks[idx].get(self._smas_str(time_period, interval))
+        return self.stocks[idx].get(self._smas_str(time_period, interval), [-1])
     # **************************************************************************
 
     # ***************************************** Functions for Overview ************************************

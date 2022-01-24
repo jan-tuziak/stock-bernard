@@ -165,6 +165,7 @@ def ui_executiontime(execute_time):
 def create_overview_table(overview_table_data):
     table_html = """<table class="overview">
     <tr>
+        <th>#</th>
         <th>Symbol</th>
         <th>Name</th>
         <th>Market Cap</th>
@@ -172,10 +173,11 @@ def create_overview_table(overview_table_data):
         <th>Sector</th>
         <th>Exchange</th>
     </tr>"""
-
+    num = 1
     for stock in overview_table_data:
         row_html = f"""
         <tr>
+            <td>{num}</td>
             <td>{stock.get('symbol')}</td>
             <td>{stock.get('overview').get('Name')}</td>
             <td>{stock.get('overview').get('MarketCapitalization')}</td>
@@ -184,6 +186,7 @@ def create_overview_table(overview_table_data):
             <td>{stock.get('exchange')}</td>
         </tr>"""
         table_html += row_html
+        num+=1
 
     table_html += "</table>"
     return table_html

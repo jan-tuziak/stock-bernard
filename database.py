@@ -1,8 +1,6 @@
-from multiprocessing import connection
 import os
-from sqlite3 import Cursor
-from tkinter import E
 import psycopg2
+from psycopg2 import cursor, connection
 import logging
 
 import criterias
@@ -12,7 +10,7 @@ STOCK_LIST_TABLE_NAME = 'ms_stock_list'
 STOCKS_DATA_TABLE_NAME = 'ms_stocks_data'
 DIAG_TABLE_NAME = 'ms_diagnostics'
 
-def _connect() -> tuple[connection, Cursor, Exception]:
+def _connect() -> tuple[connection, cursor, Exception]:
     err = None
     conn = None
     cur = None
@@ -24,11 +22,11 @@ def _connect() -> tuple[connection, Cursor, Exception]:
         logging.error(f"Could not connect to database. Error msg: {err}")
     return conn, cur, err
 
-def _disconnect(conn:connection, cur:Cursor) -> None:
+def _disconnect(conn:connection, cur:cursor) -> None:
     cur.close()
     conn.close()
 
-def _get_stock_list(cur:Cursor) -> tuple[list[dict], Exception]:
+def _get_stock_list(cur:cursor) -> tuple[list[dict], Exception]:
     try:
         cur.execute(f'SELECT * FROM {STOCK_LIST_TABLE_NAME}')
         data = cur.fetchall()
@@ -67,7 +65,7 @@ def _add_evaluated_stocks_data_to_db(stocks_data:list[dict]) -> Exception:
     _disconnect(conn, cur)
     return err
 
-def _get_diagnostics_from_db(cur:Cursor) -> tuple[str, Exception]:
+def _get_diagnostics_from_db(cur:cursor) -> tuple[str, Exception]:
     try:
         cur.execute(f'SELECT * FROM {DIAG_TABLE_NAME}')
         data = cur.fetchall()

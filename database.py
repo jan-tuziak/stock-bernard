@@ -1,6 +1,5 @@
 import os
 import psycopg2
-from psycopg2 import cursor, connection
 import logging
 
 import criterias
@@ -10,7 +9,7 @@ STOCK_LIST_TABLE_NAME = 'ms_stock_list'
 STOCKS_DATA_TABLE_NAME = 'ms_stocks_data'
 DIAG_TABLE_NAME = 'ms_diagnostics'
 
-def _connect() -> tuple[connection, cursor, Exception]:
+def _connect():
     err = None
     conn = None
     cur = None
@@ -22,11 +21,11 @@ def _connect() -> tuple[connection, cursor, Exception]:
         logging.error(f"Could not connect to database. Error msg: {err}")
     return conn, cur, err
 
-def _disconnect(conn:connection, cur:cursor) -> None:
+def _disconnect(conn, cur) -> None:
     cur.close()
     conn.close()
 
-def _get_stock_list(cur:cursor) -> tuple[list[dict], Exception]:
+def _get_stock_list(cur) -> tuple[list[dict], Exception]:
     try:
         cur.execute(f'SELECT * FROM {STOCK_LIST_TABLE_NAME}')
         data = cur.fetchall()
@@ -65,7 +64,7 @@ def _add_evaluated_stocks_data_to_db(stocks_data:list[dict]) -> Exception:
     _disconnect(conn, cur)
     return err
 
-def _get_diagnostics_from_db(cur:cursor) -> tuple[str, Exception]:
+def _get_diagnostics_from_db(cur) -> tuple[str, Exception]:
     try:
         cur.execute(f'SELECT * FROM {DIAG_TABLE_NAME}')
         data = cur.fetchall()

@@ -1,6 +1,5 @@
 '''Get Top Stocks from csv file'''
 
-from msilib.schema import Error
 import pandas as pd
 import logging
 

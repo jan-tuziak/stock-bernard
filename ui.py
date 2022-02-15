@@ -1,6 +1,6 @@
 from fastapi.responses import HTMLResponse
 
-def css_style():
+def _css_style() -> str:
     css = '''
     <style>
     body  {
@@ -39,7 +39,7 @@ def css_style():
     /* Table Styling */
     .overview {
         border-collapse: collapse;
-        width: 80%;
+        width: 5%;
         margin-left: auto;
         margin-right: auto;
     }
@@ -65,7 +65,7 @@ def css_style():
     '''
     return css
 
-def head():
+def _head() -> str:
     head = f'''
     <head>
         <title>Money Spyder</title>
@@ -76,38 +76,73 @@ def head():
         <meta name="description" content="Stocks Data Filter App">
         <meta name="author" content="Draxgen">
         
-        {css_style()}
+        {_css_style()}
     </head>
     '''
     return head
 
-def ui_root():
+def _string_for_tradingview(stocks:list[dict]) -> str:
+    if len(stocks) == 0:
+        return ""
+    tv_list = []
+    for st in stocks:
+        sym = st['symbol']
+        exch = st['exchange']
+        #TradingView does not what 'NYSE ARCA' is. It recognizes those symbols as part of "AMEX" exchange
+        if exch == 'NYSE ARCA': exch = 'AMEX'
+        tv_list.append(f"{exch}:{sym}")
+    return ", ".join(tv_list)
+
+def _create_stocks_table(stocks:list[dict]) -> str:
+    if len(stocks) == 0:
+        return ""
+    table_html = """<table class="overview">
+    <tr>
+        <th>#</th>
+        <th>Exchange</th>
+        <th>Symbol</th>
+    </tr>"""
+    num = 1
+    for stock in stocks:
+        row_html = f"""
+        <tr>
+            <td>{num}</td>
+            <td>{stock.get('exchange')}</td>
+            <td>{stock.get('symbol')}</td>
+        </tr>"""
+        table_html += row_html
+        num+=1
+    table_html += "</table>"
+    return table_html
+
+def root() -> HTMLResponse:
+    #Removed Diagnostics Menu
+    # <h4>Diagnostics</h4>
+    # <a href="/datastocks" class="diag-button">Stocks Data</a>
+    # <br><br>
+    # <a href="/failedsymbols" class="diag-button">Failed Symbols</a>
+    # <br><br>
+    # <a href="/executiontime" class="diag-button">Execution Time</a>
+    # <br><br>
+    
     html_content = f"""
     <html>
-        {head()}
+        {_head()}
         <body>
             <h1>Money Spyder</h1>
             <h2>Services</h2>
-            <a href="/lighthouse" class="button">Lighthouse</a>
+            <a href="/lighthouse_long" class="button">Lighthouse Long</a>
             <br><br>
-            <a href="/inverted_lighthouse" class="button">Inverted Lighthouse</a>
-            <br><br>
-            <h4>Diagnostics</h4>
-            <a href="/datastocks" class="diag-button">Stocks Data</a>
-            <br><br>
-            <a href="/failedsymbols" class="diag-button">Failed Symbols</a>
-            <br><br>
-            <a href="/executiontime" class="diag-button">Execution Time</a>
-            <br><br>
+            <a href="/lighthouse_short" class="button">Lighthouse Short</a>
         </body>
     </html>
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-def ui_common(title, subtitle, body):
+def common(title:str, subtitle:str, body:str) -> str:
     html_content = f"""
     <html>
-        {head()}
+        {_head()}
         <body>
             <h1>Money Spyder</h1>
             <h2>{title}</h2>
@@ -121,25 +156,24 @@ def ui_common(title, subtitle, body):
     """
     return html_content
 
-def ui_lighthouse(stocks_to_observe, overview_table_data, inverted=False, sector=""):
-    if not inverted:
-        title = "Lighthouse" if len(sector) == 0 else f"Lighthouse - {sector}"
+def lighthouse(stocks:list[dict], long:bool=True) -> HTMLResponse:
+    if long:
+        title = "Lighthouse Long"
     else:
-        title = "Inverted Lighthouse" if len(sector) == 0 else f"Inverted Lighthouse - {sector}"
-    subtitle = "Stocks to Analyze"
-    if len(overview_table_data)==0: 
-        table = ""
-    else: 
-        table = create_overview_table(overview_table_data)
+        title = "Lighthouse Short"
+    subtitle = f"{len(stocks)} Stocks found"
+    
+    str_for_tv = _string_for_tradingview(stocks)
+    table = _create_stocks_table(stocks)
 
     html_content = f"""
     <html>
-        {head()}
+        {_head()}
         <body>
             <h1>Money Spyder</h1>
             <h2>{title}</h2>
             <h4>{subtitle}</h4>
-            <div>{stocks_to_observe}</div>
+            <div>{str_for_tv}</div>
             <br><br>
             <div>{table}</div>
             <br><br>
@@ -150,43 +184,18 @@ def ui_lighthouse(stocks_to_observe, overview_table_data, inverted=False, sector
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-def ui_datastocks(datastocks):
-    html_content = ui_common("Stocks Data", "Data acquired and used by Money Spyder", datastocks)
+def datastocks(datastocks):
+    html_content = common("Stocks Data", "Data acquired and used by Money Spyder", datastocks)
     return HTMLResponse(content=html_content, status_code=200)
 
-def ui_failedsymbols(failed_symbols):
-    html_content = ui_common("Failed Symbols", "Symbols for which getting data for resulted in an error", failed_symbols)
+def failedsymbols(failed_symbols):
+    html_content = common("Failed Symbols", "Symbols for which getting data for resulted in an error", failed_symbols)
     return HTMLResponse(content=html_content, status_code=200)
 
-def ui_executiontime(execute_time):
-    html_content = ui_common("Execution Time", "Amount of time Money Spyder took to acquire and analyze given stocks", execute_time)
+def executiontime(execute_time):
+    html_content = common("Execution Time", "Amount of time Money Spyder took to acquire and analyze given stocks", execute_time)
     return HTMLResponse(content=html_content, status_code=200)
 
-def create_overview_table(overview_table_data):
-    table_html = """<table class="overview">
-    <tr>
-        <th>#</th>
-        <th>Symbol</th>
-        <th>Name</th>
-        <th>Market Cap</th>
-        <th>P/E</th>
-        <th>Sector</th>
-        <th>Exchange</th>
-    </tr>"""
-    num = 1
-    for stock in overview_table_data:
-        row_html = f"""
-        <tr>
-            <td>{num}</td>
-            <td>{stock.get('symbol')}</td>
-            <td>{stock.get('overview').get('Name')}</td>
-            <td>{stock.get('overview').get('MarketCapitalization')}</td>
-            <td>{stock.get('overview').get('PERatio')}</td>
-            <td>{stock.get('sector')}</td>
-            <td>{stock.get('exchange')}</td>
-        </tr>"""
-        table_html += row_html
-        num+=1
-
-    table_html += "</table>"
-    return table_html
+def error(err:Exception) -> HTMLResponse:
+    html_content = common("Error Occurred!", "Sorry, something went wrong", err)
+    return HTMLResponse(content=html_content, status_code=404)

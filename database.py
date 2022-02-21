@@ -120,8 +120,8 @@ def _get_lighthouse_results(long:bool=True) -> tuple[list[dict], Exception]:
                 row_lst[i] = row_lst[i].replace(")", "")
             # data_dict.append(f'{row_lst[0]}:{row_lst[1]}')
             data_dict.append({
-                'exchange': row_lst[0],
-                'symbol': row_lst[1]
+                'exchange': row_lst[0].replace("\"", ""),
+                'symbol': row_lst[1].replace("\"", "")
             })
     except Exception as e:
         logging.error(f'Could not get {col_name} results from database. Error msg: {e}')

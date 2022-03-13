@@ -1,2 +1,0 @@
-“At minute 0 past every hour from 9 through 17 on every day-of-week from Monday through Friday.” 
-0 15-22 * * 1-5 /usr/bin/python3 /home/pi/Money-Spyder/money-spyder.py >> /home/pi/Money-Spyder/data/cron.log 2>&1

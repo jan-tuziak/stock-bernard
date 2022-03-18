@@ -1,9 +1,9 @@
-# Money Spyder
+# St(ock) Bernard
  
-Small web app used for techncial screening of the biggest American stocks using.
+Technical S&P500 EOD stocks screener. This app aims to fill in the gap of TradingView's built-in screener, which is very sparce when it comes to technical rules. St(ock) Bernard focues on those technical rules. 
 
-The app:
-- gets x amount of stocks from csv file
-- gets data about the stocks
-- sets wich stocks pass the developer's criterias
-- repeat above steps after the market closes (every 24h)
+## Example
+St(ock) Bernard can give you a list of stocks that meet ALL of these rules:
+- `sma12xDaily > sma36xDaily`
+- `sma12xDaily > sma130xDaily`
+- `smas36xDaily > smas12xDaily 5 candles earlier`

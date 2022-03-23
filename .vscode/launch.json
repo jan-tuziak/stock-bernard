@@ -12,7 +12,7 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Money Spyder",
+            "name": "Stock Bernard",
             "type": "python",
             "request": "launch",
             "program": "main.py",
